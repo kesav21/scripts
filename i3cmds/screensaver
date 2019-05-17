@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# this script turns off the screensaver if any audio is playing
+# and turns it on when there is no media playing
+
+# set screensaver timeout (in minutes)
+# timeout=10
+timeout=1
+# set screensaver timeout (in seconds)
+notify=10
+
+# calculate timeout in seconds
+timeoutsec=$(echo "$timeout * 60" | bc)
+
+
+while true
+do
+
+	# checks whether there is any audio playing
+	audio_status=$(~/.scripts/audio/is_audio_running)
+
+	# checks if there is a process of xautolock already running
+	x_running=$(ps aux | awk '$11=="xautolock"')
+
+	if [ "$audio_status" = "RUNNING" ]
+	then
+		echo "audio:		running"
+		# notify-send "audio" "running"
+
+		echo "dpms:		disabled"
+		# notify-send -t 1000 "dpms" "disabled"
+
+		xset -dpms
+
+		# if there is no process of xautolock, then $x_running will be empty
+		if [ -z "$x_running" ]
+		then
+			echo "xautolock:	not running"
+			# notify-send -t 1000 "xautolock" "not running"
+		else
+			echo "xautolock:	disabled"
+			# notify-send -t 1000 "xautolock" "disabled"
+
+			xautolock -disable
+		fi
+	else
+		echo "audio:		not running"
+		# notify-send -t 1000 "audio" "not running"
+
+		echo "dpms:		enabled with timeout of $timeoutsec seconds"
+		# notify-send -t 1000 "dpms" "enabled with timeout of $timeoutsec seconds"
+
+		xset dpms $timeoutsec
+
+		# if there is no process of xautolock, then $running will be empty
+		if [ -z "$x_running" ]
+		then
+			# there is no xautolock process running
+			echo "xautolock:	enabled with timeout of $timeout minutes"
+			# notify-send -t 1000 "xautolock" "enabled with timeout of $timeout minutes"
+
+			xautolock -time $timeout \
+				-locker ~/.scripts/i3cmds/i3lock-color \
+				-notify $notify \
+				-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in $notify seconds'" &
+		else
+			# there is an xautolock process running
+			echo "xautolock:	enabled with existing settings"
+			# notify-send -t 1000 "xautolock" "enabled with existing settings"
+
+			xautolock -enable
+		fi
+
+	fi
+
+	echo ""
+	sleep 5
+done

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Bash3 Boilerplate. Copyright (c) 2014, kvz.io
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# need this for file name
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+__file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
+__base="$(basename ${__file} .sh)"
+
+# logging
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>$__base.log 2>&1
+
+# Everything below will go to the file 'log.out':
+
+echo $__dir
+echo $__file
+echo $__base
+echo $1
+
+echo "$(date) : part 1 - start" >&3
+

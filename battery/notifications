@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# if the battery % is below 10%
+# and the laptop is not plugged in,
+# then send a notification every minute
+
+# minimum acceptable battery power
+minimum=15
+# time between notifications (in seconds)
+waittime=60 # 1 minute
+
+
+# sends a notification when the current battery level is
+# below the threshold, and is not charging
+# $1 is battery status: charging/discharging/full
+# $2 is current battery level
+# $3 is minimum acceptable battery power
+batterylow () {
+	if [ "$1" = "Discharging" ]
+	then
+		if [ "$2" -lt "$3" ]
+		then
+			notify-send "Battery low" "Level: $2% "
+		fi
+	fi
+}
+
+# sends a notification when the battery is full
+# $1 is battery status: charging/discharging/full
+# $2 is current battery level
+batteryhigh () {
+	if [ "$1" = "Full" ]
+	then
+		notify-send "Battery high" "Level: $2% "
+	fi
+}
+
+while true
+do
+	# export DISPLAY=:0.0
+
+	status=$(acpi -b | grep -P -o '(?<=\:)(.*?)(?=,)' | tr -d '[:space:]')
+	battery=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+
+	echo "status:		$status"
+	echo "battery:	$battery"
+	echo "minimum:	$minimum"
+	echo ""
+
+	batterylow $status $battery $minimum
+	batteryhigh $status $battery
+
+	sleep $waittime
+done
