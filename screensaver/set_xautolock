@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+
+#
+# $1 is wanted status: Enable/Disable
+# $2 is timeout
+# $3 is notify
+#
+# $1			$2			action
+# not running	enable		setup
+# running		enable		enable
+# running		disable		disable
+# not running	disable		do nothing
+#
+set_xautolock () {
+
+	# checks if there is a process of xautolock already running
+	x_running=$(ps aux | awk '$11=="xautolock"')
+
+	# if xautolock is not running
+	# and if the command is enable
+	if [ -z "$x_running" ] && [ "$1" = "Enable" ]
+	then
+		echo "xautolock:	setup"
+
+		xautolock -time $2 \
+			-locker ~/.scripts/i3cmds/i3lock-color \
+			-notify $3 \
+			-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in $3 seconds'" &
+
+	# if xautolock is running
+	# TODO: find out a way to check if xautolock is enabled
+	elif [ ! -z "$x_running" ] && [ "$1" = "Enable" ]
+	then
+		echo "xautolock:	enable"
+
+		xautolock -enable
+
+	# if xautolock is running
+	# TODO: find out a way to check if xautolock is disabled
+	elif [ ! -z "$x_running" ] && [ "$1" = "Disable" ]
+	then
+		echo "xautolock:	disable"
+
+		xautolock -disable
+
+	else
+		echo "xautolock:	do nothing"
+	fi
+}
+
+set_xautolock "$@"
+
