@@ -1,6 +1,6 @@
 
 # ignore all logfiles
-.log
+*.log
 
 # ignore all vim generated swap files
-.swp
+*.swp
