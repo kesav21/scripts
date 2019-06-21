@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# nord colors
+BG='#2E3440'
+GREY='#4C566A'
+WHITE='#ECEFF4'
+
+FONT=12
+
+# add code to make resizing automatic
+# SIZE=1920
+
+dmenu_run -x 5 -w 1910 -y 5 -h 25 -nb $BG -nf $GREY -sb $BG -sf $WHITE -fn "Monospace-$FONT:normal"
+
