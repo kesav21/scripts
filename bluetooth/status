@@ -1,0 +1,11 @@
+#!/bin/bash
+
+status=$(echo info | bluetoothctl | grep "Connected: yes")
+
+if [ -z "$status" ]
+then
+	echo "not connected"
+else
+	echo "connected"
+fi
+
