@@ -10,5 +10,5 @@ FONT=12
 # add code to make resizing automatic
 # SIZE=1920
 
-dmenu_run -x 5 -w 1910 -y 5 -h 25 -nb $BG -nf $GREY -sb $BG -sf $WHITE -fn "Monospace-$FONT:normal"
+dmenu -x 5 -w 1910 -y 5 -h 25 -nb $BG -nf $GREY -sb $BG -sf $WHITE -fn "Monospace-$FONT:normal"
 
