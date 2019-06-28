@@ -1,0 +1,10 @@
+#! /bin/bash
+# dwm startup script
+
+while true
+do
+	xsetroot -name "` date +"%R"`"
+done &
+
+exec dwm
+
