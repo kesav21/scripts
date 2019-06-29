@@ -1,10 +1,12 @@
 #! /bin/bash
 # dwm startup script
 
-while true
-do
-	xsetroot -name "` date +"%R"`"
-done &
+# startup script
+# ~/.scripts/dwm/startup &
 
+# sets the statusbar
+~/.scripts/dwm/set_statusbar &
+
+# execute dwm
 exec dwm
 

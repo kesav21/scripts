@@ -1,0 +1,71 @@
+#! /bin/bash
+# dwm startup script
+#
+# powerline symbols
+# 
+# 
+# 
+# 
+
+
+# background
+
+# wifi
+
+getwifi() {
+	# TODO: implement wifi status
+
+	echo "wifi"
+}
+
+# volume
+
+getvolume() {
+	# TODO: implement volume status
+
+	echo "volume"
+}
+
+# brightness
+
+getbrightness() {
+	# TODO: implement brightness status
+
+	echo "brightness"
+}
+
+# battery
+
+getbattery() {
+	# TODO: implement battery status
+
+	echo "battery"
+}
+
+# datetime
+
+getdatetime() {
+	date="$(date +"%a")"
+	time="$(date +"%I:%M %P")"
+
+	# TODO: figure out how to integrate this
+	# date_alt="$(date +"%m/%d/%Y")"
+	# time_alt="$(date +"%H:%M:%S")"
+
+	echo "$date $time"
+	# echo "date  $date $time"
+}
+
+# all statuses
+
+getstatus() {
+	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
+	echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x05"
+}
+
+while true
+do
+	xsetroot -name "$(getstatus)"
+	sleep 5
+done
+
