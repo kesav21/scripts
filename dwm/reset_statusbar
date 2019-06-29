@@ -1,0 +1,5 @@
+#!/bin/sh
+
+killall set_statusbar
+./set_statusbar &
+

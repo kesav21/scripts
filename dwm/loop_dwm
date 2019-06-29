@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # startup script
-# ~/.scripts/dwm/startup &
+~/.scripts/dwm/startup &
 
 # sets the statusbar
-~/.scripts/dwm/set_statusbar &
+# ~/.scripts/dwm/set_statusbar &
 
 # execute dwm
 while true

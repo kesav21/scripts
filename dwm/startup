@@ -1,0 +1,7 @@
+#!/bin/sh
+
+hsetroot -solid "#2e3440"
+
+# sets the statusbar
+~/.scripts/dwm/set_statusbar &
+
