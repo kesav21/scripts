@@ -51,20 +51,20 @@ timeoutsec=$(echo "$timeout * 60" | bc)
 set_screensaver () {
 
 	# checks whether there is any audio playing
-	audio_status=$(~/.scripts/audio/is_audio_running)
+	audio_status=$(~/.bin/audio_isrunning)
 
 	if [ "$audio_status" = "RUNNING" ]
 	then
 		echo "audio:		running"
 
-		~/.scripts/screensaver/set_dpms "Disable"
-		~/.scripts/screensaver/set_xautolock "Disable"
+		~/.bin/dpms_set "Disable"
+		~/.bin/xautolock_set "Disable"
 	else
 		echo "audio:		not running"
 
-		~/.scripts/screensaver/set_dpms "Enable"
-		~/.scripts/screensaver/set_dpms_timeout $3
-		~/.scripts/screensaver/set_xautolock "Enable" $1 $2
+		~/.bin/dpms_set "Enable"
+		~/.bin/dtime_set $3
+		~/.bin/xautolock_set "Enable" $1 $2
 	fi
 
 }

@@ -1,3 +1,4 @@
 #!/bin/bash
 
 pacmd list-sinks | grep 'index:' | cut -b12
+

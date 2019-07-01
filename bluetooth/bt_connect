@@ -22,7 +22,7 @@
 
 # everything below will be sent to a log file
 
-name=$(cat ~/.bluetooth-devices | cut -d" " -f3- | ~/.scripts/i3cmds/dmenu)
+name=$(cat ~/.bluetooth-devices | cut -d" " -f3- | ~/.bin/mydmenu)
 
 echo "name: $name"
 

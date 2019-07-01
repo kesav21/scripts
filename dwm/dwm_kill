@@ -1,8 +1,8 @@
 #!/bin/sh
 
-killall startup
-killall set_statusbar
+killall dwm_init
+killall dwm_setstatbar
 
-killall noloop_dwm
-killall loop_dwm
+killall dwm_loop
+killall dwm_noloop
 

@@ -24,7 +24,7 @@ set_xautolock () {
 		echo "xautolock:	setup"
 
 		xautolock -time $2 \
-			-locker ~/.scripts/i3cmds/i3lock-color \
+			-locker ~/.bin/i3_lockcolor \
 			-notify $3 \
 			-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in $3 seconds'" &
 

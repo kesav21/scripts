@@ -2,10 +2,7 @@
 # dwm startup script
 
 # startup script
-~/.scripts/dwm/startup &
-
-# sets the statusbar
-# ~/.scripts/dwm/set_statusbar &
+~/.bin/dwm_init &
 
 # execute dwm
 exec dwm
