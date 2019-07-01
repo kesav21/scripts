@@ -1,0 +1,19 @@
+#!/bin/sh
+
+files=$(find ~/.scripts/ -type f | grep -v "\.git")
+
+for file in $files
+do
+	contains=$(cat $file | grep "scripts")
+	echo $file
+	echo $contains
+
+	# if [ -z "$contains" ]
+	# then
+	# 	echo $file
+	# 	echo "$contains"
+	# else
+	# 	echo "no contains"
+	# fi
+done
+
