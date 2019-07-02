@@ -1,10 +1,11 @@
 #!/bin/sh
 
-files=$(find ~/.scripts/ -type f | grep -v "\.git")
+# files=$(find ~/.scripts/ -type f | grep -v "\.git")
+files=$(find "$1" -type f | grep -v "\.git")
 
 for file in $files
 do
-	contains=$(cat $file | grep "scripts")
+	contains=$(cat $file | grep "\.scripts")
 	echo $file
 	echo $contains
 
