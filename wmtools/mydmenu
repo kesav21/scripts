@@ -5,10 +5,17 @@ BG='#2E3440'
 GREY='#4C566A'
 WHITE='#ECEFF4'
 
-FONT=12
+# FONT="Monospace"
+FONT_SIZE=12
+FONT="Fira Mono:style=Regular:size=$FONT_SIZE"
 
 # add code to make resizing automatic
 # SIZE=1920
 
-dmenu -x 5 -w 1910 -y 5 -h 25 -nb $BG -nf $GREY -sb $BG -sf $WHITE -fn "Monospace-$FONT:normal"
+# HEIGHT=25
+# this height thing is a bit weird
+# i cannot seem to get the height right
+HEIGHT=0
+
+dmenu -x 5 -w 1910 -y 5 -h $HEIGHT -nb $BG -nf $GREY -sb $BG -sf $WHITE -fn "$FONT"
 
