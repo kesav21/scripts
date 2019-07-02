@@ -3,6 +3,12 @@
 cd ~/.scripts/
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
+echo "\nclearing ~/.bin:\n"
+
+rm -rfv ~/.bin/ && mkdir ~/.bin/
+
+echo "\nadding scripts to ~/.bin/\n"
+
 for file in $files
 do
 	if [ -x "$file" ]
@@ -12,4 +18,6 @@ do
 		printf "moved \t%-40s to \t~/.bin/%s\n" "$file" "$filename"
 	fi
 done
+
+echo "\n"
 
