@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# which is better?
+# percentage=$(cat /sys/class/power_supply/BAT?/capacity)%
+percentage=$(acpi -b | grep "Battery 0" | grep -P -o '[0-9]+(?=%)')
+
+echo $percentage
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "kk"
+
+status=$(acpi -b | grep "Battery 0" | grep -P -o '(?<=\:)(.*?)(?=,)' | tr -d '[:space:]')
+battery=$(acpi -b | grep "Battery 0" | grep -P -o '[0-9]+(?=%)')
+

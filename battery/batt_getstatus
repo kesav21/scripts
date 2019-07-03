@@ -1,0 +1,5 @@
+#!/bin/sh
+
+status=$(acpi -b | grep "Battery 0" | grep -P -o '(?<=\:)(.*?)(?=,)' | tr -d '[:space:]')
+echo $status
+
