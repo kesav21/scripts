@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# let this be a warning to future me: do not write code past midnight
+# follow my overcomplicated algorithm to check for mute/unmute
+# and you will see why
+
+# search for "off"
+isoff=$(amixer sget Master | grep "\[off\]")
+# search for "on"
+ison=$(amixer sget Master | grep "\[on\]")
+
+# if length of the $isoff is nonzero
+# and if the length of $ison is zero
+if [ -n "$isoff" ] && [ -z "$ison" ]
+then
+	echo "muted"
+
+# if length of the $isoff is zero
+# and if the length of $ison is nonzero
+elif [ -z "$isoff" ] && [ -n "$ison" ]
+then
+	echo "not muted"
+
+# otherwise, i messed up
+else
+	echo "error"
+fi
+
