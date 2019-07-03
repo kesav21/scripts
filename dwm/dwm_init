@@ -1,7 +1,22 @@
 #!/bin/sh
 
-hsetroot -solid "#2e3440"
+# set wallpaper
+hsetroot -solid "#2e3440" &
+# feh --bg-scale $wallpaper &
 
 # sets the statusbar
 ~/.bin/dwm_setstatbar &
+
+# compositor
+# do i need this?
+compton &
+
+# battery low/full notifications
+~/.bin/batt_notifier &
+
+# screensaver
+~/.bin/screensaver_set &
+
+# notification daemon
+dunst &
 
