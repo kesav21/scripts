@@ -7,60 +7,99 @@
 # 
 # 
 # 
-
-# TODO: replace text with icons
+#
+# other symbols
+#     wifi
+#     volume-on
+#     volume-muted
+#     brightness
+#     battery full
+#     battery charging
+#     battery discharging
+#     time
+#
 # TODO: add colors to signify status
 # TODO: implement toggle between short and long format
 
-# background
 
 # wifi
-
+#
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
 getwifi() {
-	echo "wifi: $(~/.bin/wifi_getssid)"
+	wifi=$(~/.bin/wifi_getssid)
+
+	if [ -z "$wifi" ]
+	then
+		echo "  (disconnected)"
+	else
+		echo "  $(~/.bin/wifi_getssid)"
+	fi
+
+	# echo "wifi: $(~/.bin/wifi_getssid)"
 }
 
 # volume
-
+#
 # short format: volume level
 # no long format
 getvolume() {
-	echo "volume: $(~/.bin/audio_getvolume)"
+	ismuted=$(~/.bin/audio_ismuted)
+
+	if [ "$ismuted" = "muted" ]
+	then
+		# why is the mute symbol a garbage can?
+		echo "  $(~/.bin/audio_getvolume)"
+		# echo "(muted)  $(~/.bin/audio_getvolume)"
+	elif [ "$ismuted" = "not muted" ]
+	then
+		echo "  $(~/.bin/audio_getvolume)"
+	fi
 }
 
 # brightness
-
+#
 # short format: brightness level
 # no long format
 getbrightness() {
-	echo "brightness: $(~/.bin/bright_get)"
+	echo "  $(~/.bin/bright_get)"
 }
 
 # battery
-
+#
 # short format: battery level, status
 # long format: battery level, status, time left
+#
+# TODO: (long format) display time left until full charge/time until dead
+# TODO: if multiple batteries present, only display the first one
 getbattery() {
-	# TODO: (long format) display time left until full charge/time until dead
-	# TODO: if multiple batteries present, only display the first one
+	status=$(~/.bin/batt_getstatus)
 
-	echo "battery: ($(~/.bin/batt_getstatus)) $(~/.bin/batt_getp)%"
+	if [ "$status" = "Discharging" ]
+	then
+		echo "  $(~/.bin/batt_getp)%"
+	elif [ "$status" = "Charging" ]
+	then
+		echo "  $(~/.bin/batt_getp)%"
+	elif [ "$status" = "Full" ]
+	then
+		echo "  $(~/.bin/batt_getp)%"
+	fi
 }
 
 # datetime
-
+#
 # short format: day of the week, 12 hour time
 # long format: month/day/year, 24 hour time
 getdatetime() {
 	date="$(date +"%a")"
 	time="$(date +"%I:%M %P")"
 
+	echo "  $date $time"
+
 	# date_long="$(date +"%m/%d/%Y")"
 	# time_long="$(date +"%H:%M:%S")"
 
-	echo "date: $date $time"
 	# echo "date: $date_long $time_long"
 }
 
@@ -69,12 +108,12 @@ getdatetime() {
 getstatus() {
 	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
 	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
-	echo -e "$(getwifi) | $(getvolume) | $(getbrightness) | $(getbattery) | $(getdatetime) "
+	echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
 }
 
 while true
 do
 	xsetroot -name "$(getstatus)"
-	sleep 1
+	sleep .1
 done
 
