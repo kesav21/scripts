@@ -1,0 +1,6 @@
+#!/bin/sh
+
+executable=~/Projects/external/brightlight/brightlight
+bright_raw=$($executable -rp |  grep -o '[^:]\+$')
+echo $bright_raw
+
