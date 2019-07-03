@@ -1,4 +1,5 @@
 #! /bin/bash
+#
 # dwm startup script
 #
 # powerline symbols
@@ -42,7 +43,6 @@ getbrightness() {
 # short format: battery level, status
 # long format: battery level, status, time left
 getbattery() {
-	# TODO: (short format) implement battery status (charging/discharging)
 	# TODO: (long format) display time left until full charge/time until dead
 	# TODO: if multiple batteries present, only display the first one
 
