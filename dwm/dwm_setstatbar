@@ -7,53 +7,61 @@
 # 
 # 
 
+# TODO: replace text with icons
+# TODO: add colors to signify status
+# TODO: implement toggle between short and long format
 
 # background
 
 # wifi
 
+# short format: ssid
+# long format: ssid, upspeed, downspeed, signal
 getwifi() {
-	# TODO: implement wifi status
-
-	echo "wifi"
+	echo "wifi: $(~/.bin/wifi_getssid)"
 }
 
 # volume
 
+# short format: volume level
+# no long format
 getvolume() {
-	# TODO: implement volume status
-
-	echo "volume"
+	echo "volume: $(~/.bin/audio_getvolume)"
 }
 
 # brightness
 
+# short format: brightness level
+# no long format
 getbrightness() {
-	# TODO: implement brightness status
-
-	echo "brightness"
+	echo "brightness: $(~/.bin/bright_get)"
 }
 
 # battery
 
+# short format: battery level, status
+# long format: battery level, status, time left
 getbattery() {
-	# TODO: implement battery status
+	# TODO: (short format) implement battery status (charging/discharging)
+	# TODO: (long format) display time left until full charge/time until dead
+	# TODO: if multiple batteries present, only display the first one
 
-	echo "battery"
+	echo "battery: ($(~/.bin/batt_getstatus)) $(~/.bin/batt_getp)%"
 }
 
 # datetime
 
+# short format: day of the week, 12 hour time
+# long format: month/day/year, 24 hour time
 getdatetime() {
 	date="$(date +"%a")"
 	time="$(date +"%I:%M %P")"
 
-	# TODO: figure out how to integrate this
-	# date_alt="$(date +"%m/%d/%Y")"
-	# time_alt="$(date +"%H:%M:%S")"
+	# date_long="$(date +"%m/%d/%Y")"
+	# time_long="$(date +"%H:%M:%S")"
 
-	echo "$date $time"
-	# echo "date  $date $time"
+	echo "date: $date $time"
+	# echo "date: $date_long $time_long"
 }
 
 # all statuses
@@ -67,6 +75,6 @@ getstatus() {
 while true
 do
 	xsetroot -name "$(getstatus)"
-	sleep 5
+	sleep 1
 done
 
