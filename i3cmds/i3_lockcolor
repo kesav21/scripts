@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cd ~/Projects/external/i3lock-color/
+cd /usr/local/src/i3lock-color/
 ./lock.sh
+
+
