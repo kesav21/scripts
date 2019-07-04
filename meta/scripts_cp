@@ -13,9 +13,7 @@ for file in $files
 do
 	if [ -x "$file" ]
 	then
-		cp $file ~/.bin/
-		filename=$(basename $file)
-		printf "moved \t%-40s to \t~/.bin/%s\n" "$file" "$filename"
+		ln -sv $(realpath $file) ~/.bin/$(basename $file)
 	fi
 done
 
