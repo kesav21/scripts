@@ -21,7 +21,7 @@ set_xautolock () {
 	# and if the command is enable
 	if [ -z "$x_running" ] && [ "$1" = "Enable" ]
 	then
-		echo "xautolock:	setup"
+		echo "$(date +%x_%H:%M:%S:%N)	xautolock :		setup"
 
 		xautolock -time $2 \
 			-locker ~/.bin/i3_lockcolor \
@@ -32,7 +32,7 @@ set_xautolock () {
 	# TODO: find out a way to check if xautolock is enabled
 	elif [ ! -z "$x_running" ] && [ "$1" = "Enable" ]
 	then
-		echo "xautolock:	enable"
+		echo "$(date +%x_%H:%M:%S:%N)	xautolock :		enable"
 
 		xautolock -enable
 
@@ -40,12 +40,12 @@ set_xautolock () {
 	# TODO: find out a way to check if xautolock is disabled
 	elif [ ! -z "$x_running" ] && [ "$1" = "Disable" ]
 	then
-		echo "xautolock:	disable"
+		echo "$(date +%x_%H:%M:%S:%N)	xautolock :		disable"
 
 		xautolock -disable
 
 	else
-		echo "xautolock:	do nothing"
+		echo "$(date +%x_%H:%M:%S:%N)	xautolock :		do nothing"
 	fi
 }
 

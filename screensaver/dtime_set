@@ -17,11 +17,11 @@ set_dpms_timeout () {
 
 	if [ "$dpms_timeout" != "$1" ]
 	then
-		echo "dpms timeout:	set timeout to $1"
+		echo "$(date +%x_%H:%M:%S:%N)	dpms timeout:		set timeout to $1"
 
 		xset dpms $1 0 0
 	else
-		echo "dpms timeout:	do nothing"
+		echo "$(date +%x_%H:%M:%S:%N)	dpms timeout:		do nothing"
 	fi
 }
 

@@ -19,18 +19,18 @@ set_dpms () {
 
 	if [ "$dpms_status" = "Disabled" ] && [ "$1" = "Enable" ]
 	then
-		echo "dpms status:	enable"
+		echo "$(date +%x_%H:%M:%S:%N)	dpms status:		enable"
 
 		xset +dpms
 
 	elif [ "$dpms_status" = "Enabled" ] && [ "$1" = "Disable" ]
 	then
-		echo "dpms status:	disable"
+		echo "$(date +%x_%H:%M:%S:%N)	dpms status:		disable"
 
 		xset -dpms
 
 	else
-		echo "dpms status:	do nothing"
+		echo "$(date +%x_%H:%M:%S:%N)	dpms status:		do nothing"
 	fi
 }
 

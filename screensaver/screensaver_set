@@ -12,6 +12,10 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __logfile=$__file.log
 
+# delete log file, if it exists
+
+[ -f "$__logfile" ] && rm $__logfile
+
 # set up logging
 
 exec 3>&1 4>&2
@@ -55,12 +59,12 @@ set_screensaver () {
 
 	if [ "$audio_status" = "RUNNING" ]
 	then
-		echo "audio:		running"
+		echo "$(date +%x_%H:%M:%S:%N)	audio:			running"
 
 		~/.bin/dpms_set "Disable"
 		~/.bin/xautolock_set "Disable"
 	else
-		echo "audio:		not running"
+		echo "$(date +%x_%H:%M:%S:%N)	audio:			not running"
 
 		~/.bin/dpms_set "Enable"
 		~/.bin/dtime_set $3
