@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # set wallpaper
-hsetroot -solid "#2e3440" &
+# hsetroot -solid "#2e3440" & # nord
+hsetroot -solid "#282828" & # gruvbox
 # feh --bg-scale $wallpaper &
 
 # sets the statusbar
