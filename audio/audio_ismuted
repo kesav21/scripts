@@ -1,28 +1,10 @@
 #!/bin/sh
 
-# let this be a warning to future me: do not write code past midnight
-# follow my overcomplicated algorithm to check for mute/unmute
-# and you will see why
+sink=$( ~/.bin/audio_getusablesink )
 
-# search for "off"
-isoff=$(amixer sget Master | grep "\[off\]")
-# search for "on"
-ison=$(amixer sget Master | grep "\[on\]")
+muted=$( pactl list sinks | grep 'Mute: ' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 
-# if length of the $isoff is nonzero
-# and if the length of $ison is zero
-if [ -n "$isoff" ] && [ -z "$ison" ]
-then
-	echo "muted"
+ismuted=$( echo "$muted" | grep 'yes' )
 
-# if length of the $isoff is zero
-# and if the length of $ison is nonzero
-elif [ -z "$isoff" ] && [ -n "$ison" ]
-then
-	echo "not muted"
-
-# otherwise, i messed up
-else
-	echo "error"
-fi
+[ -n "$ismuted" ] && echo "muted" || echo "not muted"
 

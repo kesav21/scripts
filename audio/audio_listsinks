@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+sinks=$(pactl list sinks short | awk '{print $1}')
+printf '%s\n' "${sinks[@]}"
+

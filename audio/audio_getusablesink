@@ -1,0 +1,20 @@
+#!/bin/bash
+
+running_sink=$( ~/.bin/audio_getrunningsink )
+
+# if there is currently a running sink
+if [ -n "$running_sink" ]
+then
+	# echo "running sink"
+
+	echo $running_sink
+
+# if there is no currently running sink
+else
+	# echo "backup sink"
+
+	backup_sink=$( ~/.bin/audio_getbackupsink)
+
+	echo $backup_sink
+fi
+

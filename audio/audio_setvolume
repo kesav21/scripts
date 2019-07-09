@@ -1,0 +1,10 @@
+#!/bin/sh
+
+sink=$( ~/.bin/audio_getusablesink )
+
+mod="$1"
+
+# echo "sink: $sink"
+
+pactl set-sink-volume $sink ${mod}
+
