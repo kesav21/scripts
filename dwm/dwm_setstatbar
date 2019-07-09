@@ -49,11 +49,11 @@ getvolume() {
 	if [ "$ismuted" = "muted" ]
 	then
 		# why is the mute symbol a garbage can?
-		echo "  $(~/.bin/audio_getvolume)"
+		echo "  $(~/.bin/audio_getvolume)%"
 		# echo "(muted)  $(~/.bin/audio_getvolume)"
 	elif [ "$ismuted" = "not muted" ]
 	then
-		echo "  $(~/.bin/audio_getvolume)"
+		echo "  $(~/.bin/audio_getvolume)%"
 	fi
 }
 
