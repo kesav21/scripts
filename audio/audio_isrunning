@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # this script checks if this device is playing any audio
+# TODO: update the audio/audio_isrunning script to use pactl
+
 
 # this function checks the statuses of all sound cards
 # returns RUNNING if any of them are running

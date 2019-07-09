@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# TODO:	figure out how to use entr
+
+# find . -not -path '*/\.*' -type f
+find . -not -path '*/\.*' -type f | entr -p notify-send "change alert" "new file added to ~/.scripts/"
+
+# tree --noreport -i -f ~/.scrts/
+# tree --noreport -i ~/.scripts/ | entr -p notify-send "change alert" "new file added to ~/.scripts/"
+
