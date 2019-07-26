@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#
+# prints the vim folds from a file to standard input
+#
+# arguments
+# $1 - the file to read
+
+cat $1 | grep "{{{" | grep -v "}}}" | awk '{print $2}'
+
