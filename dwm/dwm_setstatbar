@@ -21,6 +21,15 @@
 # TODO: add colors to signify status
 # TODO: implement toggle between short and long format
 
+# weather
+#
+# short format: temperature
+# long forrmat: temperature
+#
+getweather() {
+	echo "  $(curl -s wttr.in/Phoenix?format=%t)"
+ }
+
 
 # wifi
 #
@@ -108,7 +117,7 @@ getdatetime() {
 getstatus() {
 	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
 	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
-	echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
 }
 
 while true
