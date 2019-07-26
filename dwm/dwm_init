@@ -1,8 +1,11 @@
 #!/bin/sh
 
 # set wallpaper
+# set wallpaper to a solid color
 # hsetroot -solid "#2e3440" & # nord
 hsetroot -solid "#282828" & # gruvbox
+# set wallpaper to an image
+# wallpaper=~/Pictures/Wallpapers/arctic.sunset.jpg
 # feh --bg-scale $wallpaper &
 
 # sets the statusbar
