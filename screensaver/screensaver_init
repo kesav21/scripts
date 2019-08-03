@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# retrieve screensaver variables
+source ~/.bin/screensaver_vars
+
+# initialize dpms
+~/.bin/dpms_init $dpms_timeout
+
+# initialize xautolock
+~/.bin/xautolock_init $locker_timeout
+

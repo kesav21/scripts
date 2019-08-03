@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# $1 is dpms timeout in minutes
+#
+
+# calculate dpms timeout in seconds
+display_timeout_sec=$(echo "$1 * 60" | bc)
+
+# enable dpms
+xset +dpms
+
+# set dpms timeouts
+xset dpms 0 0 $display_timeout_sec
+
+# send notification
+notify-send 'Screensaver' "\nDPMS enabled."
+

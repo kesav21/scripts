@@ -18,8 +18,8 @@ compton &
 # battery low/full notifications
 ~/.bin/batt_notifier &
 
-# screensaver
-~/.bin/screensaver_set &
+# initialize screensaver
+~/.bin/screensaver_init 2 5 &
 
 # notification daemon
 dunst &

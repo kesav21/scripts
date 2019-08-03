@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# retrieve screensaver variables
+source ~/.bin/screensaver_vars
+
+# toggle dpms
+~/.bin/dpms_toggle
+
+# toggle xautolock
+~/.bin/xautolock_toggle $locker_timeout
+

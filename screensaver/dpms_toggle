@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#
+# toggles dpms state, ie:
+# if dpms is enabled, disable it
+# if dpms is disabled, enable it
+#
+toggle_dpms () {
+
+	dpms_status=$(xset q | grep "DPMS is " | grep -oE '[^ ]+$')
+
+	if [ "$dpms_status" = "Disabled" ]
+	then
+		# enable dpms
+		xset +dpms
+		# send notification
+		notify-send 'Screensaver' "\nDPMS enabled."
+
+	elif [ "$dpms_status" = "Enabled" ]
+	then
+		# disable dpms
+		xset -dpms
+		# send notification
+		notify-send 'Screensaver' "\nDPMS disabled."
+
+	else
+		# send notification
+		notify-send 'Screensaver' "DPMS error."
+	fi
+}
+
+toggle_dpms "$@"
+

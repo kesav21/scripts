@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# $1 is locker timeout
+#
+
+
+# kill previous instances of xautolock
+killall -q xautolock
+
+# enable xautolock (with corner support)
+# xautolock -time $1 \
+# 	-locker ~/.bin/i3_lockcolor \
+# 	-notify 10 \
+# 	-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in 10 seconds'" \
+# 	-corners 000- \
+# 	-cornersize 30 &
+
+# enable xautolock (without corner support)
+xautolock -time $1 \
+	-locker ~/.bin/i3_lockcolor \
+	-notify 10 \
+	-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in 10 seconds.'" &
+
+# send notification
+notify-send 'Screensaver' "\nLocker initialized."
+

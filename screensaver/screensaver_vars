@@ -1,0 +1,5 @@
+#!/bin/bash
+
+dpms_timeout=1
+locker_timeout=5
+
