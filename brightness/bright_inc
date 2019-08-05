@@ -1,6 +1,8 @@
 #!/bin/sh
 
 executable=/usr/local/src/brightlight/brightlight
-
 $executable -i 150
+
+# send notification
+~/.bin/dunst_brightness
 
