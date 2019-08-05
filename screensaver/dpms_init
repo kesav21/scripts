@@ -10,7 +10,7 @@ display_timeout_sec=$(echo "$1 * 60" | bc)
 xset +dpms
 
 # set dpms timeouts
-xset dpms 0 0 $display_timeout_sec
+xset dpms 0 $display_timeout_sec 0
 
 # send notification
 notify-send 'Screensaver' "\nDPMS enabled."
