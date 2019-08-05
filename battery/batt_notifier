@@ -8,9 +8,10 @@ set -o nounset
 
 # get file name
 
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-__file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
-__logfile=$__file.log
+# __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
+# __logfile=$__file.log
+__logfile=/home/kesav/.scripts/battery/batt_notifier.log
 
 # set up logging
 
@@ -21,60 +22,91 @@ exec 1>$__logfile 2>&1
 # everything below will be sent to a log file
 
 
-# if the battery % is below 10%
-# and the laptop is not plugged in,
-# then send a notification every minute
+# critical threshold capacity
+critical=9
+# low threshold capacity
+low=15
 
-# minimum acceptable battery power
-minimum=15
 # time between notifications (in seconds)
-waittime=60 # 1 minute
+waittime=60
 
-
+#
 # sends a notification when the current battery level is
-# below the threshold, and is not charging
+# - is not charging
+# - below the critical threshold
+#
 # $1 is battery status: charging/discharging/full
-# $2 is current battery level
-# $3 is minimum acceptable battery power
-batterylow () {
-	if [ "$1" = "Discharging" ]
+# $2 is current battery capacity
+# $3 is critical capacity threshold
+#
+batterycritical () {
+
+	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-empty.svg'
+
+	if [ "$1" = "Discharging" ] && [ "$2" -le "$3" ]
 	then
-		if [ "$2" -lt "$3" ]
-		then
-			notify-send "Battery low" "Level: $2% "
-		fi
+		dunstify -i $icon -r 997 -u critical "Battery low: $2% "
 	fi
 }
 
-# sends a notification when the battery is full
+#
+# sends a notification when the current battery level is
+# - is not charging
+# - above the critical threshold
+# - below the low threshold
+#
 # $1 is battery status: charging/discharging/full
-# $2 is current battery level
-batteryhigh () {
-	if [ "$1" = "Full" ]
+# $2 is current battery capacity
+# $3 is critical capacity threshold
+# $4 is low capacity threshold
+#
+batterylow () {
+
+	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-quarter.svg'
+
+	if [ "$1" = "Discharging" ] && [ "$2" -gt "$3" ] && [ "$2" -le "$4" ]
 	then
-		notify-send "Battery high" "Level: $2% "
+		dunstify -i $icon -r 997 "Battery low: $2% "
 	fi
 }
+
+#
+# sends a notification when the battery is full
+#
+# $1 is battery status: charging/discharging/full
+#
+batteryfull () {
+	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-full.svg'
+
+	[ "$1" = "Full" ] && dunstify -i $icon -r 997 "Battery full"
+}
+
+#
+# $1 is critical capacity threshold
+# $2 is low capacity threshold
+#
+#
+batterycheck () {
+
+	status=$(cat /sys/class/power_supply/BAT0/status)
+	capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+
+	echo "status:		$status"
+	echo "capacity:	$capacity"
+	echo "critical:	$critical"
+	echo "low:		$low"
+	echo ""
+
+	batterycritical $status $capacity $1
+	batterylow $status $capacity $1 $2
+	batteryfull $status
+}
+
 
 while true
 do
-	# export DISPLAY=:0.0
 
-	# instead of acpi use
-	# cat /sys/class/power_supply/BAT?/capacity
-	# or
-	# cat /sys/class/power_supply/BAT0/capacity
-
-	status=$(acpi -b | grep "Battery 0" | grep -P -o '(?<=\:)(.*?)(?=,)' | tr -d '[:space:]')
-	battery=$(acpi -b | grep "Battery 0" | grep -P -o '[0-9]+(?=%)')
-
-	echo "status:		$status"
-	echo "battery:	$battery"
-	echo "minimum:	$minimum"
-	echo ""
-
-	batterylow $status $battery $minimum
-	batteryhigh $status $battery
+	batterycheck $critical $low
 
 	sleep $waittime
 done
