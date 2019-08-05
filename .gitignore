@@ -2,5 +2,6 @@
 # ignore all logfiles
 *.log
 
-# ignore all vim generated swap files
 *.swp
+
+nohup.out
