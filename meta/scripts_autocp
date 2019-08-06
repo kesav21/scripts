@@ -1,10 +1,25 @@
 #!/bin/sh
 
-# TODO:	figure out how to use entr
+autolink () {
 
-# find . -not -path '*/\.*' -type f
-find . -not -path '*/\.*' -type f | entr -p dunstify -r 1007 "change alert" "new file added to ~/.scripts/"
+	while read newfile
+	do
+		dirname=$(echo $newfile | awk '{print $1}')
+		filename=$(echo $newfile | awk '{print $3}')
 
-# tree --noreport -i -f ~/.scrts/
-# tree --noreport -i ~/.scripts/ | entr -p dunstify -r 1007 "change alert" "new file added to ~/.scripts/"
+		fullpath="$dirname$filename"
+		binpath="/home/kesav/.bin/$filename"
+
+		# if file is executable but not in ~/.bin/
+		if [ -x "$fullpath" ] && [ ! -e "$binpath" ]
+		then
+			# create a symlink to the file
+			ln -sv "$fullpath" "$binpath"
+		fi
+	done
+
+}
+
+monitordir="/home/kesav/.scripts/"
+inotifywait -m -r -e attrib "${monitordir}" | autolink
 
