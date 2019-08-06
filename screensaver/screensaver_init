@@ -10,5 +10,5 @@ md=$(~/.bin/dpms_init $dpms_timeout)
 mx=$(~/.bin/xautolock_init $locker_timeout)
 
 # send notification
-~/.bin/dunst_screensaver $md $mx
+~/.bin/dunst_screensaver "$md" "$mx"
 
