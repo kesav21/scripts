@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+source ~/.bin/dunst_ids
+
 muted=$(~/.bin/audio_ismuted | grep 'not')
 volume=`~/.bin/audio_getvolume`
 
@@ -11,9 +13,8 @@ bar=$(~/.bin/dunst_bar $volume 100)
 
 if [ -z "$muted" ]
 then
-	dunstify -i $icon_mute -t 2000 -r 999 'Volume' "\nVolume muted\n$bar"
-
+	dunstify -i $icon_mute -t 2000 -r $id_volume 'Volume' "\nVolume muted\n$bar"
 else
-	dunstify -i $icon_vol -t 2000 -r 999 'Volume' "\nVolume not muted\n$bar"
+	dunstify -i $icon_vol -t 2000 -r $id_volume 'Volume' "\nVolume not muted\n$bar"
 fi
 

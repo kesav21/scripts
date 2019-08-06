@@ -1,7 +1,11 @@
 #!/bin/bash
 
+
+source ~/.bin/dunst_ids
+
+icon=~/.icons/fa-5.10.1-desktop/svgs/solid/adjust.svg
 brightness=$(~/.bin/bright_get | grep -o '[0-9]' | paste -sd '')
 bar=$(~/.bin/dunst_bar $brightness 100)
-icon=~/.icons/fa-5.10.1-desktop/svgs/solid/adjust.svg
-dunstify -i $icon -t 2000 -r 998 'Brightness' "\n$bar"
+
+dunstify -i $icon -t 2000 -r $id_brightness 'Brightness' "\n$bar"
 

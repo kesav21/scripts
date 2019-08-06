@@ -1,0 +1,7 @@
+#!/bin/bash
+
+id_volume=1000
+id_brightness=1001
+id_screensaver=1002
+id_xautolock=1003
+
