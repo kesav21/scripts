@@ -11,7 +11,7 @@ killall -q xautolock
 # xautolock -time $1 \
 # 	-locker ~/.bin/i3_lockcolor \
 # 	-notify 10 \
-# 	-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in 10 seconds'" \
+# 	-notifier "~/.bin/dunst_xautolock" \
 # 	-corners 000- \
 # 	-cornersize 30 &
 
@@ -19,9 +19,8 @@ killall -q xautolock
 xautolock -time $1 \
 	-locker ~/.bin/i3_lockcolor \
 	-notify 10 \
-	-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in 10 seconds.'" &
+	-notifier "~/.bin/dunst_xautolock" &
 
 # send notification
-# dunstify -r 996 'Screensaver' "\nLocker initialized."
 echo "Locker enabled"
 
