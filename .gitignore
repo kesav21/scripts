@@ -1,6 +1,7 @@
 
 # ignore all logfiles
 *.log
+.logs/
 
 *.swp
 
