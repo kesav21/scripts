@@ -13,5 +13,5 @@ xset +dpms
 xset dpms 0 $display_timeout_sec 0
 
 # send notification
-notify-send 'Screensaver' "\nDPMS enabled."
+echo "DPMS enabled"
 

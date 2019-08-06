@@ -12,9 +12,9 @@ toggle_xautolock () {
 	if [ -z "$x_running" ]
 	then
 		# initialize xautolock
-		. /home/kesav/.bin/xautolock_init $1
+		. /home/kesav/.bin/xautolock_init $1 &> /dev/null
 		# send notification
-		notify-send 'Screensaver' "\nLocker initialized."
+		echo 'Locker enabled'
 
 	# if xautolock is running
 	elif [ ! -z "$x_running" ]
@@ -22,11 +22,11 @@ toggle_xautolock () {
 		# kill all instances xautolock
 		killall -q xautolock
 		# send notification
-		notify-send 'Screensaver' "\nLocker killed."
+		echo 'Locker disabled'
 
 	else
 		# send notification
-		notify-send 'Screensaver' "\nLocker error."
+		echo 'Locker error'
 	fi
 }
 

@@ -14,18 +14,18 @@ toggle_dpms () {
 		# enable dpms
 		xset +dpms
 		# send notification
-		notify-send 'Screensaver' "\nDPMS enabled."
+		echo 'DPMS enabled'
 
 	elif [ "$dpms_status" = "Enabled" ]
 	then
 		# disable dpms
 		xset -dpms
 		# send notification
-		notify-send 'Screensaver' "\nDPMS disabled."
+		echo 'DPMS disabled'
 
 	else
 		# send notification
-		notify-send 'Screensaver' "DPMS error."
+		echo 'DPMS error'
 	fi
 }
 

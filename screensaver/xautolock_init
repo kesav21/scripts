@@ -22,5 +22,6 @@ xautolock -time $1 \
 	-notifier "notify-send -t 9000 'Locking screen' 'Locking screen in 10 seconds.'" &
 
 # send notification
-notify-send 'Screensaver' "\nLocker initialized."
+# dunstify -r 996 'Screensaver' "\nLocker initialized."
+echo "Locker enabled"
 
