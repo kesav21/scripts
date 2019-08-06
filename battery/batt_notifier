@@ -1,26 +1,5 @@
 #!/bin/bash
 
-# fail on error
-
-set -o errexit
-set -o pipefail
-set -o nounset
-
-# get file name
-
-# __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
-# __logfile=$__file.log
-__logfile=/home/kesav/.scripts/battery/batt_notifier.log
-
-# set up logging
-
-exec 3>&1 4>&2
-trap 'exec 2>&4 1>&3' 0 1 2 3
-exec 1>$__logfile 2>&1
-
-# everything below will be sent to a log file
-
 
 # critical threshold capacity
 critical=9
@@ -41,11 +20,9 @@ waittime=60
 #
 batterycritical () {
 
-	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-empty.svg'
-
 	if [ "$1" = "Discharging" ] && [ "$2" -le "$3" ]
 	then
-		dunstify -i $icon -r 997 -u critical "Battery low: $2% "
+		~/.bin/dunst_battery 'critical'  "$2" &
 	fi
 }
 
@@ -62,11 +39,9 @@ batterycritical () {
 #
 batterylow () {
 
-	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-quarter.svg'
-
 	if [ "$1" = "Discharging" ] && [ "$2" -gt "$3" ] && [ "$2" -le "$4" ]
 	then
-		dunstify -i $icon -r 997 "Battery low: $2% "
+		~/.bin/dunst_battery 'low'  "$2" &
 	fi
 }
 
@@ -76,15 +51,13 @@ batterylow () {
 # $1 is battery status: charging/discharging/full
 #
 batteryfull () {
-	icon='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-full.svg'
 
-	[ "$1" = "Full" ] && dunstify -i $icon -r 997 "Battery full"
+	[ "$1" = "Full" ] && ~/.bin/dunst_battery 'full' &
 }
 
 #
 # $1 is critical capacity threshold
 # $2 is low capacity threshold
-#
 #
 batterycheck () {
 
@@ -105,9 +78,7 @@ batterycheck () {
 
 while true
 do
-
 	batterycheck $critical $low
-
 	sleep $waittime
 done
 
