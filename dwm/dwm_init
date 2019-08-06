@@ -1,12 +1,7 @@
 #!/bin/sh
 
 # set wallpaper
-# set wallpaper to a solid color
-# hsetroot -solid "#2e3440" & # nord
 hsetroot -solid "#282828" & # gruvbox
-# set wallpaper to an image
-# wallpaper=~/Pictures/Wallpapers/arctic.sunset.jpg
-# feh --bg-scale $wallpaper &
 
 # sets the statusbar
 ~/.bin/dwm_setstatbar &
@@ -19,7 +14,11 @@ compton &
 ~/.bin/batt_notifier &
 
 # initialize screensaver
-~/.bin/screensaver_init 2 5 &
+~/.bin/screensaver_init &
+
+# initialize meta scripts
+~/.bin/scripts_autocp
+~/.bin/scripts_autorm
 
 # notification daemon
 dunst &
