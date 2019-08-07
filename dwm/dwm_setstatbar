@@ -27,7 +27,16 @@
 # long forrmat: temperature
 #
 getweather() {
-	echo "  $(curl -s wttr.in/Phoenix?format=%t)"
+	temp="$(curl -s wttr.in/Phoenix?format=%t)"
+	error=$(echo $temp | grep 'error')
+
+	if [ -n "$error" ]
+	then
+		echo "  (error)"
+	else
+		echo "  $(curl -s wttr.in/Phoenix?format=%t)"
+	fi
+
  }
 
 
@@ -58,8 +67,8 @@ getvolume() {
 	if [ "$ismuted" = "muted" ]
 	then
 		# why is the mute symbol a garbage can?
-		echo "  $(~/.bin/audio_getvolume)%"
-		# echo "(muted)  $(~/.bin/audio_getvolume)"
+		# echo "  $(~/.bin/audio_getvolume)%"
+		echo "m  $(~/.bin/audio_getvolume)"
 	elif [ "$ismuted" = "not muted" ]
 	then
 		echo "  $(~/.bin/audio_getvolume)%"
@@ -71,7 +80,7 @@ getvolume() {
 # short format: brightness level
 # no long format
 getbrightness() {
-	echo "  $(~/.bin/bright_get)"
+	echo "  $(~/.bin/bright_getp)%"
 }
 
 # battery
@@ -93,6 +102,8 @@ getbattery() {
 	elif [ "$status" = "Full" ]
 	then
 		echo "  $(~/.bin/batt_getp)%"
+	else
+		echo "e  $(~/.bin/batt_getp)%"
 	fi
 }
 
