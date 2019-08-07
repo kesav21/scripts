@@ -1,18 +1,19 @@
 #!/bin/bash
 #
-# $1 is the progress value
+# $1 is the current value
 # $2 is the maximum value
 #
 
-progress=$1
-max=$2
-shrink=5
+scale=20
 
+p_progress=$(echo "100 * $1 / $2" | bc)
+s_progress=$(echo "$scale * $1 / $2" | bc)
+spacing=$(echo "$scale - $s_progress" | bc)
 
-progress_bar="$(seq -s "─" $(($progress / $shrink + 1)) | sed 's/[0-9]//g')"
-spacing_bar="$(seq -s "  " $((($max - $progress) / $shrink + 1)) | sed 's/[0-9]//g')"
+# in the terminal, the ─ is equivalent to one space
+# in a notification, it is equivalent to two spaces
+bar_progress="$(seq -s "─" $s_progress | sed 's/[0-9]//g')"
+bar_spacing="$(seq -s "  " $spacing | sed 's/[0-9]//g')"
 
-bar="$progress%: |$progress_bar$spacing_bar|"
-
-echo "$bar"
+echo "$p_progress%: |$bar_progress$bar_spacing|"
 

@@ -4,8 +4,7 @@
 source ~/.bin/dunst_ids
 
 icon=~/.icons/fa-5.10.1-desktop/svgs/solid/adjust.svg
-brightness=$(~/.bin/bright_get | grep -o '[0-9]' | paste -sd '')
-bar=$(~/.bin/dunst_bar $brightness 100)
+bar=$(~/.bin/dunst_bar `~/.bin/bright_get` `~/.bin/bright_getmax`)
 
 dunstify -i $icon -t 2000 -r $id_brightness 'Brightness' "\n$bar"
 
