@@ -1,8 +1,0 @@
-#!/bin/bash
-
-echo ""
-xwininfo -all -id $1
-echo ""
-xprop -id $1
-echo ""
-
