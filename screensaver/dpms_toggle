@@ -12,14 +12,14 @@ toggle_dpms () {
 	if [ "$dpms_status" = "Disabled" ]
 	then
 		# enable dpms
-		xset +dpms
+		~/.bin/dpms_init $1 $2 $3 &> /dev/null
 		# send notification
 		echo 'DPMS enabled'
 
 	elif [ "$dpms_status" = "Enabled" ]
 	then
 		# disable dpms
-		xset -dpms
+		xset -dpms &> /dev/null
 		# send notification
 		echo 'DPMS disabled'
 

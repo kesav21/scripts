@@ -1,5 +1,8 @@
 #!/bin/bash
 
-dpms_timeout=1
+standby_timeout=2
+suspend_timeout=4
+off_timeout=6
+
 locker_timeout=5
 

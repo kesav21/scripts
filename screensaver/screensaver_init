@@ -4,7 +4,7 @@
 source ~/.bin/screensaver_vars
 
 # initialize dpms
-md=$(~/.bin/dpms_init $dpms_timeout)
+md=$(~/.bin/dpms_init $standby_timeout $suspend_timeout $off_timeout)
 
 # initialize xautolock
 mx=$(~/.bin/xautolock_init $locker_timeout)

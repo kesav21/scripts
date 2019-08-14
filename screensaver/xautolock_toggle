@@ -20,7 +20,7 @@ toggle_xautolock () {
 	elif [ ! -z "$x_running" ]
 	then
 		# kill all instances xautolock
-		killall -q xautolock
+		killall -q xautolock &> /dev/null
 		# send notification
 		echo 'Locker disabled'
 
