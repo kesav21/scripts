@@ -3,6 +3,15 @@
 # let user choose profile
 profile=$(cat ~/.ff_profiles | dmenu)
 
-echo "Launching profile: $profile"
-firefox -P $profile &
+# if user selected a profile
+if [ -n "$profile" ]
+then
+	# launch firefox with selected profile
+	echo "Launching profile: $profile"
+	firefox -P $profile &
+
+else
+	# print message and return
+	echo "no profile selected; aborting"
+fi
 
