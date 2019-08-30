@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# let user choose profile
+profile=$(cat ~/.ff_profiles | dmenu)
+
+echo "Launching profile: $profile"
+firefox -P $profile &
+
