@@ -45,16 +45,16 @@
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
 getwifi() {
-	wifi=$(~/.bin/wifi_getssid)
+	wifi=$(~/.local/bin/wifi_getssid)
 
 	if [ -z "$wifi" ]
 	then
 		echo "  (disconnected)"
 	else
-		echo "  $(~/.bin/wifi_getssid)"
+		echo "  $(~/.local/bin/wifi_getssid)"
 	fi
 
-	# echo "wifi: $(~/.bin/wifi_getssid)"
+	# echo "wifi: $(~/.local/bin/wifi_getssid)"
 }
 
 # volume
@@ -62,16 +62,16 @@ getwifi() {
 # short format: volume level
 # no long format
 getvolume() {
-	ismuted=$(~/.bin/audio_ismuted)
+	ismuted=$(~/.local/bin/audio_ismuted)
 
 	if [ "$ismuted" = "muted" ]
 	then
 		# why is the mute symbol a garbage can?
-		# echo "  $(~/.bin/audio_getvolume)%"
-		echo "m  $(~/.bin/audio_getvolume)"
+		# echo "  $(~/.local/bin/audio_getvolume)%"
+		echo "m  $(~/.local/bin/audio_getvolume)"
 	elif [ "$ismuted" = "not muted" ]
 	then
-		echo "  $(~/.bin/audio_getvolume)%"
+		echo "  $(~/.local/bin/audio_getvolume)%"
 	fi
 }
 
@@ -80,7 +80,7 @@ getvolume() {
 # short format: brightness level
 # no long format
 getbrightness() {
-	echo "  $(~/.bin/bright_getp)%"
+	echo "  $(~/.local/bin/bright_getp)%"
 }
 
 # battery
@@ -91,19 +91,19 @@ getbrightness() {
 # TODO: (long format) display time left until full charge/time until dead
 # TODO: if multiple batteries present, only display the first one
 getbattery() {
-	status=$(~/.bin/batt_getstatus)
+	status=$(~/.local/bin/batt_getstatus)
 
 	if [ "$status" = "Discharging" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(~/.local/bin/batt_getp)%"
 	elif [ "$status" = "Charging" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(~/.local/bin/batt_getp)%"
 	elif [ "$status" = "Full" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(~/.local/bin/batt_getp)%"
 	else
-		echo "e  $(~/.bin/batt_getp)%"
+		echo "e  $(~/.local/bin/batt_getp)%"
 	fi
 }
 

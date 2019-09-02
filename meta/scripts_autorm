@@ -5,7 +5,8 @@ autodelete () {
 	while read newfile
 	do
 		filename=$(echo $newfile | awk '{print $3}')
-		binpath="/home/kesav/.bin/$filename"
+		bindir="/home/kesav/.local/bin"
+		binpath="$bindir/$filename"
 
 		# remove symlink
 		[ -h "$binpath" ] && rm "$binpath"

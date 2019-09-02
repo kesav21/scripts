@@ -8,9 +8,10 @@ autolink () {
 		filename=$(echo $newfile | awk '{print $3}')
 
 		fullpath="$dirname$filename"
-		binpath="/home/kesav/.bin/$filename"
+		bindir="/home/kesav/.local/bin"
+		binpath="$bindir/$filename"
 
-		# if file is executable but not in ~/.bin/
+		# if file is executable but not in ~/.local/bin/
 		if [ -x "$fullpath" ] && [ ! -e "$binpath" ]
 		then
 			# create a symlink to the file

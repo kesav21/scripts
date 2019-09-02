@@ -1,21 +1,24 @@
 #!/bin/sh
 
-cd ~/.scripts/
+scriptsdir="$HOME/.local/scripts"
+bindir="$HOME/.local/bin"
+
+cd "$scriptsdir"
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
-echo "\nclearing ~/.bin:\n"
+echo -e "\nclearing $bindir:\n"
 
-rm -rfv ~/.bin/ && mkdir ~/.bin/
+rm -rfv $bindir && mkdir $bindir
 
-echo "\nadding scripts to ~/.bin/\n"
+echo -e "\nadding scripts to $bindir\n"
 
 for file in $files
 do
 	if [ -x "$file" ]
 	then
-		ln -sv $(realpath $file) ~/.bin/$(basename $file)
+		ln -sv $(realpath $file) $bindir/$(basename $file)
 	fi
 done
 
-echo "\n"
+echo ""
 
