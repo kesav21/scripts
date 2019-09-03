@@ -12,7 +12,7 @@ toggle_xautolock () {
 	if [ -z "$x_running" ]
 	then
 		# initialize xautolock
-		. /home/kesav/.bin/xautolock_init $1 &> /dev/null
+		. /home/kesav/.local/bin/xautolock_init $1 &> /dev/null
 		# send notification
 		echo 'Locker enabled'
 

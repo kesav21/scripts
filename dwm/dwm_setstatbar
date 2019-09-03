@@ -92,18 +92,19 @@ getbrightness() {
 # TODO: if multiple batteries present, only display the first one
 getbattery() {
 	status=$(~/.local/bin/batt_getstatus)
+	percent="$(~/.local/bin/batt_getp)%"
 
 	if [ "$status" = "Discharging" ]
 	then
-		echo "  $(~/.local/bin/batt_getp)%"
+		echo "  $percent"
 	elif [ "$status" = "Charging" ]
 	then
-		echo "  $(~/.local/bin/batt_getp)%"
+		echo "  $percent"
 	elif [ "$status" = "Full" ]
 	then
-		echo "  $(~/.local/bin/batt_getp)%"
+		echo "  $percent"
 	else
-		echo "e  $(~/.local/bin/batt_getp)%"
+		echo "e  $percent"
 	fi
 }
 
@@ -129,7 +130,8 @@ getstatus() {
 	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
 	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
 	# echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
-	echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	# echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	echo -e " $(getbattery)  |  $(getdatetime) "
 }
 
 while true
