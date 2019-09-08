@@ -1,7 +1,7 @@
 #!/bin/bash
 
-scripts_dir=~/.local/scripts/
-files=$(grep -rnw '\~\/\.bin' $scripts_dir | awk -F: '{print $1}')
+SCRIPTS_DIR=/home/kesav/.local/scripts/
+files=$(grep -rnw '\~\/\.bin' $SCRIPTS_DIR | awk -F: '{print $1}')
 
 for file in $files
 do

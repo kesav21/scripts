@@ -1,6 +1,8 @@
 #!/bin/sh
 
-cd ~/.scripts/
+SCRIPTS_DIR=/home/kesav/.local/scripts/
+
+cd $SCRIPTS_DIR
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
 for file in $files

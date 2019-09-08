@@ -49,9 +49,11 @@ getwifi() {
 
 	if [ -z "$wifi" ]
 	then
-		echo "  (disconnected)"
+		# echo "  (disconnected)"
+		echo "w  (disconnected)"
 	else
-		echo "  $(wifi_getssid)"
+		# echo "  $(wifi_getssid)"
+		echo "w  $(wifi_getssid)"
 	fi
 
 	# echo "wifi: $(wifi_getssid)"
@@ -68,10 +70,11 @@ getvolume() {
 	then
 		# why is the mute symbol a garbage can?
 		# echo "  $(audio_getvolume)%"
-		echo "m  $(audio_getvolume)"
+		echo "vm  $(audio_getvolume)"
 	elif [ "$ismuted" = "not muted" ]
 	then
-		echo "  $(audio_getvolume)%"
+		# echo "  $(audio_getvolume)%"
+		echo "vu  $(audio_getvolume)%"
 	fi
 }
 
@@ -80,7 +83,8 @@ getvolume() {
 # short format: brightness level
 # no long format
 getbrightness() {
-	echo "  $(bright_getp)%"
+	# echo "  $(bright_getp)%"
+	echo "bright  $(bright_getp)%"
 }
 
 # battery
@@ -95,15 +99,18 @@ getbattery() {
 
 	if [ "$status" = "Discharging" ]
 	then
-		echo "  $(batt_getp)%"
+		# echo "  $(batt_getp)%"
+		echo "bd  $(batt_getp)%"
 	elif [ "$status" = "Charging" ]
 	then
-		echo "  $(batt_getp)%"
+		# echo "  $(batt_getp)%"
+		echo "bc  $(batt_getp)%"
 	elif [ "$status" = "Full" ]
 	then
-		echo "  $(batt_getp)%"
+		# echo "  $(batt_getp)%"
+		echo "bf  $(batt_getp)%"
 	else
-		echo "e  $(batt_getp)%"
+		echo "be  $(batt_getp)%"
 	fi
 }
 
@@ -115,7 +122,8 @@ getdatetime() {
 	date="$(date +"%a")"
 	time="$(date +"%I:%M %P")"
 
-	echo "  $date $time"
+	# echo "  $date $time"
+	echo "d  $date $time"
 
 	# date_long="$(date +"%m/%d/%Y")"
 	# time_long="$(date +"%H:%M:%S")"
@@ -130,7 +138,7 @@ getstatus() {
 	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
 	# echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
 	# echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
-	echo -e " $(getwifi) "
+	echo -e " $(getwifi) | $(getbrightness) | $(getbattery) | $(getdatetime) "
 }
 
 while true

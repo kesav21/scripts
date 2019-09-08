@@ -10,7 +10,7 @@ As this directory grows, I sometimes move some files around within the file stru
 I also make new directories to accommodate some of the new files I create.
 When I do this, the references to some of these files become obsolete, and need to be changed wherever they are referenced.
 
-Therefore, I have decided to keep all of my scripts within `~/.scripts/` with a proper directory structure separating all of the scripts.
+Therefore, I have decided to keep all of my scripts within `~/.local/scripts/` with a proper directory structure separating all of the scripts.
 In addition, I have also decided to create a script that flattens the directory structure of all of my scripts and moves them to `~/.local/bin/`.
 
 Currently, I do this by literally creating a new file in the `~/.local/bin/` which is a "clone" or "copy" of the original.

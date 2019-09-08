@@ -1,25 +1,28 @@
 #!/bin/sh
 
-# set wallpaper
-hsetroot -solid "#282828" & # gruvbox
-
-# sets the statusbar
-nohup dwm_setstatbar > ~/.scripts/.logs/dwm_setstatbar &
+SCRIPTS_DIR=~/.local/scripts
 
 # compositor
 # do i need this?
 compton &
-
-# battery low/full notifications
-nohup batt_notifier > ~/.scripts/.logs/batt_notifier &
-
-# initialize screensaver
-nohup screensaver_init > ~/.scripts/.logs/screensaver_init &
-
-# initialize meta scripts
-nohup scripts_autocp > ~/.scripts/.logs/scripts_autocp &
-nohup scripts_autorm > ~/.scripts/.logs/scripts_autorm &
-
 # notification daemon
 dunst &
+# wifi daemon
+wicd &
+
+# set wallpaper
+hsetroot -solid "#282828" & # gruvbox
+
+# sets the statusbar
+nohup dwm_setstatbar > $SCRIPTS_DIR/.logs/dwm_setstatbar &
+
+# battery low/full notifications
+nohup batt_notifier > $SCRIPTS_DIR/.logs/batt_notifier &
+
+# initialize screensaver
+nohup screensaver_init > $SCRIPTS_DIR/.logs/screensaver_init &
+
+# initialize meta scripts
+nohup scripts_autocp > $SCRIPTS_DIR/.logs/scripts_autocp &
+nohup scripts_autorm > $SCRIPTS_DIR/.logs/scripts_autorm &
 

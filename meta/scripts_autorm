@@ -1,11 +1,14 @@
 #!/bin/sh
 
+SCRIPTS_DIR=/home/kesav/.local/scripts
+BIN_DIR=/home/kesav/.local/bin
+
 autodelete () {
 
 	while read newfile
 	do
 		filename=$(echo $newfile | awk '{print $3}')
-		binpath="/home/kesav/.bin/$filename"
+		binpath="$BIN_DIR/$filename"
 
 		# remove symlink
 		[ -h "$binpath" ] && rm "$binpath"
@@ -13,6 +16,5 @@ autodelete () {
 
 }
 
-monitordir="/home/kesav/.scripts/"
-inotifywait -m -r -e delete "${monitordir}" | autodelete
+inotifywait -m -r -e delete "$BIN_DIR" | autodelete
 
