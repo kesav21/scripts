@@ -9,17 +9,17 @@ killall -q xautolock
 
 # enable xautolock (with corner support)
 # xautolock -time $1 \
-# 	-locker ~/.bin/i3_lockcolor \
+# 	-locker i3_lockcolor \
 # 	-notify 10 \
-# 	-notifier "~/.bin/dunst_xautolock" \
+# 	-notifier "dunst_xautolock" \
 # 	-corners 000- \
 # 	-cornersize 30 &
 
 # enable xautolock (without corner support)
 xautolock -time $1 \
-	-locker ~/.bin/i3_lockcolor \
+	-locker i3_lockcolor \
 	-notify 10 \
-	-notifier "~/.bin/dunst_xautolock" &
+	-notifier "dunst_xautolock" &
 
 # send notification
 echo "Locker enabled"

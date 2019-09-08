@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sink=$( ~/.bin/audio_getusablesink )
+sink=$( audio_getusablesink )
 
 muted=$( pactl list sinks | grep 'Mute: ' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 

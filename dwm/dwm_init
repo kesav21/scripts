@@ -4,21 +4,21 @@
 hsetroot -solid "#282828" & # gruvbox
 
 # sets the statusbar
-nohup ~/.bin/dwm_setstatbar > ~/.scripts/.logs/dwm_setstatbar &
+nohup dwm_setstatbar > ~/.scripts/.logs/dwm_setstatbar &
 
 # compositor
 # do i need this?
 compton &
 
 # battery low/full notifications
-nohup ~/.bin/batt_notifier > ~/.scripts/.logs/batt_notifier &
+nohup batt_notifier > ~/.scripts/.logs/batt_notifier &
 
 # initialize screensaver
-nohup ~/.bin/screensaver_init > ~/.scripts/.logs/screensaver_init &
+nohup screensaver_init > ~/.scripts/.logs/screensaver_init &
 
 # initialize meta scripts
-nohup ~/.bin/scripts_autocp > ~/.scripts/.logs/scripts_autocp &
-nohup ~/.bin/scripts_autorm > ~/.scripts/.logs/scripts_autorm &
+nohup scripts_autocp > ~/.scripts/.logs/scripts_autocp &
+nohup scripts_autorm > ~/.scripts/.logs/scripts_autorm &
 
 # notification daemon
 dunst &

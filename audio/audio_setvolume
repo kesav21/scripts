@@ -1,10 +1,10 @@
 #!/bin/sh
 
-sink=$( ~/.bin/audio_getusablesink )
+sink=$( audio_getusablesink )
 delta="$1"
 # echo "sink: $sink"
 pactl set-sink-volume $sink ${delta}
 
 # send notification
-~/.bin/dunst_volume
+dunst_volume
 

@@ -1,20 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-# files=$(find ~/.scripts/ -type f | grep -v "\.git")
-files=$(find "$1" -type f | grep -v "\.git")
+scripts_dir=~/.local/scripts/
+files=$(grep -rnw '\~\/\.bin' $scripts_dir | awk -F: '{print $1}')
 
 for file in $files
 do
-	contains=$(cat $file | grep "\.scripts")
 	echo $file
-	echo $contains
-
-	# if [ -z "$contains" ]
-	# then
-	# 	echo $file
-	# 	echo "$contains"
-	# else
-	# 	echo "no contains"
-	# fi
+	# sed -i 's/\~\/\.bin\///g' "$file"
 done
 

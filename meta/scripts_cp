@@ -1,19 +1,19 @@
 #!/bin/sh
 
-cd ~/.scripts/
+cd /home/kesav/.local/scripts/
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
-echo "\nclearing ~/.bin:\n"
+echo "\nclearing /home/kesav/.local/bin:\n"
 
-rm -rfv ~/.bin/ && mkdir ~/.bin/
+rm -rfv /home/kesav/.local/bin/ && mkdir /home/kesav/.local/bin/
 
-echo "\nadding scripts to ~/.bin/\n"
+echo "\nadding scripts to /home/kesav/.local/bin/\n"
 
 for file in $files
 do
 	if [ -x "$file" ]
 	then
-		ln -sv $(realpath $file) ~/.bin/$(basename $file)
+		ln -sv $(realpath $file) /home/kesav/.local/bin/$(basename $file)
 	fi
 done
 

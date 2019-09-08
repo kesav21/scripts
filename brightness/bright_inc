@@ -5,9 +5,9 @@
 
 
 # calculate 2% of maximum brightness
-diff=$(echo "0.02 * $(~/.bin/bright_getmax)" | bc)
+diff=$(echo "0.02 * $(bright_getmax)" | bc)
 # add 2% to current brightness
-bright_new=$(echo "$(~/.bin/bright_get) + $diff" | bc)
+bright_new=$(echo "$(bright_get) + $diff" | bc)
 
 # remove decimal places
 backlight=${bright_new%.*}
@@ -15,5 +15,5 @@ backlight=${bright_new%.*}
 echo "$backlight" > /sys/class/backlight/intel_backlight/brightness
 
 # send notification
-~/.bin/dunst_brightness
+dunst_brightness
 

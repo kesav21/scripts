@@ -1,9 +1,9 @@
 
-# .scripts
+# scripts
 
 These are the scripts I use to automate miscellaneous things on my laptop.
 
-## ~/.bin/
+## `~/.local/bin/`
 
 There is one problem that I face with this scripts directory.
 As this directory grows, I sometimes move some files around within the file structure.
@@ -11,14 +11,14 @@ I also make new directories to accommodate some of the new files I create.
 When I do this, the references to some of these files become obsolete, and need to be changed wherever they are referenced.
 
 Therefore, I have decided to keep all of my scripts within `~/.scripts/` with a proper directory structure separating all of the scripts.
-In addition, I have also decided to create a script that flattens the directory structure of all of my scripts and moves them to `~/.bin/`.
+In addition, I have also decided to create a script that flattens the directory structure of all of my scripts and moves them to `~/.local/bin/`.
 
-Currently, I do this by literally creating a new file in the ~/.bin/ which is a "clone" or "copy" of the original.
-In the future, I think it might be better to create, in `~/.bin/`, a symbolic link to the original file.
+Currently, I do this by literally creating a new file in the `~/.local/bin/` which is a "clone" or "copy" of the original.
+In the future, I think it might be better to create, in `~/.local/bin/`, a symbolic link to the original file.
 
 ## usage
 
-Whenever I need to use any of my scripts, I reference the script through the `~/.bin/` directory.
+Whenever I need to use any of my scripts, I reference the script through the `~/.local/bin/` directory.
 
 ## naming convention
 

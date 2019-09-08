@@ -4,7 +4,7 @@
 # $2 is battery capacity: required for critical and low modes
 #
 
-source ~/.bin/dunst_ids
+source dunst_ids
 
 if [ "$1" = 'critical' ]
 then

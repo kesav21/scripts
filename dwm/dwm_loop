@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # startup script
-~/.bin/dwm_init &
+dwm_init &
 
 # execute dwm
 while true

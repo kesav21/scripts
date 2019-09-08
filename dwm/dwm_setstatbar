@@ -45,16 +45,16 @@
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
 getwifi() {
-	wifi=$(~/.bin/wifi_getssid)
+	wifi=$(wifi_getssid)
 
 	if [ -z "$wifi" ]
 	then
 		echo "  (disconnected)"
 	else
-		echo "  $(~/.bin/wifi_getssid)"
+		echo "  $(wifi_getssid)"
 	fi
 
-	# echo "wifi: $(~/.bin/wifi_getssid)"
+	# echo "wifi: $(wifi_getssid)"
 }
 
 # volume
@@ -62,16 +62,16 @@ getwifi() {
 # short format: volume level
 # no long format
 getvolume() {
-	ismuted=$(~/.bin/audio_ismuted)
+	ismuted=$(audio_ismuted)
 
 	if [ "$ismuted" = "muted" ]
 	then
 		# why is the mute symbol a garbage can?
-		# echo "  $(~/.bin/audio_getvolume)%"
-		echo "m  $(~/.bin/audio_getvolume)"
+		# echo "  $(audio_getvolume)%"
+		echo "m  $(audio_getvolume)"
 	elif [ "$ismuted" = "not muted" ]
 	then
-		echo "  $(~/.bin/audio_getvolume)%"
+		echo "  $(audio_getvolume)%"
 	fi
 }
 
@@ -80,7 +80,7 @@ getvolume() {
 # short format: brightness level
 # no long format
 getbrightness() {
-	echo "  $(~/.bin/bright_getp)%"
+	echo "  $(bright_getp)%"
 }
 
 # battery
@@ -91,19 +91,19 @@ getbrightness() {
 # TODO: (long format) display time left until full charge/time until dead
 # TODO: if multiple batteries present, only display the first one
 getbattery() {
-	status=$(~/.bin/batt_getstatus)
+	status=$(batt_getstatus)
 
 	if [ "$status" = "Discharging" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(batt_getp)%"
 	elif [ "$status" = "Charging" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(batt_getp)%"
 	elif [ "$status" = "Full" ]
 	then
-		echo "  $(~/.bin/batt_getp)%"
+		echo "  $(batt_getp)%"
 	else
-		echo "e  $(~/.bin/batt_getp)%"
+		echo "e  $(batt_getp)%"
 	fi
 }
 
@@ -129,7 +129,8 @@ getstatus() {
 	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
 	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
 	# echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
-	echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	# echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	echo -e " $(getwifi) "
 }
 
 while true

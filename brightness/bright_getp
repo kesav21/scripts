@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "100 * $(~/.bin/bright_get) / $(~/.bin/bright_getmax)" | bc
+echo "100 * $(bright_get) / $(bright_getmax)" | bc
 

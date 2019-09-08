@@ -22,7 +22,7 @@ batterycritical () {
 
 	if [ "$1" = "Discharging" ] && [ "$2" -le "$3" ]
 	then
-		~/.bin/dunst_battery 'critical'  "$2" &
+		dunst_battery 'critical'  "$2" &
 	fi
 }
 
@@ -41,7 +41,7 @@ batterylow () {
 
 	if [ "$1" = "Discharging" ] && [ "$2" -gt "$3" ] && [ "$2" -le "$4" ]
 	then
-		~/.bin/dunst_battery 'low'  "$2" &
+		dunst_battery 'low'  "$2" &
 	fi
 }
 
@@ -52,7 +52,7 @@ batterylow () {
 #
 batteryfull () {
 
-	[ "$1" = "Full" ] && ~/.bin/dunst_battery 'full' &
+	[ "$1" = "Full" ] && dunst_battery 'full' &
 }
 
 #

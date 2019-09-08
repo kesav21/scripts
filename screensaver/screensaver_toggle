@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # retrieve shared variables
-source ~/.bin/screensaver_vars
+source screensaver_vars
 
 # toggle dpms
-md=$(~/.bin/dpms_toggle $standby_timeout $suspend_timeout $off_timeout)
+md=$(dpms_toggle $standby_timeout $suspend_timeout $off_timeout)
 
 # toggle xautolock
-mx=$(~/.bin/xautolock_toggle $locker_timeout)
+mx=$(xautolock_toggle $locker_timeout)
 
 # send notification
-~/.bin/dunst_screensaver "$md" "$mx"
+dunst_screensaver "$md" "$mx"
 

@@ -2,7 +2,7 @@
 # dwm startup script
 
 # startup script
-~/.bin/dwm_init &
+dwm_init &
 
 # execute dwm
 exec dwm

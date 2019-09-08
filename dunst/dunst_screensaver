@@ -4,7 +4,7 @@
 # $2 is xautolock message
 #
 
-source ~/.bin/dunst_ids
+source dunst_ids
 
 icon_lock=~/.icons/fa-5.10.1-desktop/svgs/solid/lock.svg
 dunstify -t 2000 -i $icon_lock -r $id_screensaver 'Screensaver' "\n$1\n$2"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-running_sink=$( ~/.bin/audio_getrunningsink )
+running_sink=$( audio_getrunningsink )
 
 # if there is currently a running sink
 if [ -n "$running_sink" ]
@@ -13,7 +13,7 @@ then
 else
 	# echo "backup sink"
 
-	backup_sink=$( ~/.bin/audio_getbackupsink)
+	backup_sink=$( audio_getbackupsink)
 
 	echo $backup_sink
 fi

@@ -10,7 +10,7 @@ autolink () {
 		fullpath="$dirname$filename"
 		binpath="/home/kesav/.bin/$filename"
 
-		# if file is executable but not in ~/.bin/
+		# if file is executable but not in ~/.local/bin/
 		if [ -x "$fullpath" ] && [ ! -e "$binpath" ]
 		then
 			# create a symlink to the file

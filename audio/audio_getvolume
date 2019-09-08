@@ -3,7 +3,7 @@
 # limitations of this script:
 # it can only get the active sink if audio is currently playing
 
-sink=$( ~/.bin/audio_getusablesink )
+sink=$( audio_getusablesink )
 now=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
 
 echo "$now"
