@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# shortcut file locations
+shell_shortcuts="$HOME/.bash_shortcuts"
+
+# remove existing files
+rm "$shell_shortcuts"
+
+# bookmarked folders
+printf "\n# bookmarked folders\n\n" >> "$shell_shortcuts"
+
+# Format the `bmdirs` file in the correct syntax and sent it to all three configs.
+sed "s/\s*#.*$//;/^\s*$/d" "$HOME/.config/bmdirs" | awk '{print "alias g"$1"=\"cd "$2"\""}' >> "$shell_shortcuts"
+
+# bookmarked files
+printf "\n# bookmarked files\n\n" >> "$shell_shortcuts"
+
+# Format the `configs` file in the correct syntax and sent it to both configs.
+sed "s/\s*#.*$//;/^\s*$/d"  "$HOME/.config/bmfiles" | awk '{print "alias "$1"=\"$EDITOR "$2"\""}' >> "$shell_shortcuts"
+
+
+printf "\n" >> "$shell_shortcuts"
+
