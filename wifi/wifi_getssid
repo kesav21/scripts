@@ -1,5 +1,6 @@
 #!/bin/sh
 
-# nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\' -f2
-nmcli -t -f active,ssid dev wifi | egrep '^yes' | awk -F ':' '{print $2}'
+ssid=$(wicd-cli --status | grep 'Connected to' | awk '{print $3}')
+
+echo "$ssid"
 

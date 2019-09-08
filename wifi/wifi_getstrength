@@ -1,0 +1,6 @@
+#!/bin/sh
+
+strength=$(wicd-cli --status | grep 'Connected to' | awk '{print $5}')
+
+echo "$strength"
+
