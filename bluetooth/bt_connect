@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-name=$(cat ~/.bluetooth-devices | cut -d" " -f3- | fzf)
+name=$(cat ~/.bt_devices | cut -d" " -f3- | fzf)
 echo "name: $name"
 
-macid=$(cat ~/.bluetooth-devices | grep "$name" | awk '{print $2}')
+macid=$(cat ~/.bt_devices | grep "$name" | awk '{print $2}')
 echo "macid: $macid"
 
 # use the macid to connect to the bluetooth device
