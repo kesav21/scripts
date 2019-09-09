@@ -3,6 +3,10 @@
 
 These are the scripts I use to automate miscellaneous things on my laptop.
 
+<!-- TODO: add screenshot script -->
+<!-- TODO: fix brightness control -->
+<!-- TODO: fix audio control -->
+
 ## `~/.local/bin/`
 
 There is one problem that I face with this scripts directory.
