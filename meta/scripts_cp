@@ -1,22 +1,19 @@
 #!/bin/sh
 
-SCRIPTS_DIR=/home/kesav/.local/scripts
-BIN_DIR=/home/kesav/.local/bin
-
-cd $SCRIPTS_DIR
+cd $SCRIPTSPATH
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
-echo "\nclearing $BIN_DIR:\n"
+echo "\nclearing $BINPATH:\n"
 
-rm -rfv $BIN_DIR && mkdir $BIN_DIR
+rm -rfv $BINPATH && mkdir $BINPATH
 
-echo "\nadding scripts to $BIN_DIR/\n"
+echo "\nadding scripts to $BINPATH/\n"
 
 for file in $files
 do
 	if [ -x "$file" ]
 	then
-		ln -sv $(realpath $file) $BIN_DIR/$(basename $file)
+		ln -sv $(realpath $file) $BINPATH/$(basename $file)
 	fi
 done
 

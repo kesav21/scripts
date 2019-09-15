@@ -1,7 +1,5 @@
 #!/bin/sh
 
-SCRIPTS_DIR=/home/kesav/.local/scripts
-
 # startup script
 dwm_init &
 
@@ -9,7 +7,7 @@ dwm_init &
 while true
 do
 	# log stderror to a file
-	dwm 2> $SCRIPTS_DIR/.logs/dwm.log
+	dwm 2> $SCRIPTSPATH/.logs/dwm.log
 
 	# no error logging
 	# dwm >/dev/null 2>&1

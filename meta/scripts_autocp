@@ -1,8 +1,5 @@
 #!/bin/sh
 
-SCRIPTS_DIR=/home/kesav/.local/scripts
-BIN_DIR=/home/kesav/.local/bin
-
 autolink () {
 
 	while read newfile
@@ -11,7 +8,7 @@ autolink () {
 		filename=$(echo $newfile | awk '{print $3}')
 
 		fullpath="$dirname$filename"
-		binpath="$BIN_DIR/$filename"
+		binpath="$BINPATH/$filename"
 
 		# if file is executable but not in $bin_dir
 		if [ -x "$fullpath" ] && [ ! -e "$binpath" ]
@@ -23,5 +20,5 @@ autolink () {
 
 }
 
-inotifywait -m -r -e attrib "$SCRIPTS_DIR" | autolink
+inotifywait -m -r -e attrib "$SCRIPTSPATH" | autolink
 

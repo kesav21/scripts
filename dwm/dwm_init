@@ -1,24 +1,21 @@
 #!/bin/sh
 
-SCRIPTS_DIR=/home/kesav/.local/scripts
-
-# compositor
 # notification daemon
-nohup dunst > $SCRIPTS_DIR/.logs/dunst.log &
+nohup dunst > $SCRIPTSPATH/.logs/dunst.log &
 
 # set wallpaper
 hsetroot -solid "#282828" & # gruvbox
 
 # sets the statusbar
-nohup dwm_setstatbar > $SCRIPTS_DIR/.logs/dwm_setstatbar &
+nohup dwm_setstatbar > $SCRIPTSPATH/.logs/dwm_setstatbar &
 
 # battery low/full notifications
-nohup batt_notifier > $SCRIPTS_DIR/.logs/batt_notifier &
+nohup batt_notifier > $SCRIPTSPATH/.logs/batt_notifier &
 
 # initialize screensaver
-nohup screensaver_init > $SCRIPTS_DIR/.logs/screensaver_init &
+nohup screensaver_init > $SCRIPTSPATH/.logs/screensaver_init &
 
 # initialize meta scripts
-nohup scripts_autocp > $SCRIPTS_DIR/.logs/scripts_autocp &
-nohup scripts_autorm > $SCRIPTS_DIR/.logs/scripts_autorm &
+nohup scripts_autocp > $SCRIPTSPATH/.logs/scripts_autocp &
+nohup scripts_autorm > $SCRIPTSPATH/.logs/scripts_autorm &
 
