@@ -1,7 +1,7 @@
 #!/bin/bash
 
-standby_timeout=2
-suspend_timeout=4
+standby_timeout=4
+suspend_timeout=5
 off_timeout=6
 
 locker_timeout=5
