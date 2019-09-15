@@ -6,8 +6,8 @@ source dunst_ids
 muted=$(audio_ismuted | grep 'not')
 volume=`audio_getvolume`
 
-icon_mute=~/.icons/fa-5.10.1-desktop/svgs/solid/volume-mute.svg
-icon_vol=~/.icons/fa-5.10.1-desktop/svgs/solid/volume-up.svg
+icon_mute="$ICONPATH/svgs/solid/volume-mute.svg"
+icon_vol="$ICONPATH/svgs/solid/volume-up.svg"
 
 bar=$(dunst_bar $volume 100)
 

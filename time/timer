@@ -2,6 +2,6 @@
 
 sleep $1
 
-icon_clock=~/.icons/fa-5.10.1-desktop/svgs/solid/clock.svg
+icon_clock="$ICONPATH/svgs/solid/clock.svg"
 dunstify -i $icon_clock -u critical "Time's up"
 

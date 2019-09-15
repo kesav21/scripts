@@ -3,6 +3,6 @@
 
 source dunst_ids
 
-icon_lock=~/.icons/fa-5.10.1-desktop/svgs/solid/lock.svg
+icon_lock="$ICONPATH/svgs/solid/lock.svg"
 dunstify -t 9000 -i $icon_lock -r $id_xautolock -u critical 'Screensaver' "\nLocking screen in 10s"
 

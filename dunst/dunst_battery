@@ -8,21 +8,21 @@ source dunst_ids
 
 if [ "$1" = 'critical' ]
 then
-	icon_empty='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-empty.svg'
+	icon_empty="$ICONPATH/svgs/solid/battery-empty.svg"
 	dunstify -i $icon_empty -r $id_battery -u critical "Battery low: $2% " &
 
 elif [ "$1" = 'low' ]
 then
-	icon_quarter='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-quarter.svg'
+	icon_quarter="$ICONPATH/svgs/solid/battery-quarter.svg"
 	dunstify -i $icon_quarter -r $id_battery "Battery low: $2% " &
 
 elif [ "$1" = 'full' ]
 then
-	icon_full='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-full.svg'
+	icon_full="$ICONPATH/svgs/solid/battery-full.svg"
 	dunstify -i $icon_full -r $id_battery "Battery full" &
 
 else
-	icon_full='~/.icons/fa-5.10.1-desktop/svgs/solid/battery-full.svg'
+	icon_full="$ICONPATH/svgs/solid/battery-full.svg"
 	dunstify -i $icon_full -r $id_battery "Battery error" &
 fi
 
