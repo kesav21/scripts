@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SCRIPTS_DIR=~/.local/scripts
+SCRIPTS_DIR=/home/kesav/.local/scripts
 
 # compositor
 # notification daemon
