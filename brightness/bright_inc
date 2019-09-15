@@ -15,5 +15,5 @@ backlight=${bright_new%.*}
 echo "$backlight" > /sys/class/backlight/intel_backlight/brightness
 
 # send notification
-dunst_brightness
+dunst_brightness &
 
