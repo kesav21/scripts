@@ -3,12 +3,8 @@
 SCRIPTS_DIR=~/.local/scripts
 
 # compositor
-# do i need this?
-compton &
 # notification daemon
-dunst &
-# wifi daemon
-wicd &
+nohup dunst > $SCRIPTS_DIR/.logs/dunst.log &
 
 # set wallpaper
 hsetroot -solid "#282828" & # gruvbox
