@@ -1,6 +1,0 @@
-#!/bin/bash
-
-cd /usr/local/src/i3lock-color/
-./lock.sh
-
-
