@@ -3,5 +3,5 @@
 current=eDP-1
 output=HDMI-1
 
-xrandr --output $output --auto --right-of $current
+xrandr --output $output --auto --above $current
 
