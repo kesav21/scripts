@@ -6,8 +6,8 @@ source screensaver_vars
 # toggle dpms
 md=$(dpms_toggle $standby_timeout $suspend_timeout $off_timeout)
 
-# toggle xautolock
-mx=$(xautolock_toggle $locker_timeout)
+# toggle xss
+mx=$(xss_toggle)
 
 # send notification
 dunst_screensaver "$md" "$mx"
