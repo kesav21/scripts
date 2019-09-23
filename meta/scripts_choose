@@ -1,0 +1,4 @@
+#!/bin/sh
+
+$(scripts_ls | dmenu)
+

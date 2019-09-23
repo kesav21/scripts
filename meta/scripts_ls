@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# lists all scripts in my scripts directory
+# a file is a script if:
+# - it is in the scripts directory
+# - it is executable
+
+cd $SCRIPTSPATH
+files=$(find . \( ! -regex '.*/\..*' \) -type f)
+
+for file in $files
+do
+	if [ -x "$file" ]
+	then
+		basename $file
+	fi
+done
+
