@@ -1,8 +1,0 @@
-#!/bin/bash
-
-
-source dunst_ids
-
-icon_lock="$ICONPATH/svgs/solid/lock.svg"
-dunstify -t 9000 -i $icon_lock -r $id_xautolock -u critical 'Screensaver' "\nLocking screen in 10s"
-
