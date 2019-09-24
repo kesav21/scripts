@@ -13,8 +13,8 @@ bar=$(dunst_bar $volume 100)
 
 if [ -z "$muted" ]
 then
-	dunstify -i $icon_mute -t 2000 -r $id_volume 'Volume' "\nVolume muted\n$bar"
+	dunstify -i $icon_mute -t 2000 -r $id_volume 'Volume' "\nMuted\n$bar"
 else
-	dunstify -i $icon_vol -t 2000 -r $id_volume 'Volume' "\nVolume not muted\n$bar"
+	dunstify -i $icon_vol -t 2000 -r $id_volume 'Volume' "\nNot muted\n$bar"
 fi
 
