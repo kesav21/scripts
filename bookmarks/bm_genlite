@@ -1,10 +1,14 @@
 #!/bin/bash
 
 # shortcut file locations
-shell_shortcuts="$HOME/.bash_shortcuts"
+shell_shortcuts="$HOME/.config/shell/bookmarks"
 
 # remove existing files
 rm "$shell_shortcuts"
+
+# file prep
+printf "#!/bin/sh\n" >> "$shell_shortcuts"
+printf "\necho 'sourced shortcuts'\n" >> "$shell_shortcuts"
 
 # bookmarked folders
 printf "\n# bookmarked folders\n\n" >> "$shell_shortcuts"
