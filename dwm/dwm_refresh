@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# refreshes dwm by killing a singular instance
+
+killall -q dwm
+
