@@ -1,9 +1,0 @@
-#! /bin/bash
-# dwm startup script
-
-# startup script
-dwm_init &
-
-# execute dwm
-exec dwm
-
