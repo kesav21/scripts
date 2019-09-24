@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+source dunst_ids
+
+dunstify -t 2000 -r $id_shot 'Screenshot' "Screenshot stored in ~/Pictures/"
+
