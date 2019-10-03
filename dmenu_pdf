@@ -1,0 +1,8 @@
+#!/bin/bash
+
+file="$(find $HOME -iname '*.pdf' | dmenu)"
+if [ -n "$file" ]
+then
+	nohup zathura "$file" >/dev/null 2>&1 &
+fi
+
