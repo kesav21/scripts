@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# reduces brightness by 2%
+# reduces brightness by 5%
 #
 
 
-# calculate 2% of maximum brightness
-diff=$(echo "0.02 * $(bright_getmax)" | bc)
-# subtract 2% from current brightness
+# calculate 5% of maximum brightness
+diff=$(echo "0.05 * $(bright_getmax)" | bc)
+# subtract 5% from current brightness
 bright_new=$(echo "$(bright_get) - $diff" | bc)
 
 # remove decimal places
