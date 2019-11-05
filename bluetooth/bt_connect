@@ -1,13 +1,21 @@
 #!/bin/bash
 
 
-name=$(cat ~/.config/scripts/bt_devices | cut -d" " -f3- | fzf)
-echo "name: $name"
+name=$(cat ~/.config/scripts/bt_devices | cut -d" " -f3- | dmenu)
 
-macid=$(cat ~/.config/scripts/bt_devices | grep "$name" | awk '{print $2}')
-echo "macid: $macid"
+# if name is empty
+if [ -z "$name" ];
+then
+	echo "no device selected"
+else
+	echo "name: $name"
 
-# use the macid to connect to the bluetooth device
+	macid=$(cat ~/.config/scripts/bt_devices | grep "$name" | awk '{print $2}')
+	echo "macid: $macid"
 
-echo "connect $macid" | bluetoothctl
+	# use the macid to connect to the bluetooth device
+	echo "connect $macid" | bluetoothctl
+fi
+
+
 
