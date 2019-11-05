@@ -16,6 +16,6 @@ nohup batt_notifier >$SCRIPTSPATH/.logs/batt_notifier.log 2>&1 &
 nohup screensaver_init >$SCRIPTSPATH/.logs/screensaver_init.log 2>&1 &
 
 # initialize meta scripts
-nohup scripts_autocp >$SCRIPTSPATH/.logs/scripts_autocp.log 2>&1 &
-nohup scripts_autorm >$SCRIPTSPATH/.logs/scripts_autorm.log 2>&1 &
+# nohup scripts_autocp >$SCRIPTSPATH/.logs/scripts_autocp.log 2>&1 &
+# nohup scripts_autorm >$SCRIPTSPATH/.logs/scripts_autorm.log 2>&1 &
 
