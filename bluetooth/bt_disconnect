@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# disconnects given device
 
-echo "disconnect" | bluetoothctl
+# get device name
+name=$(bt_connected | dmenu)
+# get macid
+macid=$(bt_getmacid "$name")
+# disconnect using macid
+echo "disconnect $macid" | bluetoothctl
 
