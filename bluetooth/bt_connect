@@ -1,21 +1,11 @@
 #!/bin/bash
+#
+# connects given device
 
-
-name=$(cat ~/.config/scripts/bt_devices | cut -d" " -f3- | dmenu)
-
-# if name is empty
-if [ -z "$name" ];
-then
-	echo "no device selected"
-else
-	echo "name: $name"
-
-	macid=$(cat ~/.config/scripts/bt_devices | grep "$name" | awk '{print $2}')
-	echo "macid: $macid"
-
-	# use the macid to connect to the bluetooth device
-	echo "connect $macid" | bluetoothctl
-fi
-
-
+# prompt names of devices
+devices=$(echo "devices" | bluetoothctl | grep -oP "(?<=Device ).*" | grep -oP "(?<= ).*" | dmenu)
+# get macid
+macid=$(bt_getmacid "$name")
+# use the macid to connect to the bluetooth device
+echo "connect $macid" | bluetoothctl
 
