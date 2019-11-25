@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# returns macid of a bluetooth device, given it's name
+
+# if name is empty
+if [ -z "$1" ]
+then
+	echo "no device selected"
+
+# if name is non-empty
+else
+	# query bluetoothctl for historical devices
+	# extract name
+	echo "devices" | bluetoothctl | grep -oP "(?<=Device ).*(?= $1)"
+fi
+
