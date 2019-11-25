@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# returns names of all connected devices
+
+# get macid of devices
+devices=$(echo "devices" | bluetoothctl | grep "Device" | awk '{print $2}')
+
+for device in $devices
+do
+	# get if device is connected
+	connected=$(echo "info $device" | bluetoothctl | grep "Connected: yes")
+	# if is connected
+	if [ -n "$connected" ]
+	then
+		# print device name
+		echo "info $device" | bluetoothctl | grep -oP '(?<=Name: ).*'
+	fi
+done
+
