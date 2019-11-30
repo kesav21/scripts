@@ -33,3 +33,6 @@ There are, of course, some (a lot, like 20%) exceptions to this rule.
 The scripts that do not belong to any module do not have a prefix (such as `colortest` or `windowlookup`).
 There are other exceptions where I thought it would be better to leave the script name be rather than force it into a convention that doesn't work for that particular script.
 
+## todo
+
+- [add zathura window to tabbed through dmenu](https://www.reddit.com/r/suckless/comments/adfllb/how_to_create_named_tabs_using_the_suckless/)
