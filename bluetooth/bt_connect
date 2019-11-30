@@ -3,7 +3,7 @@
 # connects given device
 
 # prompt names of devices
-devices=$(echo "devices" | bluetoothctl | grep -oP "(?<=Device ).*" | grep -oP "(?<= ).*" | dmenu)
+name=$(echo "devices" | bluetoothctl | grep -oP "(?<=Device ).*" | grep -oP "(?<= ).*" | dmenu)
 # get macid
 macid=$(bt_getmacid "$name")
 # use the macid to connect to the bluetooth device
