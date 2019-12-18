@@ -11,7 +11,7 @@ case "$option" in
 		;;
 	"quit")
 		echo "quit dwm"
-		dwm_kill
+		dwm_quit
 		;;
 	"refresh")
 		echo "refresh dwm"
