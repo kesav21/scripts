@@ -1,0 +1,9 @@
+#!/bin/sh
+
+password=$(find ~/.config/pass -type f -name '*.gpg' \
+	| sed 's|\/home\/kesav\/\.config\/pass\/||' \
+	| sed 's|\.gpg||' \
+	| dmenu -i)
+
+[ -n "$password" ] && pass show -c "$password"
+
