@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 
-file="$(find . -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*.pdf' -print | dmenu)"
+file="$(pdf_list | dmenu)"
 
 if [ -n "$file" ]
 then
-	nohup zathura "$file" >/dev/null 2>&1 &
+	echo "$file"
+	zathura "$file" &
 fi
+
 
