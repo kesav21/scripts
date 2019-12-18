@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd ~/Pictures/screenshots/
-scrot "$@" -e 'echo $f && sxiv $f'
+scrot -s -e 'echo $f && sxiv $f'
 dunst_shot &
 
