@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# TODO: automatically spawn a terminal with fzf, similar to dmenu
+
+files="$(pdf_list | fzf -m)"
+
+if [ -n "$files" ]
+then
+	xid=$(tabbed -cd)
+	echo "$xid"
+	for file in $files
+	do
+		echo "$file"
+		zathura -e "$xid" "$file" &
+	done
+fi
+
+

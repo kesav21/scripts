@@ -1,0 +1,11 @@
+#!/bin/sh
+
+file="$(pdf_list | dmenu)"
+
+if [ -n "$file" ]
+then
+	echo "$file"
+	zathura "$file" &
+fi
+
+

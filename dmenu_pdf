@@ -1,9 +1,0 @@
-#!/bin/bash
-
-file="$(find . -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*.pdf' -print | dmenu)"
-
-if [ -n "$file" ]
-then
-	nohup zathura "$file" >/dev/null 2>&1 &
-fi
-
