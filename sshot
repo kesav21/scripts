@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd ~/Pictures/screenshots/
+dir=$HOME/Pictures/screenshots
+cd $dir
 scrot -s -e 'echo $f && sxiv $f'
-dunst_shot &
+dunst_shot $dir &
 

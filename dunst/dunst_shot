@@ -1,7 +1,13 @@
 #!/bin/bash
-
+#
+# $1 is the directory where pictures are stored
+#
 
 source dunst_ids
 
-dunstify -t 2000 -r $id_shot 'Screenshot' "Screenshot stored in ~/Pictures/"
+# convert the /home/$user/ to ~/
+# it's shorter, and i am very bored
+dir=$(echo "$1" | sed "s|/home/$(whoami)/|~/|")
+
+dunstify -t 2000 -r $id_shot 'Screenshot' "Stored in $dir"
 
