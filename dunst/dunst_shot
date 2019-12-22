@@ -5,9 +5,9 @@
 
 source dunst_ids
 
-# convert the /home/$user/ to ~/
+# convert the /home/user to ~
 # it's shorter, and i am very bored
-dir=$(echo "$1" | sed "s|/home/$(whoami)/|~/|")
+dir=$(echo "$1" | sed "s|$HOME|~|")
 
 dunstify -t 2000 -r $id_shot 'Screenshot' "Stored in $dir"
 
