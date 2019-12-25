@@ -3,11 +3,11 @@
 cd $SCRIPTSPATH
 files=$(find . \( ! -regex '.*/\..*' \) -type f)
 
-echo "\nclearing $BINPATH:\n"
+echo -e "\nclearing $BINPATH:\n"
 
 rm -rfv $BINPATH && mkdir $BINPATH
 
-echo "\nadding scripts to $BINPATH/\n"
+echo -e "\nadding scripts to $BINPATH/\n"
 
 for file in $files
 do
@@ -17,5 +17,5 @@ do
 	fi
 done
 
-echo "\n"
+echo ""
 
