@@ -1,8 +1,11 @@
 #!/bin/bash
 
+bmdirs="bm_dirs"
+bmfiles="bm_files"
+
 # shortcut file locations
-shell="$HOME/.config/shell/bookmarks"
-vifm="$HOME/.config/vifm/vifm_bookmarks"
+shell="$XDG_CONFIG_HOME/shell/bookmarks"
+vifm="$XDG_CONFIG_HOME/vifm/vifm_bookmarks"
 
 # remove existing files
 rm "$shell" "$vifm"
@@ -16,16 +19,16 @@ printf "\n# bookmarked folders\n\n" >> "$shell"
 printf "\n\" bookmarked folders\n\n" >> "$vifm"
 
 # Format the `bmdirs` file in the correct syntax and sent it to all three configs.
-sed "s/\s*#.*$//;/^\s*$/d" "$HOME/.config/bmdirs" | awk '{print "alias g"$1"=\"cd "$2"\""}' >> "$shell"
-sed "s/\s*#.*$//;/^\s*$/d" "$HOME/.config/bmdirs" | awk '{print "map g" $1, ":cd", $2 "<CR>\nmap t" $1, "<tab>:cd", $2 "<CR><tab>\nmap M" $1, "<tab>:cd", $2 "<CR><tab>:mo<CR>\nmap Y" $1, "<tab>:cd", $2 "<CR><tab>:co<CR>" }' >> "$vifm"
+sed "s/\s*#.*$//;/^\s*$/d" "$bmdirs" | awk '{print "alias g"$1"=\"cd "$2"\""}' >> "$shell"
+sed "s/\s*#.*$//;/^\s*$/d" "$bmdirs" | awk '{print "map g" $1, ":cd", $2 "<CR>\nmap t" $1, "<tab>:cd", $2 "<CR><tab>\nmap M" $1, "<tab>:cd", $2 "<CR><tab>:mo<CR>\nmap Y" $1, "<tab>:cd", $2 "<CR><tab>:co<CR>" }' >> "$vifm"
 
 # bookmarked files
 printf "\n# bookmarked files\n\n" >> "$shell"
 printf "\n\" bookmarked files\n\n" >> "$vifm"
 
 # Format the `configs` file in the correct syntax and sent it to both configs.
-sed "s/\s*#.*$//;/^\s*$/d"  "$HOME/.config/bmfiles" | awk '{print "alias "$1"=\"$EDITOR "$2"\""}' >> "$shell"
-sed "s/\s*#.*$//;/^\s*$/d"  "$HOME/.config/bmfiles" | awk '{print "map", $1, ":e", $2 "<CR>" }' >> "$vifm"
+sed "s/\s*#.*$//;/^\s*$/d"  "$bmfiles" | awk '{print "alias "$1"=\"$EDITOR "$2"\""}' >> "$shell"
+sed "s/\s*#.*$//;/^\s*$/d"  "$bmfiles" | awk '{print "map", $1, ":e", $2 "<CR>" }' >> "$vifm"
 
 printf "\n" >> "$shell"
 printf "\n" >> "$vifm"
