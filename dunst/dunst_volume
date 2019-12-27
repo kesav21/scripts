@@ -3,12 +3,10 @@
 
 source dunst_ids
 
-volume=`audio_getvolume`
-
 icon_mute="$ICONPATH/svgs/solid/volume-mute.svg"
 icon_vol="$ICONPATH/svgs/solid/volume-up.svg"
 
-bar=$(dunst_bar $volume 100)
+bar=$(dunst_bar $(audio_getvolume) 100)
 
 if [ "$(audio_ismuted)" = "yes" ]
 then

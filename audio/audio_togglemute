@@ -1,9 +1,7 @@
 #!/bin/sh
 
-sink=$( audio_getusablesink )
-# echo "sink: $sink"
-pactl set-sink-mute $sink "toggle"
-
+# mute command
+pactl set-sink-mute $(audio_getusablesink) "toggle"
 # send notification
 dunst_volume
 
