@@ -3,7 +3,6 @@
 
 source dunst_ids
 
-muted=$(audio_ismuted | grep 'not')
 volume=`audio_getvolume`
 
 icon_mute="$ICONPATH/svgs/solid/volume-mute.svg"
@@ -11,7 +10,7 @@ icon_vol="$ICONPATH/svgs/solid/volume-up.svg"
 
 bar=$(dunst_bar $volume 100)
 
-if [ -z "$muted" ]
+if [ "$(audio_ismuted)" = "yes" ]
 then
 	dunstify -i $icon_mute -t 2000 -r $id_volume 'Volume' "\nMuted\n$bar"
 else

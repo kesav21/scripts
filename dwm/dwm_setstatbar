@@ -64,15 +64,12 @@ getwifi() {
 # short format: volume level
 # no long format
 getvolume() {
-	ismuted=$(audio_ismuted)
-
-	if [ "$ismuted" = "muted" ]
+	if [ "$(audio_ismuted)" = "yes" ]
 	then
 		# why is the mute symbol a garbage can?
 		# echo "  $(audio_getvolume)%"
 		echo "vm  $(audio_getvolume)%"
-	elif [ "$ismuted" = "not muted" ]
-	then
+	else
 		# echo "  $(audio_getvolume)%"
 		echo "vu  $(audio_getvolume)%"
 	fi
