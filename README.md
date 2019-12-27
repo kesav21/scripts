@@ -33,4 +33,8 @@ There are other exceptions where I thought it would be better to leave the scrip
 - move config files out of scripts and to `$XDG_CONFIG_HOME`
 	- no need to include them in my dotfiles
 	- i should add documentation about where config files are located
-- add colors to dwm statusbar
+- dwm statusbar
+	- add colors
+	- add short/long formats
+- remove `screensaver_toggle`, streamline `screensaver_init`
+
