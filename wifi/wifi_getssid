@@ -1,6 +1,4 @@
 #!/bin/sh
 
-ssid=$(wicd-cli --status | grep 'Connected to' | awk '{print $3}')
-
-echo "$ssid"
+wicd-cli --status | awk '/Connected to/ {print $3}'
 

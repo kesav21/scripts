@@ -7,7 +7,7 @@
 #
 toggle_dpms () {
 
-	dpms_status=$(xset q | grep "DPMS is " | grep -oE '[^ ]+$')
+	dpms_status=$(xset q | awk '/DPMS is/ {print $3}')
 
 	if [ "$dpms_status" = "Disabled" ]
 	then

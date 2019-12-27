@@ -1,6 +1,4 @@
 #!/bin/sh
 
-status=$(wicd-cli --status | grep 'status' | awk '{print $3}')
-
-echo "$status"
+wicd-cli --status | awk '/status/ {print $3}'
 

@@ -1,6 +1,4 @@
 #!/bin/sh
 
-type=$(wicd-cli --status | grep 'type' | awk '{print $3}')
-
-echo "$type"
+wicd-cli --status | awk '/type/ {print $3}'
 
