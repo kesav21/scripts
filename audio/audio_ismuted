@@ -1,10 +1,15 @@
 #!/bin/sh
+#
+# returns 'yes' or ''
+#
 
-sink=$( audio_getusablesink )
+# smarter check:
+# add 1 to sink
+# sink=$(($(audio_getusablesink)+1))
+# extract if that specific sink is muted
+# pactl list sinks | awk "/Mute: / {i++} i==$sink{print \$2;exit}"
 
-muted=$( pactl list sinks | grep 'Mute: ' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
-
-ismuted=$( echo "$muted" | grep 'yes' )
-
-[ -n "$ismuted" ] && echo "muted" || echo "not muted"
+# dumber check:
+# check if any sinks are running
+pactl list sinks | awk '/Mute: yes/ {print $2}'
 
