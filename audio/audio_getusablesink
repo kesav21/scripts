@@ -1,20 +1,17 @@
 #!/bin/bash
 
-running_sink=$( audio_getrunningsink )
+# smarter check:
+# get currently running sink
+# running_sink=`pactl list sinks short | awk '/RUNNING/ {print $1}'`
+# print either the current sink or the backup sink
+# [ -n "$running_sink" ] && echo $running_sink \
+# 	|| pactl list sinks short | awk 'END {print $1}'
 
-# if there is currently a running sink
-if [ -n "$running_sink" ]
-then
-	# echo "running sink"
 
-	echo $running_sink
-
-# if there is no currently running sink
-else
-	# echo "backup sink"
-
-	backup_sink=$( audio_getbackupsink)
-
-	echo $backup_sink
-fi
+# dumber check:
+# see if this is sufficient
+# basically, if my headphones are plugged in, use that sink
+# otherwise, use sink 0
+# i don't think i need something smarter than this
+pactl list sinks short | awk 'END {print $1}'
 
