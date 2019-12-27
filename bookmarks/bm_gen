@@ -1,7 +1,7 @@
 #!/bin/bash
 
-bmdirs="bm_dirs"
-bmfiles="bm_files"
+bmdirs="$HOME/.local/scripts/bookmarks/bm_dirs"
+bmfiles="$HOME/.local/scripts/bookmarks/bm_files"
 
 # shortcut file locations
 shell="$XDG_CONFIG_HOME/shell/bookmarks"

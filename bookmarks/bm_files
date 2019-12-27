@@ -10,9 +10,11 @@ cfv $XDG_CONFIG_HOME/nvim/init.vim
 cfvf $XDG_CONFIG_HOME/vifm/vifmrc
 cfz $XDG_CONFIG_HOME/zathura/zathurarc
 
-cfdm ~/.local/src/dmenu-4.9/config.h
-cfdw ~/.local/src/dwm-6.2/config.h
-cfs ~/.local/src/st-0.8.2/config.h
+cfdm ~/.local/src/dmenu/config.h
+cfdw ~/.local/src/dwm/config.h
+cfst ~/.local/src/st/config.h
+cfsu ~/.local/src/surf/config.h
+cft ~/.local/src/tabbed/config.h
 
 cfbf $HOME/.local/scripts/bookmarks/bm_files
 cfbd $HOME/.local/scripts/bookmarks/bm_dirs
