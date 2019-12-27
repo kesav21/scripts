@@ -3,7 +3,7 @@
 # returns names of all connected devices
 
 # get macid of devices
-devices=$(echo "devices" | bluetoothctl | grep "Device" | awk '{print $2}')
+devices=$(echo "devices" | bluetoothctl | awk '/Device/ {print $2}')
 
 for device in $devices
 do
