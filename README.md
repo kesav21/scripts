@@ -1,11 +1,7 @@
 
 # scripts
 
-These are the scripts I use to automate miscellaneous things on my laptop.
-
-<!-- TODO: add screenshot script -->
-<!-- TODO: fix brightness control -->
-<!-- TODO: fix audio control -->
+These are the scripts I use to automate miscellaneous things on my machine.
 
 ## `~/.local/bin/`
 
@@ -17,12 +13,11 @@ When I do this, the references to some of these files become obsolete, and need 
 Therefore, I have decided to keep all of my scripts within `~/.local/scripts/` with a proper directory structure separating all of the scripts.
 In addition, I have also decided to create a script that flattens the directory structure of all of my scripts and moves them to `~/.local/bin/`.
 
-Currently, I do this by literally creating a new file in the `~/.local/bin/` which is a "clone" or "copy" of the original.
-In the future, I think it might be better to create, in `~/.local/bin/`, a symbolic link to the original file.
+I do this by creating, in `~/.local/bin/`, a symbolic link to the script in `~/.local/scripts/`.
 
 ## usage
 
-Whenever I need to use any of my scripts, I reference the script through the `~/.local/bin/` directory.
+I added `~/.local/bin/` to PATH, so I can reference the scripts directly, such as `dwm_quit`.
 
 ## naming convention
 
@@ -35,4 +30,7 @@ There are other exceptions where I thought it would be better to leave the scrip
 
 ## todo
 
-- [add zathura window to tabbed through dmenu](https://www.reddit.com/r/suckless/comments/adfllb/how_to_create_named_tabs_using_the_suckless/)
+- move config files out of scripts and to `$XDG_CONFIG_HOME`
+	- no need to include them in my dotfiles
+	- i should add documentation about where config files are located
+
