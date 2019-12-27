@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# TODO: automatically spawn a terminal with fzf, similar to dmenu
-
-files="$(pdf_list | fzf -m)"
+files="$(pdf_list | dmenu)"
 
 if [ -n "$files" ]
 then
