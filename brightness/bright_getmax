@@ -1,8 +1,4 @@
 #!/bin/sh
 
-# executable=/usr/local/src/brightlight/brightlight
-# bright_raw=$($executable -rp |  grep -o '[^:]\+$')
-# echo $bright_raw
-
 cat '/sys/class/backlight/intel_backlight/max_brightness'
 
