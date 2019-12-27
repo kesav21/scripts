@@ -1,43 +1,21 @@
 #! /bin/bash
-#
-# dwm startup script
-#
-# powerline symbols
-# 
-# 
-# 
-# 
-#
-# other symbols
-#     wifi
-#     volume-on
-#     volume-muted
-#     brightness
-#     battery full
-#     battery charging
-#     battery discharging
-#     time
-#
-# TODO: add colors to signify status
-# TODO: implement toggle between short and long format
 
 # weather
 #
 # short format: temperature
 # long forrmat: temperature
 #
-# getweather() {
-# 	temp="$(curl -s wttr.in/Phoenix?format=%t)"
-# 	error=$(echo $temp | grep '[eE]rror')
+getweather() {
+	temp="$(curl -s 'wttr.in/Phoenix?format=%t')"
+	error=$(echo $temp | grep '[eE]rror')
 
-# 	if [ -n "$error" ]
-# 	then
-# 		echo "  (error)"
-# 	else
-# 		echo "  $(curl -s wttr.in/Phoenix?format=%t)"
-# 	fi
-
-#  }
+	if [ -n "$error" ]
+	then
+		echo "  (error)"
+	else
+		echo "  $temp"
+	fi
+}
 
 
 # wifi
@@ -49,14 +27,10 @@ getwifi() {
 
 	if [ -z "$wifi" ]
 	then
-		# echo "  (disconnected)"
-		echo "w  (disconnected)"
+		echo "睊  (disconnected)"
 	else
-		# echo "  $(wifi_getssid)"
-		echo "w  $(wifi_getssid)"
+		echo "  $(wifi_getssid)"
 	fi
-
-	# echo "wifi: $(wifi_getssid)"
 }
 
 # volume
@@ -66,12 +40,9 @@ getwifi() {
 getvolume() {
 	if [ "$(audio_ismuted)" = "yes" ]
 	then
-		# why is the mute symbol a garbage can?
-		# echo "  $(audio_getvolume)%"
-		echo "vm  $(audio_getvolume)%"
+		echo "  $(audio_getvolume)%"
 	else
-		# echo "  $(audio_getvolume)%"
-		echo "vu  $(audio_getvolume)%"
+		echo "  $(audio_getvolume)%"
 	fi
 }
 
@@ -80,8 +51,7 @@ getvolume() {
 # short format: brightness level
 # no long format
 getbrightness() {
-	# echo "  $(bright_getp)%"
-	echo "bright  $(bright_getp)%"
+	echo "  $(bright_getp)%"
 }
 
 # battery
@@ -96,18 +66,15 @@ getbattery() {
 
 	if [ "$status" = "Discharging" ]
 	then
-		# echo "  $(batt_getp)%"
-		echo "bd  $(batt_getp)%"
+		echo "  $(batt_getp)%"
 	elif [ "$status" = "Charging" ]
 	then
-		# echo "  $(batt_getp)%"
-		echo "bc  $(batt_getp)%"
+		echo "  $(batt_getp)%"
 	elif [ "$status" = "Full" ]
 	then
-		# echo "  $(batt_getp)%"
-		echo "bf  $(batt_getp)%"
+		echo "  $(batt_getp)%"
 	else
-		echo "be  $(batt_getp)%"
+		echo "be  $(batt_getp)%"
 	fi
 }
 
@@ -116,26 +83,16 @@ getbattery() {
 # short format: day of the week, 12 hour time
 # long format: month/day/year, 24 hour time
 getdatetime() {
-	date="$(date +"%a")"
-	time="$(date +"%I:%M %P")"
+	time="$(date +"%H:%M")"
+	date="$(date +"%a %m/%d")"
 
-	# echo "  $date $time"
-	echo "d  $date $time"
-
-	# date_long="$(date +"%m/%d/%Y")"
-	# time_long="$(date +"%H:%M:%S")"
-
-	# echo "date: $date_long $time_long"
+	echo "  $time $date"
 }
 
 # all statuses
 
 getstatus() {
-	# echo -e "\x02 $(getwifi) \x01 \x02 $(getvolume) \x01 \x02 $(getbrightness) \x01 \x02 $(getbattery) \x01 \x02 $(getdatetime) \x01"
-	# echo -e "\x01 $(getwifi) \x01 \x01 $(getvolume) \x01 \x01 $(getbrightness) \x01 \x01 $(getbattery) \x01 \x01 $(getdatetime) \x01"
-	# echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
-	echo -e " $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
-	# echo -e " $(getwifi) | $(getbrightness) | $(getbattery) | $(getdatetime) "
+	echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
 }
 
 while true
