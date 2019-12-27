@@ -37,4 +37,5 @@ There are other exceptions where I thought it would be better to leave the scrip
 	- add colors
 	- add short/long formats
 - remove `screensaver_toggle`, streamline `screensaver_init`
+- setup `xdg-user-dirs` to manage folders like downloads, documents, ...
 
