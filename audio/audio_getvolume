@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# limitations of this script:
-# it can only get the active sink if audio is currently playing
-
-sink=$( audio_getusablesink )
-now=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
-
-echo "$now"
+# add 1 to sink
+sink=$(($(audio_getusablesink)+1))
+# extract volume (digits only) for that specific sink
+pactl list sinks | awk "/^\sVolume: / {i++} i==$sink {print \$5;exit} " | grep -o '[0-9]*'
 
