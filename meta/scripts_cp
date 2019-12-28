@@ -1,21 +1,21 @@
 #!/bin/sh
 
 symlink_exe () {
-	cd $SCRIPTSPATH
+	cd $XDG_SCRIPTS_DIR
 	for line in $(git ls-files)
 	do
-		[ -x "$line" ] && ln -sv "$(realpath "$line")" "$BINPATH/$(basename $line)"
+		[ -x "$line" ] && ln -sv "$(realpath "$line")" "$XDG_BIN_DIR/$(basename $line)"
 	done
 }
 
 # empty bin
 
-echo -e "\nclearing $BINPATH:\n"
-rm -rfv $BINPATH && mkdir $BINPATH
+echo -e "\nclearing $XDG_BIN_DIR:\n"
+rm -rfv $XDG_BIN_DIR && mkdir $XDG_BIN_DIR
 
 # refill bin
 
-echo -e "\nadding scripts to $BINPATH/\n"
+echo -e "\nadding scripts to $XDG_BIN_DIR/\n"
 symlink_exe
 
 echo ''

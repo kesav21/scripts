@@ -5,7 +5,7 @@ autodelete () {
 	while read newfile
 	do
 		filename=$(echo $newfile | awk '{print $3}')
-		filepath="$BINPATH/$filename"
+		filepath="$XDG_BIN_DIR/$filename"
 
 		# remove symlink
 		[ -h "$filepath" ] && rm "$filepath"
@@ -13,5 +13,5 @@ autodelete () {
 
 }
 
-inotifywait -m -r -e delete "$BINPATH" | autodelete
+inotifywait -m -r -e delete "$XDG_BIN_DIR" | autodelete
 

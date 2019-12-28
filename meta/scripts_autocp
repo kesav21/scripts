@@ -8,7 +8,7 @@ autolink () {
 		filename=$(echo $newfile | awk '{print $3}')
 
 		fullpath="$dirname$filename"
-		binpath="$BINPATH/$filename"
+		binpath="$XDG_BIN_DIR/$filename"
 
 		# if file is executable but not in $bin_dir
 		if [ -x "$fullpath" ] && [ ! -e "$binpath" ]
@@ -20,5 +20,5 @@ autolink () {
 
 }
 
-inotifywait -m -r -e attrib "$SCRIPTSPATH" | autolink
+inotifywait -m -r -e attrib "$XDG_SCRIPTS_DIR" | autolink
 

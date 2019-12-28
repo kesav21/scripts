@@ -1,6 +1,11 @@
 
 # config files
 
+cfbf $XDG_SCRIPTS_DIR/bookmarks/bm_files
+cfbd $XDG_SCRIPTS_DIR/bookmarks/bm_dirs
+
+cfx $XDG_CONFIG_HOME/X11/xinitrc
+
 cfsa $XDG_CONFIG_HOME/shell/aliases
 cfsp $XDG_CONFIG_HOME/shell/profile
 cfzr $XDG_CONFIG_HOME/zsh/.zshrc
@@ -10,12 +15,9 @@ cfv $XDG_CONFIG_HOME/nvim/init.vim
 cfvf $XDG_CONFIG_HOME/vifm/vifmrc
 cfz $XDG_CONFIG_HOME/zathura/zathurarc
 
-cfdm ~/.local/src/dmenu/config.h
-cfdw ~/.local/src/dwm/config.h
-cfst ~/.local/src/st/config.h
-cfsu ~/.local/src/surf/config.h
-cft ~/.local/src/tabbed/config.h
-
-cfbf $HOME/.local/scripts/bookmarks/bm_files
-cfbd $HOME/.local/scripts/bookmarks/bm_dirs
+cfdm $XDG_SRC_DIR/dmenu/config.h
+cfdw $XDG_SRC_DIR/dwm/config.h
+cfst $XDG_SRC_DIR/st/config.h
+cfsu $XDG_SRC_DIR/surf/config.h
+cft $XDG_SRC_DIR/tabbed/config.h
 

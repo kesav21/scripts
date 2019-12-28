@@ -1,21 +1,21 @@
 #!/bin/sh
 
 # notification daemon
-nohup dunst >$SCRIPTSPATH/.logs/dunst.log 2>&1 &
+nohup dunst >$XDG_SCRIPTS_DIR/.logs/dunst.log 2>&1 &
 
 # set wallpaper
 hsetroot -solid "#282828" & # gruvbox
 
 # sets the statusbar
-nohup dwm_setstatbar >$SCRIPTSPATH/.logs/dwm_setstatbar.log 2>&1 &
+nohup dwm_setstatbar >$XDG_SCRIPTS_DIR/.logs/dwm_setstatbar.log 2>&1 &
 
 # battery low/full notifications
-nohup batt_notifier >$SCRIPTSPATH/.logs/batt_notifier.log 2>&1 &
+nohup batt_notifier >$XDG_SCRIPTS_DIR/.logs/batt_notifier.log 2>&1 &
 
 # initialize screensaver
-nohup screensaver_init >$SCRIPTSPATH/.logs/screensaver_init.log 2>&1 &
+nohup screensaver_init >$XDG_SCRIPTS_DIR/.logs/screensaver_init.log 2>&1 &
 
 # initialize meta scripts
-# nohup scripts_autocp >$SCRIPTSPATH/.logs/scripts_autocp.log 2>&1 &
-# nohup scripts_autorm >$SCRIPTSPATH/.logs/scripts_autorm.log 2>&1 &
+# nohup scripts_autocp >$XDG_SCRIPTS_DIR/.logs/scripts_autocp.log 2>&1 &
+# nohup scripts_autorm >$XDG_SCRIPTS_DIR/.logs/scripts_autorm.log 2>&1 &
 

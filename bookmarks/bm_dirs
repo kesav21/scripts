@@ -1,7 +1,7 @@
 
 # comments
 
-h ~
+h $HOME
 
 co $XDG_CONFIG_HOME
 ca $XDG_CACHE_HOME
@@ -9,17 +9,17 @@ da $XDG_DATA_HOME
 
 ps $PASSWORD_STORE_DIR
 
-d ~/.local/dotfiles/
-s ~/.local/scripts/
-ls ~/.local/src/
-lb ~/.local/bin/
+d $XDG_DOTFILES_DIR
+s $XDG_SCRIPTS_DIR
+ls $XDG_SRC_DIR
+lb $XDG_BIN_DIR
 
-a ~/asu/
+dc $XDG_DOCUMENTS_DIR
+dw $XDG_DOWNLOADS_DIR
+m $XDG_MUSIC_DIR
+pc $XDG_PICTURES_DIR
 
-# b ~/Books/
-dc ~/Documents/
-dw ~/Downloads/
-pc ~/Pictures/
-pr ~/projects/
-pe ~/projects/project-euler/
+a $XDG_ASU_DIR
+pr $XDG_PROJECTS_DIR
+pe $XDG_PROJECTS_DIR/project-euler
 
