@@ -1,4 +1,0 @@
-#!/bin/sh
-
-wicd-cli --status | awk '/status/ {print $3}'
-

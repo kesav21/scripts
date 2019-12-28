@@ -1,7 +1,0 @@
-#!/bin/bash
-
-sleep $1
-
-icon_clock="$ICONPATH/svgs/solid/clock.svg"
-dunstify -i $icon_clock -u critical "Time's up"
-
