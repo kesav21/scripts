@@ -1,6 +1,0 @@
-#!/bin/bash
-
-standby_timeout=5
-suspend_timeout=6
-off_timeout=7
-

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # retrieve shared variables
-source screensaver_vars
+source $XDG_CONFIG_HOME/bin/screensaver_vars
 
 # toggle dpms
 md=$(dpms_toggle $standby_timeout $suspend_timeout $off_timeout)
