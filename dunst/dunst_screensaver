@@ -4,7 +4,7 @@
 # $2 is xautolock message
 #
 
-source dunst_ids
+source $XDG_CONFIG_HOME/bin/dunst_ids
 
 icon_lock="$ICONPATH/svgs/solid/lock.svg"
 dunstify -t 2000 -i $icon_lock -r $id_screensaver 'Screensaver' "\n$1\n$2"

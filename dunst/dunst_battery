@@ -3,7 +3,7 @@
 # $1 is battery mode: critical, low or full
 #
 
-source dunst_ids
+source $XDG_CONFIG_HOME/bin/dunst_ids
 
 if [ "$1" = 'critical' ]
 then

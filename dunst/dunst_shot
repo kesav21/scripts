@@ -3,7 +3,7 @@
 # $1 is the directory where pictures are stored
 #
 
-source dunst_ids
+source $XDG_CONFIG_HOME/bin/dunst_ids
 
 icon='camera-on'
 dir=$(echo "$1" | sed "s|$HOME|~|")
