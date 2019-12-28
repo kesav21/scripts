@@ -5,17 +5,21 @@ These are the scripts I use to automate miscellaneous things on my machine.
 
 ## usage
 
-This directory is located at `~/.local/bin/` on my machine.
-I added `~/.local/bin/` and all of its subdirectories to `$PATH`, so I can reference the scripts directly, such as `dwm_quit`.
+This directory is located at `~/.local/bin` on my machine.
+I added `~/.local/bin` and all of its subdirectories to `$PATH`, so I can reference the scripts directly (`dwm_quit` instead of `~/.local/bin/dwm/dwm_quit`).
 
-## naming convention
+## configuration
 
-I am trying to have a consistent naming convention within this folder.
-The convention I have decided upon is not only naming the script after what it does (such as `connect` or `notifier`), but also prefixing the script with the module that it belongs to, such as (`blue` or `batt`).
+Config files must be located in `$XDG_CONFIG_HOME/bin` (which is usually `~/.config/`).
 
-There are, of course, some (a lot, like 20%) exceptions to this rule.
-The scripts that do not belong to any module do not have a prefix (such as `colortest` or `windowlookup`).
-There are other exceptions where I thought it would be better to leave the script name be rather than force it into a convention that doesn't work for that particular script.
+These are all the config files required:
+- `bm_files`, `bm_dirs`: bookmarks
+- `dunst_ids`: notifications
+- `screensaver_vars`: screensaver
+
+## logs
+
+Logs are stored in `$XDG_CACHE_HOME/bin` (usually `~/.cache`).
 
 ## todo
 
