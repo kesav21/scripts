@@ -1,11 +1,11 @@
 #!/bin/bash
 
-bmdirs="$XDG_BIN_DIR/bookmarks/bm_dirs"
-bmfiles="$XDG_BIN_DIR/bookmarks/bm_files"
+bmdirs="$XDG_CONFIG_HOME"/bin/bm_dirs
+bmfiles="$XDG_CONFIG_HOME"/bin/bm_files
 
 # shortcut file locations
-shell="$XDG_CONFIG_HOME/shell/bookmarks"
-vifm="$XDG_CONFIG_HOME/vifm/vifm_bookmarks"
+shell="$XDG_CONFIG_HOME"/shell/bookmarks
+vifm="$XDG_CONFIG_HOME"/vifm/vifm_bookmarks
 
 # remove existing files
 rm "$shell" "$vifm"
