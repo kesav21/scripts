@@ -1,5 +1,4 @@
 #!/bin/sh
 
-status=$(cat /sys/class/power_supply/BAT0/status)
-echo $status
+cat /sys/class/power_supply/BAT0/status
 
