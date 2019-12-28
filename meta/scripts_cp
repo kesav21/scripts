@@ -1,21 +1,22 @@
 #!/bin/sh
 
-cd $SCRIPTSPATH
-files=$(find . \( ! -regex '.*/\..*' \) -type f)
+symlink_exe () {
+	cd $SCRIPTSPATH
+	for line in $(git ls-files)
+	do
+		[ -x "$line" ] && ln -sv "$(realpath "$line")" "$BINPATH/$(basename $line)"
+	done
+}
+
+# empty bin
 
 echo -e "\nclearing $BINPATH:\n"
-
 rm -rfv $BINPATH && mkdir $BINPATH
 
+# refill bin
+
 echo -e "\nadding scripts to $BINPATH/\n"
+symlink_exe
 
-for file in $files
-do
-	if [ -x "$file" ]
-	then
-		ln -sv $(realpath $file) $BINPATH/$(basename $file)
-	fi
-done
-
-echo ""
+echo ''
 
