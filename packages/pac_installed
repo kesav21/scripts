@@ -1,4 +1,0 @@
-#!/bin/sh
-
-pacman -Q | awk '{print $1}' | fzf -m --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -S
-

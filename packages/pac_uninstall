@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pac_installed | xargs -ro sudo pacman -Rns
+
