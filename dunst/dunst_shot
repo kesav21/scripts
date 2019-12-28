@@ -5,9 +5,8 @@
 
 source dunst_ids
 
-# convert the /home/user to ~
-# it's shorter, and i am very bored
+icon='camera-on'
 dir=$(echo "$1" | sed "s|$HOME|~|")
 
-dunstify -t 2000 -r $id_shot 'Screenshot' "Stored in $dir"
+dunstify -i "$icon" -t 2000 -r "$id_shot" 'Screenshot' "Stored in $dir/"
 

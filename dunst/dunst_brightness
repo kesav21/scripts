@@ -3,8 +3,8 @@
 
 source dunst_ids
 
-icon="$ICONPATH/svgs/solid/adjust.svg"
+icon='notification-display-brightness-medium'
 bar=$(dunst_bar $(bright_get) $(bright_getmax))
 
-dunstify -i $icon -t 2000 -r $id_brightness 'Brightness' "\n$bar"
+dunstify -i $icon -t 2000 -r $id_brightness 'Brightness' "$bar"
 

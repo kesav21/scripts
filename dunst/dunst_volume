@@ -3,15 +3,14 @@
 
 source dunst_ids
 
-icon_mute="$ICONPATH/svgs/solid/volume-mute.svg"
-icon_vol="$ICONPATH/svgs/solid/volume-up.svg"
-
 bar=$(dunst_bar $(audio_getvolume) 100)
 
 if [ "$(audio_ismuted)" = "yes" ]
 then
-	dunstify -i $icon_mute -t 2000 -r $id_volume 'Volume' "\nMuted\n$bar"
+	icon='notification-audio-volume-muted'
+	dunstify -i $icon -t 2000 -r $id_volume 'Volume' "$bar"
 else
-	dunstify -i $icon_vol -t 2000 -r $id_volume 'Volume' "\nNot muted\n$bar"
+	icon='notification-audio-volume-high'
+	dunstify -i $icon -t 2000 -r $id_volume 'Volume' "$bar"
 fi
 
