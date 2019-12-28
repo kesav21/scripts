@@ -3,21 +3,10 @@
 
 These are the scripts I use to automate miscellaneous things on my machine.
 
-## `~/.local/bin/`
-
-There is one problem that I face with this scripts directory.
-As this directory grows, I sometimes move some files around within the file structure.
-I also make new directories to accommodate some of the new files I create.
-When I do this, the references to some of these files become obsolete, and need to be changed wherever they are referenced.
-
-Therefore, I have decided to keep all of my scripts within `~/.local/scripts/` with a proper directory structure separating all of the scripts.
-In addition, I have also decided to create a script that flattens the directory structure of all of my scripts and moves them to `~/.local/bin/`.
-
-I do this by creating, in `~/.local/bin/`, a symbolic link to the script in `~/.local/scripts/`.
-
 ## usage
 
-I added `~/.local/bin/` to PATH, so I can reference the scripts directly, such as `dwm_quit`.
+This directory is located at `~/.local/bin/` on my machine.
+I added `~/.local/bin/` and all of its subdirectories to `$PATH`, so I can reference the scripts directly, such as `dwm_quit`.
 
 ## naming convention
 
@@ -37,5 +26,4 @@ There are other exceptions where I thought it would be better to leave the scrip
 	- add colors
 	- add short/long formats
 - remove `screensaver_toggle`, streamline `screensaver_init`
-- setup `xdg-user-dirs` to manage folders like downloads, documents, ...
 

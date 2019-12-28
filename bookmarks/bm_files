@@ -1,8 +1,8 @@
 
 # config files
 
-cfbf $XDG_SCRIPTS_DIR/bookmarks/bm_files
-cfbd $XDG_SCRIPTS_DIR/bookmarks/bm_dirs
+cfbf $XDG_BIN_DIR/bookmarks/bm_files
+cfbd $XDG_BIN_DIR/bookmarks/bm_dirs
 
 cfx $XDG_CONFIG_HOME/X11/xinitrc
 
