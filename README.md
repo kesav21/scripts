@@ -26,5 +26,4 @@ Logs are stored in `$XDG_CACHE_HOME/bin` (usually `~/.cache`).
 - dwm statusbar
 	- add colors
 	- add short/long formats
-- remove `screensaver_toggle`, streamline `screensaver_init`
 

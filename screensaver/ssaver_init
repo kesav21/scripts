@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+# retrieve config variables
+source $XDG_CONFIG_HOME/bin/screensaver_vars
+
+# enable dpms
+xset +dpms
+# set dpms timeouts
+xset dpms $s_standby $s_suspend $s_off
+# enable xss-lock to trigger on suspend
+nohup xss-lock slock >$XDG_CACHE_HOME/bin/xss_lock.log 2>&1 &
+

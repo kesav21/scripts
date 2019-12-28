@@ -13,5 +13,5 @@ nohup dwm_setstatbar >$XDG_CACHE_HOME/bin/dwm_setstatbar.log 2>&1 &
 nohup batt_notifier >$XDG_CACHE_HOME/bin/batt_notifier.log 2>&1 &
 
 # initialize screensaver
-nohup screensaver_init >$XDG_CACHE_HOME/bin/screensaver_init.log 2>&1 &
+ssaver_init &
 
