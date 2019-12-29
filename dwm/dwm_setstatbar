@@ -1,28 +1,23 @@
-#! /bin/bash
+#!/bin/dash
 
-# weather
-#
-# short format: temperature
-# long forrmat: temperature
-#
 getweather() {
 	temp="$(curl -s 'wttr.in/Phoenix?format=%t')"
 	error=$(echo $temp | grep '[eE]rror')
 
 	if [ -n "$error" ]
 	then
-		echo "  (error)"
+		echo "  (e)"
 	else
 		echo "  $temp"
 	fi
 }
 
 
-# wifi
 #
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
-getwifi() {
+#
+getwifi () {
 	wifi=$(wifi_getssid)
 
 	if [ -z "$wifi" ]
@@ -33,11 +28,7 @@ getwifi() {
 	fi
 }
 
-# volume
-#
-# short format: volume level
-# no long format
-getvolume() {
+getvolume () {
 	if [ "$(audio_ismuted)" = "yes" ]
 	then
 		echo "  $(audio_getvolume)%"
@@ -46,22 +37,17 @@ getvolume() {
 	fi
 }
 
-# brightness
-#
-# short format: brightness level
-# no long format
-getbrightness() {
+getbrightness () {
 	echo "  $(bright_getp)%"
 }
 
-# battery
 #
 # short format: battery level, status
 # long format: battery level, status, time left
 #
 # TODO: (long format) display time left until full charge/time until dead
-# TODO: if multiple batteries present, only display the first one
-getbattery() {
+#
+getbattery () {
 	status=$(batt_getstatus)
 
 	if [ "$status" = "Discharging" ]
@@ -78,27 +64,27 @@ getbattery() {
 	fi
 }
 
-# datetime
-#
-# short format: day of the week, 12 hour time
-# long format: month/day/year, 24 hour time
-getdatetime() {
-	time="$(date +"%H:%M")"
-	date="$(date +"%a %m/%d")"
+gettime () {
+	time="$(date +"%I:%M:%S %p")"
+	echo "  $time"
+}
 
-	echo "  $time $date"
+getdate () {
+	date="$(date +"%a, %b %d")"
+	echo "  $date"
 }
 
 # all statuses
 
-getstatus() {
-	echo -en "\x02 $(getweather) "
-	echo -en "\x03 $(getwifi) "
-	echo -en "\x04 $(getvolume) "
-	echo -en "\x02 $(getbrightness) "
-	echo -en "\x03 $(getbattery) "
-	echo -en "\x04 $(getdatetime) "
-	echo -en "\x01"
+getstatus () {
+	echo -n "\02 $(getweather) "
+	echo -n "\03 $(getwifi) "
+	echo -n "\04 $(getvolume) "
+	echo -n "\02 $(getbrightness) "
+	echo -n "\03 $(getbattery) "
+	echo -n "\04 $(gettime) "
+	echo -n "\02 $(getdate) "
+	echo -n "\01"
 }
 
 while true
