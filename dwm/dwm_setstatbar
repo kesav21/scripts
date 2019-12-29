@@ -92,7 +92,13 @@ getdatetime() {
 # all statuses
 
 getstatus() {
-	echo -e " $(getweather) | $(getwifi)  |  $(getvolume)  |  $(getbrightness)  |  $(getbattery)  |  $(getdatetime) "
+	echo -en "\x02 $(getweather) "
+	echo -en "\x03 $(getwifi) "
+	echo -en "\x04 $(getvolume) "
+	echo -en "\x02 $(getbrightness) "
+	echo -en "\x03 $(getbattery) "
+	echo -en "\x04 $(getdatetime) "
+	echo -en "\x01"
 }
 
 while true
