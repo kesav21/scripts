@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 killall -q dunst && dunst &
 

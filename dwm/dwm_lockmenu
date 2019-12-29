@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 options='lock quit refresh restart shutdown'
 option=$(echo $options | tr ' ' '\n' | dmenu)

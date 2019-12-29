@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 getweather() {
 	temp="$(curl -s 'wttr.in/Phoenix?format=%t')"

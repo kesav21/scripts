@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 sink=$( audio_getusablesink )
 delta="$1"

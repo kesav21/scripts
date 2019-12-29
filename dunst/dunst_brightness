@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 
 . $XDG_CONFIG_HOME/bin/dunst_ids

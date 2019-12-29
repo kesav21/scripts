@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 bmdirs="$XDG_CONFIG_HOME"/bin/bm_dirs
 bmfiles="$XDG_CONFIG_HOME"/bin/bm_files
@@ -11,7 +11,7 @@ vifm="$XDG_CONFIG_HOME"/vifm/vifm_bookmarks
 rm "$shell" "$vifm"
 
 # file prep
-printf "#!/bin/dash\n" >> "$shell"
+printf "#!/bin/sh\n" >> "$shell"
 printf "\necho 'sourced shortcuts'\n" >> "$shell"
 
 # bookmarked folders

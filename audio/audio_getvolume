@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 # add 1 to sink
 sink=$(audio_getusablesink)

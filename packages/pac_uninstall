@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 pac_list | xargs -ro sudo pacman -Rns
 
