@@ -2,6 +2,7 @@
 # scripts
 
 These are the scripts I use to automate miscellaneous things on my machine.
+BTW I use dash shell now.
 
 ## usage
 
@@ -25,6 +26,5 @@ Logs are stored in `$XDG_CACHE_HOME/bin` (usually `~/.cache`).
 
 - dwm statusbar
 	- add short/long formats
-- switch to faster sh (like dash)
-	- fix `dwm/dwm_setstatbar`
+- switch to dash (in progress)
 
