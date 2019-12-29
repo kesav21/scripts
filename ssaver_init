@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/dash
 
 
 # retrieve config variables
-source $XDG_CONFIG_HOME/bin/screensaver_vars
+. $XDG_CONFIG_HOME/bin/screensaver_vars
 
 # enable dpms
 xset +dpms

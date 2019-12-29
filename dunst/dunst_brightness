@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/dash
 
 
-source $XDG_CONFIG_HOME/bin/dunst_ids
+. $XDG_CONFIG_HOME/bin/dunst_ids
 
 icon='notification-display-brightness-medium'
 bar=$(dunst_bar $(bright_get) $(bright_getmax))

@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/dash
 #
 # $1 is battery mode: critical, low or full
 #
 
-source $XDG_CONFIG_HOME/bin/dunst_ids
+. $XDG_CONFIG_HOME/bin/dunst_ids
 
 if [ "$1" = 'critical' ]
 then
