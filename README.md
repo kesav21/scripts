@@ -24,6 +24,5 @@ Logs are stored in `$XDG_CACHE_HOME/bin` (usually `~/.cache`).
 ## todo
 
 - dwm statusbar
-	- add colors
 	- add short/long formats
 
