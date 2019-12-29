@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/dash
 
-options=("lock" "quit" "refresh" "restart" "shutdown")
-
-option=$(printf '%s\n' "${options[@]}" | dmenu)
+options='lock quit refresh restart shutdown'
+option=$(echo $options | tr ' ' '\n' | dmenu)
 
 case "$option" in
 	"lock")
