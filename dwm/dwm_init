@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 # notification daemon
 nohup dunst >$XDG_CACHE_HOME/bin/dunst.log 2>&1 &

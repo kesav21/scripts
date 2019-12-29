@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 #
 # returns macid of a bluetooth device, given its name
 

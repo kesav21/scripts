@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 #
 # refreshes dwm by killing a singular instance
 

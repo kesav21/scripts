@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 # smarter check:
 # get currently running sink

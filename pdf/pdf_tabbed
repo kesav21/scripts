@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 files="$(pdf_list | dmenu)"
 

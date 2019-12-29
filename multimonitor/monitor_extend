@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 current=eDP-1
 output=HDMI-1

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 sensors | awk '/^temp1/ {print $2}'
 

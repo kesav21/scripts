@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 free -h | awk '/^Mem:/ {print $3 "/" $2}'
 

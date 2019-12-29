@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 selected=$(find $PASSWORD_STORE_DIR -type f -name '*.gpg' \
 	| sed "s|$PASSWORD_STORE_DIR/||" \

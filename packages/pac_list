@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 pacman -Q | awk '{print $1}' | fzf -m --preview 'pacman -Qi {1}'
 

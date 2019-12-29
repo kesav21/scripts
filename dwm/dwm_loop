@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 # startup script
 dwm_init &

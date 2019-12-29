@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 killall dwm_init
 killall dwm_setstatbar

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 # mute command
 pactl set-sink-mute $(audio_getusablesink) "toggle"

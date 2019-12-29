@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 wicd-cli --status | awk '/Connected to/ {print $3}'
 

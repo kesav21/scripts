@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 
 echo "100 * $(bright_get) / $(bright_getmax)" | bc
 
