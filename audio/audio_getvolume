@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/bin/dash
 
 # add 1 to sink
-sink=$(($(audio_getusablesink)+1))
+sink=$(audio_getusablesink)
+# get line number of sink
+ln=$(pactl list sinks short | awk "/^$sink/{print NR}")
 # extract volume (digits only) for that specific sink
-pactl list sinks | awk "/^\sVolume: / {i++} i==$sink {print \$5;exit} " | grep -o '[0-9]*'
+pactl list sinks | awk "/^\sVolume: / {i++} i==$ln {print \$5;exit} " | grep -o '[0-9]*'
+
 
