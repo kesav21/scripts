@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# returns 'yes' or ''
+#
+
+# check if any are muted
+pactl list sinks | awk '/Mute: yes/ {print $2}'
+

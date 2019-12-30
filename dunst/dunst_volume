@@ -3,9 +3,9 @@
 
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
-bar=$(dunst_bar $(audio_getvolume) 100)
+bar=$(dunst_bar $(getvolume) 100)
 
-if [ "$(audio_ismuted)" = "yes" ]
+if [ "$(ismuted)" = "yes" ]
 then
 	icon='notification-audio-volume-muted'
 	dunstify -i $icon -t 2000 -r $id_volume 'Volume' "$bar"

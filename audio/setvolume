@@ -1,0 +1,6 @@
+#!/bin/sh
+
+pactl set-sink-volume "$(getsink)" "$1"
+# send notification
+dunst_volume
+

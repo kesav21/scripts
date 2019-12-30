@@ -28,12 +28,12 @@ getwifi () {
 	fi
 }
 
-getvolume () {
-	if [ "$(audio_ismuted)" = "yes" ]
+volumebar () {
+	if [ "$(ismuted)" = "yes" ]
 	then
-		echo "  $(audio_getvolume)%"
+		echo "  $(getvolume)%"
 	else
-		echo "  $(audio_getvolume)%"
+		echo "  $(getvolume)%"
 	fi
 }
 
@@ -83,7 +83,7 @@ getdate () {
 getstatus () {
 	echo -n "\02 $(getweather) "
 	echo -n "\03 $(getwifi) "
-	echo -n "\04 $(getvolume) "
+	echo -n "\04 $(volumebar) "
 	echo -n "\02 $(getbrightness) "
 	echo -n "\03 $(getbattery) "
 	echo -n "\04 $(gettime) "
