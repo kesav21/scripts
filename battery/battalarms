@@ -19,7 +19,6 @@ waittime=60
 # $3 is critical capacity threshold
 #
 batterycritical () {
-
 	if [ "$1" = "Discharging" ] && [ "$2" -le "$3" ]
 	then
 		dunst_battery 'critical'  "$2" &
@@ -38,7 +37,6 @@ batterycritical () {
 # $4 is low capacity threshold
 #
 batterylow () {
-
 	if [ "$1" = "Discharging" ] && [ "$2" -gt "$3" ] && [ "$2" -le "$4" ]
 	then
 		dunst_battery 'low'  "$2" &
@@ -51,7 +49,6 @@ batterylow () {
 # $1 is battery status: charging/discharging/full
 #
 batteryfull () {
-
 	[ "$1" = "Full" ] && dunst_battery 'full' &
 }
 
@@ -61,8 +58,8 @@ batteryfull () {
 #
 batterycheck () {
 
-	status=$(cat /sys/class/power_supply/BAT0/status)
-	capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+	status=$(battinfo -s)
+	capacity=$(battinfo -p)
 
 	echo "status:		$status"
 	echo "capacity:	$capacity"

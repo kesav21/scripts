@@ -12,7 +12,6 @@ getweather() {
 	fi
 }
 
-
 #
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
@@ -28,13 +27,19 @@ getwifi () {
 	fi
 }
 
-getvolume () {
-	if [ "$(audio_ismuted)" = "yes" ]
-	then
-		echo "  $(audio_getvolume)%"
-	else
-		echo "  $(audio_getvolume)%"
-	fi
+volumebar () {
+	echo "$(volumeicon) $(volctl --get-volume)%"
+}
+
+volumeicon () {
+	case "$(volctl --is-muted)" in
+		'yes')
+			echo " "
+			;;
+		*)
+			echo " "
+			;;
+	esac
 }
 
 getbrightness () {
@@ -47,21 +52,25 @@ getbrightness () {
 #
 # TODO: (long format) display time left until full charge/time until dead
 #
-getbattery () {
-	status=$(batt_getstatus)
+batterybar () {
+	echo "$(batteryicon) $(battinfo -p)%"
+}
 
-	if [ "$status" = "Discharging" ]
-	then
-		echo "  $(batt_getp)%"
-	elif [ "$status" = "Charging" ]
-	then
-		echo "  $(batt_getp)%"
-	elif [ "$status" = "Full" ]
-	then
-		echo "  $(batt_getp)%"
-	else
-		echo "be  $(batt_getp)%"
-	fi
+batteryicon () {
+	case "$(battinfo -s)" in
+		'Discharging')
+			echo ' '
+			;;
+		'Charging')
+			echo ''
+			;;
+		'Full')
+			echo ' '
+			;;
+		*)
+			echo 'be'
+			;;
+	esac
 }
 
 gettime () {
@@ -79,9 +88,9 @@ getdate () {
 getstatus () {
 	echo -n "\02 $(getweather) "
 	echo -n "\03 $(getwifi) "
-	echo -n "\04 $(getvolume) "
+	echo -n "\04 $(volumebar) "
 	echo -n "\02 $(getbrightness) "
-	echo -n "\03 $(getbattery) "
+	echo -n "\03 $(batterybar) "
 	echo -n "\04 $(gettime) "
 	echo -n "\02 $(getdate) "
 	echo -n "\01"
@@ -90,6 +99,7 @@ getstatus () {
 while true
 do
 	xsetroot -name "$(getstatus)"
+	# echo "$(getstatus)"
 	sleep .1
 done
 

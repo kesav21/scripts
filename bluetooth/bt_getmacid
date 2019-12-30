@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# returns macid of a bluetooth device, given its name
-
-# if name is non-empty, extract macid
-[ -n "$1" ] && echo "devices" | bluetoothctl | awk "/$1\$/ {print \$2}"
-

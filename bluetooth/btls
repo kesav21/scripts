@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+
+
+pairedids () {
+	echo 'devices' | bluetoothctl \
+		| sed -rn 's/Device ([A-F0-9:]*) (.*)/\1/p'
+}
+
+pairednames () {
+	echo 'devices' | bluetoothctl \
+		| sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
+}
+
+connectedids () {
+	pairedids | while read -r line
+	do
+		[ "$(isconnected "$line")" = 'yes' ] && echo $line
+	done
+}
+
+connectednames () {
+	connectedids | xargs -I kk btconvert -n kk
+}
+
+isconnected () {
+	echo "info $1" | bluetoothctl | awk '/Connected/ {print $2}'
+}
+
+
+case "$1" in
+	'pi'|'ip')
+		pairedids
+		;;
+	'pn'|'np')
+		pairednames
+		;;
+	'ci'|'ic')
+		connectedids
+		;;
+	'cn'|'nc')
+		connectednames
+		;;
+esac
+

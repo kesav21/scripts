@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# returns info on battery
+# -p or --percent returns battery percentage
+# -s or --status returns status (charging/discharging/full)
+
+if [ -z "$1" ] || [ "$1" = '-p' ]
+then
+	# print battery percentage
+	cat /sys/class/power_supply/BAT0/capacity
+
+elif [ "$1" = '-s' ]
+then
+	# print battery status
+	cat /sys/class/power_supply/BAT0/status
+fi
+
