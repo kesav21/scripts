@@ -4,28 +4,21 @@ options='lock quit refresh restart shutdown'
 option=$(echo $options | tr ' ' '\n' | dmenu)
 
 case "$option" in
-	"lock")
-		echo "lock screen"
+	'lock')
 		slock
 		;;
-	"quit")
-		echo "quit dwm"
-		dwm_quit
+	'quit')
+		killall dwm_setstatbar
+		killall xinitrc
 		;;
-	"refresh")
-		echo "refresh dwm"
+	'refresh')
 		killall -q dwm
 		;;
-	"restart")
-		echo "restart"
+	'restart')
 		reboot
 		;;
-	"shutdown")
-		echo "shutdown"
+	'shutdown')
 		shutdown now
-		;;
-	*)
-		echo "choose a valid option"
 		;;
 esac
 

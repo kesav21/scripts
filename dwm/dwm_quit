@@ -1,8 +1,0 @@
-#!/bin/sh
-
-killall dwm_init
-killall dwm_setstatbar
-
-killall dwm_loop
-killall dwm_noloop
-
