@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# get line number of sink
-sink=$(getsink)
-ln=$(pactl list sinks short | awk "/^$sink/{print NR}")
-# extract volume (digits only) for that specific sink
-pactl list sinks | awk "/^\sVolume: / {i++} i==$ln {print \$5;exit} " | grep -o '[0-9]*'
-
-

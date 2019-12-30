@@ -1,16 +1,19 @@
 #!/bin/sh
 
-
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
-bar=$(dunst_bar $(getvolume) 100)
+volumeicon () {
+	case "$(volctl --is-muted)" in
+		'yes')
+			echo 'notification-audio-volume-muted'
+			;;
+		*)
+			echo 'notification-audio-volume-high'
+			;;
+	esac
+}
 
-if [ "$(ismuted)" = "yes" ]
-then
-	icon='notification-audio-volume-muted'
-	dunstify -i $icon -t 2000 -r $id_volume 'Volume' "$bar"
-else
-	icon='notification-audio-volume-high'
-	dunstify -i $icon -t 2000 -r $id_volume 'Volume' "$bar"
-fi
+bar=$(dunst_bar $(volctl --get-volume) 100)
+
+dunstify -i "$(volumeicon)" -t 2000 -r $id_volume 'Volume' "$bar"
 

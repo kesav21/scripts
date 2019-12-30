@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# mute command
-pactl set-sink-mute $(getsink) "toggle"
-# send notification
-dunst_volume
-
