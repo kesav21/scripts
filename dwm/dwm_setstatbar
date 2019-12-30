@@ -48,20 +48,24 @@ getbrightness () {
 # TODO: (long format) display time left until full charge/time until dead
 #
 getbattery () {
-	status=$(batt_getstatus)
+	echo "$(getbatteryicon) $(battinfo -p)%"
+}
 
-	if [ "$status" = "Discharging" ]
-	then
-		echo "  $(batt_getp)%"
-	elif [ "$status" = "Charging" ]
-	then
-		echo "  $(batt_getp)%"
-	elif [ "$status" = "Full" ]
-	then
-		echo "  $(batt_getp)%"
-	else
-		echo "be  $(batt_getp)%"
-	fi
+getbatteryicon () {
+	case "$(battinfo -s)" in
+		'Discharging')
+			echo ' '
+			;;
+		'Charging')
+			echo ''
+			;;
+		'Full')
+			echo ' '
+			;;
+		*)
+			echo 'be'
+			;;
+	esac
 }
 
 gettime () {
@@ -90,6 +94,7 @@ getstatus () {
 while true
 do
 	xsetroot -name "$(getstatus)"
+	# echo "$(getstatus)"
 	sleep .1
 done
 
