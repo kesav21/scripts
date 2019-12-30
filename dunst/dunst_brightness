@@ -4,7 +4,7 @@
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
 icon='notification-display-brightness-medium'
-bar=$(dunst_bar $(bright_get) $(bright_getmax))
+bar=$(dunst_bar $(getbright --raw) $(getbright --max))
 
 dunstify -i $icon -t 2000 -r $id_brightness 'Brightness' "$bar"
 

@@ -43,7 +43,7 @@ volumeicon () {
 }
 
 getbrightness () {
-	echo "  $(bright_getp)%"
+	echo "  $(getbright --percent)%"
 }
 
 #

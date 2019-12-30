@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo "100 * $(bright_get) / $(bright_getmax)" | bc
-
