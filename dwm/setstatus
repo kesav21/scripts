@@ -17,13 +17,13 @@ getweather() {
 # long format: ssid, upspeed, downspeed, signal
 #
 getwifi () {
-	wifi=$(wifi_getssid)
+	ssid=$(netinfo)
 
-	if [ -z "$wifi" ]
+	if [ -z "$ssid" ]
 	then
 		echo "睊  (disconnected)"
 	else
-		echo "  $(wifi_getssid)"
+		echo "  $ssid"
 	fi
 }
 

@@ -1,5 +1,5 @@
 #!/bin/sh
 
-killall dwm_setstatbar
-dwm_setstatbar &
+killall setstatus
+setstatus &
 
