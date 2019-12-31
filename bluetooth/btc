@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# connects an already paired bluetooth device
+# connects an previously paired bluetooth device
 
-# list names of connected devices
-btls cn | dmenu | sort -u | while read -r name
+# list names of paired devices
+btls pn | dmenu | sort -u | while read -r name
 do
 	# convert name to id
 	id=$(btconvert -i "$name")
