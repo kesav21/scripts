@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# changes brightness by given amount
+#
+
+# remove % symbol from input
+num=$(echo "$1" | sed 's/%//g')
+# convert input to a number
+num=$(($num + 0))
+
+# calculate 5% of maximum brightness
+diff=$(echo "$num * $(getbright --max) / 100" | bc)
+# subtract 5% from current brightness
+newbright=$(echo "$(getbright --raw) + $diff" | bc)
+# remove decimal places
+backlight=${newbright%.*}
+# write new brightness to file
+echo "$backlight" > /sys/class/backlight/intel_backlight/brightness
+
+# send notification
+notifybright &
+

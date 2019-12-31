@@ -10,13 +10,13 @@
 if [ "$1" = '-s' ] || [ "$1" = "--set-volume" ]
 then
 	pactl set-sink-volume "$(getsink)" "$2"
-	dunst_volume
+	notifyvol
 
 # toggle mute
 elif [ "$1" = '-t' ] || [ "$1" = "--toggle-mute" ]
 then
 	pactl set-sink-mute "$(getsink)" 'toggle'
-	dunst_volume
+	notifyvol
 
 # get volume
 elif [ "$1" = '-g' ] || [ "$1" = "--get-volume" ]

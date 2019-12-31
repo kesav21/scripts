@@ -13,7 +13,7 @@ volumeicon () {
 	esac
 }
 
-bar=$(dunst_bar $(volctl --get-volume) 100)
+bar=$(progressbar $(volctl --get-volume) 100)
 
 dunstify -i "$(volumeicon)" -t 2000 -r $id_volume 'Volume' "$bar"
 

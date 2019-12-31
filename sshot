@@ -4,5 +4,5 @@ dir="$XDG_PICTURES_DIR"/screenshots
 
 cd $dir
 scrot -s -e 'echo $f && sxiv $f'
-dunst_shot $dir &
+notifysshot $dir &
 

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-output=HDMI-1
-
-xrandr --auto && xrandr --output $output --off
-

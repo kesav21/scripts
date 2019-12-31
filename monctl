@@ -1,0 +1,14 @@
+#!/bin/sh
+
+output=HDMI-1
+current=eDP-1
+
+case "$1" in
+	'-e'|'--extend')
+		xrandr --output "$output" --auto --above "$current"
+		;;
+	'-d'|'--disconnect')
+		xrandr --auto && xrandr --output "$output" --off
+		;;
+esac
+

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # critical threshold capacity
 critical=9
 # low threshold capacity
@@ -21,7 +20,7 @@ waittime=60
 batterycritical () {
 	if [ "$1" = "Discharging" ] && [ "$2" -le "$3" ]
 	then
-		dunst_battery 'critical'  "$2" &
+		notifybatt 'critical'  &
 	fi
 }
 
@@ -39,7 +38,7 @@ batterycritical () {
 batterylow () {
 	if [ "$1" = "Discharging" ] && [ "$2" -gt "$3" ] && [ "$2" -le "$4" ]
 	then
-		dunst_battery 'low'  "$2" &
+		notifybatt 'low' &
 	fi
 }
 
@@ -49,7 +48,7 @@ batterylow () {
 # $1 is battery status: charging/discharging/full
 #
 batteryfull () {
-	[ "$1" = "Full" ] && dunst_battery 'full' &
+	[ "$1" = "Full" ] && notifybatt 'full' &
 }
 
 #
