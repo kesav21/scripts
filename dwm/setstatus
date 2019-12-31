@@ -1,16 +1,15 @@
 #!/bin/sh
 
-getweather() {
-	temp="$(curl -s 'wttr.in/Phoenix?format=%t')"
-	error=$(echo $temp | grep '[eE]rror')
+trap 'update' 5
 
-	if [ -n "$error" ]
-	then
-		echo "  (e)"
-	else
-		echo "  $temp"
-	fi
-}
+#
+# this makes the script really slow
+# find a faster way of reporting weather
+#
+# getweather() {
+# 	temp="$(curl -s 'wttr.in/chandler?format=%t' | grep -Eo '(\+|\-)[0-9]*°F')"
+# 	[ -n "$temp"  ] && echo "  $temp"
+# }
 
 #
 # short format: ssid
@@ -74,7 +73,7 @@ batteryicon () {
 }
 
 gettime () {
-	time="$(date +"%I:%M:%S %p")"
+	time="$(date +"%I:%M %p")"
 	echo "  $time"
 }
 
@@ -86,7 +85,7 @@ getdate () {
 # all statuses
 
 getstatus () {
-	echo -n "\02 $(getweather) "
+	# echo -n "\02 $(getweather) "
 	echo -n "\03 $(getwifi) "
 	echo -n "\04 $(volumebar) "
 	echo -n "\02 $(getbrightness) "
@@ -96,10 +95,14 @@ getstatus () {
 	echo -n "\01"
 }
 
+update () {
+	xsetroot -name "$(getstatus)" & wait
+	# echo "$(getstatus)" & wait
+}
+
 while true
 do
-	xsetroot -name "$(getstatus)"
-	# echo "$(getstatus)"
-	sleep .1
+	update
+	sleep 1m & wait
 done
 
