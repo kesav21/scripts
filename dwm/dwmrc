@@ -7,6 +7,3 @@ setstatus &
 # initialize screensaver
 lockrc &
 
-# battery low/full notifications
-battalarms >$XDG_CACHE_HOME/bin/battalarms.log 2>&1 &
-
