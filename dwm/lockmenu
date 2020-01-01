@@ -1,24 +1,28 @@
 #!/bin/sh
 
-options='lock quit refresh restart shutdown'
-option=$(echo $options | tr ' ' '\n' | dmenu)
+doaction () {
+	read -r option
 
-case "$option" in
-	'lock')
-		slock
-		;;
-	'quit')
-		killall dwm_setstatbar
-		killall xinitrc
-		;;
-	'refresh')
-		killall -q dwm
-		;;
-	'restart')
-		reboot
-		;;
-	'shutdown')
-		shutdown now
-		;;
-esac
+	case "$option" in
+		'lock')
+			slock
+			;;
+		'quit')
+			killall dwm_setstatbar
+			killall xinitrc
+			;;
+		'refresh')
+			killall -q dwm
+			;;
+		'restart')
+			reboot
+			;;
+		'shutdown')
+			shutdown now
+			;;
+	esac
+}
+
+
+echo 'lock quit refresh restart shutdown' | tr ' ' '\n' | dmenu | doaction
 
