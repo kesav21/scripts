@@ -1,8 +1,11 @@
 #!/bin/sh
 
-dir="$XDG_PICTURES_DIR"/screenshots
+. $XDG_CONFIG_HOME/bin/dunst_ids
 
-cd $dir
+# get directory name and shorten it
+dir=$(echo "$XDG_PICTURES_DIR"/screenshots | sed "s|$HOME|~|")
+# take screenshot and save it to dir
 scrot -s -e 'echo $f && sxiv $f'
-notifysshot $dir &
+# send notification
+dunstify -i 'camera-on' -t 2000 -r "$id_shot" 'Screenshot' "Stored in $dir/"
 
