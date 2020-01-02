@@ -1,0 +1,11 @@
+#!/bin/sh
+
+files() {
+	fd -e gpg . "$PASSWORD_STORE_DIR" | while read -r line; do
+		echo "$line" | sed "s|$PASSWORD_STORE_DIR/||" | sed 's|\.gpg||'
+	done
+}
+
+file="$(files | fzf --preview='pass show {}')"
+
+[ -n "$file" ] && pass edit "$file"
