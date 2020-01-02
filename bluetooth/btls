@@ -1,15 +1,17 @@
 #!/bin/sh
 #
 
-
-pairedids () {
-	echo 'devices' | bluetoothctl \
-		| sed -rn 's/Device ([A-F0-9:]*) (.*)/\1/p'
-}
-
 pairednames () {
 	echo 'devices' | bluetoothctl \
 		| sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
+}
+
+pairedids () {
+	echo 'devices' | bluetoothctl | awk '/Device/ {print $2}'
+}
+
+isconnected () {
+	echo "info $1" | bluetoothctl | awk '/Connected/ {print $2}'
 }
 
 connectedids () {
@@ -20,25 +22,15 @@ connectedids () {
 }
 
 connectednames () {
-	connectedids | xargs -I kk btconvert -n kk
-}
-
-isconnected () {
-	echo "info $1" | bluetoothctl | awk '/Connected/ {print $2}'
+	connectedids | btconvert --to-name
 }
 
 
 case "$1" in
-	'pi'|'ip')
-		pairedids
-		;;
-	'pn'|'np')
+	'-p'|'--paired')
 		pairednames
 		;;
-	'ci'|'ic')
-		connectedids
-		;;
-	'cn'|'nc')
+	'-c'|'--connected')
 		connectednames
 		;;
 esac
