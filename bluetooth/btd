@@ -1,13 +1,15 @@
 #!/bin/sh
 #
-# disconnects a device
+# disconnects a currently connected device
+
+disconnect () {
+	while read -r id
+	do
+		# disconnect using id
+		[ -n "$id" ] && echo "disconnect $id" | bluetoothctl
+	done
+}
 
 # list names of connected devices
-btls cn | dmenu | sort -u | while read -r name
-do
-	# convert name to id
-	id=$(btconvert -i "$name")
-	# disconnect using id
-	[ -n "$id" ] && echo "disconnect $id" | bluetoothctl
-done
+btls --connected | dmenu | sort -u | btconvert --to-id | disconnect
 
