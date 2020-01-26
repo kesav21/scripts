@@ -14,18 +14,17 @@ low=15
 #
 # actions: critical, low, full, ok
 #
-getaction () {
+getaction() {
 	read -r status capacity critical low
 
 	[ "$status" = "Discharging" ] && [ "$capacity" -le "$critical" ] && echo 'critical'
-	[ "$status" = "Discharging" ] && [ "$capacity" -le "$low" ] && echo 'low'
 	[ "$status" = "Full" ] && echo 'full'
 }
 
 #
 # read action from standard input
 #
-notify () {
+notify() {
 	read -r action
 
 	case "$action" in
@@ -45,4 +44,3 @@ notify () {
 }
 
 echo "$status $capacity $critical $low" | getaction | notify
-

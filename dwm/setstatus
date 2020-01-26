@@ -92,7 +92,6 @@ getstatus () {
 	echo -n "\03 $(batterybar) "
 	echo -n "\04 $(gettime) "
 	echo -n "\02 $(getdate) "
-	echo -n "\01"
 }
 
 update () {
