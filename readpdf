@@ -1,19 +1,27 @@
 #!/bin/sh
 
-lspdf () {
+lshome() {
 	find $HOME -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*.pdf' -print \
+		| sed "s|$HOME|~|"
 }
 
-files="$(lspdf | dmenu)"
+lstmp() {
+	find /tmp/vim-latex-live-preview-* -name '*.pdf' \
+		| sed "s|$HOME|~|"
+}
 
-if [ -n "$files" ]
-then
+lspdf() {
+	lstmp &
+	lshome
+}
+
+open() {
 	xid=$(tabbed -cd)
 	echo "$xid"
-	for file in $files
-	do
-		echo "$file"
-		zathura -e "$xid" "$file" &
+	while read -r line; do
+		echo "$line"
+		zathura -e "$xid" "$line" &
 	done
-fi
+}
 
+lspdf | dmenu | uniq | open
