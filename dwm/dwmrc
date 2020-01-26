@@ -6,4 +6,3 @@ hsetroot -solid "#282828"
 setstatus &
 # initialize screensaver
 lockrc &
-

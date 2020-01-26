@@ -5,14 +5,12 @@
 # -s or --status returns status (charging/discharging/full)
 
 case "$1" in
-	'-p'|'--percent')
+	'-p' | '--percent')
 		# print battery percentage
 		cat /sys/class/power_supply/BAT0/capacity
 		;;
-	'-s'|'--status')
+	'-s' | '--status')
 		# print battery status
 		cat /sys/class/power_supply/BAT0/status
 		;;
 esac
-
-

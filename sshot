@@ -2,7 +2,6 @@
 
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
-
 # screenshot directory
 dir="$XDG_PICTURES_DIR"/screenshots
 cd $dir
@@ -13,4 +12,3 @@ scrot -s -e 'echo $f && sxiv $f'
 dir=$(echo "$dir" | sed "s|$HOME|~|")
 # send notification
 dunstify -i 'camera-on' -t 2000 -r "$id_shot" 'Screenshot' "Stored in $dir/"
-

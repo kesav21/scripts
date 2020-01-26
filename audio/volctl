@@ -7,26 +7,21 @@
 # -m or --is-muted
 
 # set volume
-if [ "$1" = '-s' ] || [ "$1" = "--set-volume" ]
-then
+if [ "$1" = '-s' ] || [ "$1" = "--set-volume" ]; then
 	pactl set-sink-volume "$(getsink)" "$2"
 
 # toggle mute
-elif [ "$1" = '-t' ] || [ "$1" = "--toggle-mute" ]
-then
+elif [ "$1" = '-t' ] || [ "$1" = "--toggle-mute" ]; then
 	pactl set-sink-mute "$(getsink)" 'toggle'
 
 # get volume
-elif [ "$1" = '-g' ] || [ "$1" = "--get-volume" ]
-then
+elif [ "$1" = '-g' ] || [ "$1" = "--get-volume" ]; then
 	# get volume from given sink
 	pactl list sinks | sinkvolume.awk -v sink="$(getsink)"
 
 # is muted
-elif [ "$1" = '-m' ] || [ "$1" = "--is-muted" ]
-then
+elif [ "$1" = '-m' ] || [ "$1" = "--is-muted" ]; then
 	# check if the given sink is muted
 	# returns yes or no
 	pactl list sinks | sinkmuted.awk -v sink="$(getsink)"
 fi
-

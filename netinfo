@@ -1,4 +1,3 @@
 #!/bin/sh
 
 wicd-cli --status | awk '/Connected to/ {print $3}'
-

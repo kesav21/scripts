@@ -16,4 +16,3 @@ newbright=$(echo "$(getbright --raw) + $diff" | bc)
 backlight=${newbright%.*}
 # write new brightness to file
 echo "$backlight" > /sys/class/backlight/intel_backlight/brightness
-

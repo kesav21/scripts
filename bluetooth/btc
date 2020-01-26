@@ -2,9 +2,8 @@
 #
 # connects a previously paired device
 
-connect () {
-	while read -r id
-	do
+connect() {
+	while read -r id; do
 		# connect using id
 		[ -n "$id" ] && echo "connect $id" | bluetoothctl
 	done
@@ -12,4 +11,3 @@ connect () {
 
 # list names of paired devices
 btls --paired | dmenu | sort -u | btconvert --to-id | connect
-

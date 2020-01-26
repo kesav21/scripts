@@ -2,9 +2,8 @@
 #
 # disconnects a currently connected device
 
-disconnect () {
-	while read -r id
-	do
+disconnect() {
+	while read -r id; do
 		# disconnect using id
 		[ -n "$id" ] && echo "disconnect $id" | bluetoothctl
 	done
@@ -12,4 +11,3 @@ disconnect () {
 
 # list names of connected devices
 btls --connected | dmenu | sort -u | btconvert --to-id | disconnect
-

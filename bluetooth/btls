@@ -1,37 +1,34 @@
 #!/bin/sh
 #
 
-pairednames () {
+pairednames() {
 	echo 'devices' | bluetoothctl \
 		| sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
 }
 
-pairedids () {
+pairedids() {
 	echo 'devices' | bluetoothctl | awk '/Device/ {print $2}'
 }
 
-isconnected () {
+isconnected() {
 	echo "info $1" | bluetoothctl | awk '/Connected/ {print $2}'
 }
 
-connectedids () {
-	pairedids | while read -r line
-	do
+connectedids() {
+	pairedids | while read -r line; do
 		[ "$(isconnected "$line")" = 'yes' ] && echo $line
 	done
 }
 
-connectednames () {
+connectednames() {
 	connectedids | btconvert --to-name
 }
 
-
 case "$1" in
-	'-p'|'--paired')
+	'-p' | '--paired')
 		pairednames
 		;;
-	'-c'|'--connected')
+	'-c' | '--connected')
 		connectednames
 		;;
 esac
-

@@ -3,4 +3,3 @@
 # basically, if my headphones are plugged in, use that sink
 # otherwise, use sink 0
 pactl list sinks short | awk 'END {print $1}'
-

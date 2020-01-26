@@ -1,27 +1,25 @@
 #!/bin/sh
 
-
-getraw () {
+getraw() {
 	cat '/sys/class/backlight/intel_backlight/brightness'
 }
 
-getmax () {
+getmax() {
 	cat '/sys/class/backlight/intel_backlight/max_brightness'
 }
 
-getpercent () {
+getpercent() {
 	echo "100 * $(getraw) / $(getmax)" | bc
 }
 
 case "$1" in
-	'-r'|'--raw')
+	'-r' | '--raw')
 		getraw
 		;;
-	'-m'|'--max')
+	'-m' | '--max')
 		getmax
 		;;
-	'-p'|'--percent')
+	'-p' | '--percent')
 		getpercent
 		;;
 esac
-

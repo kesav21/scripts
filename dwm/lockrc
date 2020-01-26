@@ -9,4 +9,3 @@ xset +dpms
 xset dpms $s_standby $s_suspend $s_off
 # enable xss-lock to trigger on suspend
 xss-lock slock &
-

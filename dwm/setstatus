@@ -15,22 +15,21 @@ trap 'update' 5
 # short format: ssid
 # long format: ssid, upspeed, downspeed, signal
 #
-getwifi () {
+getwifi() {
 	ssid=$(netinfo)
 
-	if [ -z "$ssid" ]
-	then
+	if [ -z "$ssid" ]; then
 		echo "睊  (disconnected)"
 	else
 		echo "  $ssid"
 	fi
 }
 
-volumebar () {
+volumebar() {
 	echo "$(volumeicon) $(volctl --get-volume)%"
 }
 
-volumeicon () {
+volumeicon() {
 	case "$(volctl --is-muted)" in
 		'yes')
 			echo " "
@@ -41,7 +40,7 @@ volumeicon () {
 	esac
 }
 
-getbrightness () {
+getbrightness() {
 	echo "  $(getbright --percent)%"
 }
 
@@ -51,11 +50,11 @@ getbrightness () {
 #
 # TODO: (long format) display time left until full charge/time until dead
 #
-batterybar () {
+batterybar() {
 	echo "$(batteryicon) $(battinfo -p)%"
 }
 
-batteryicon () {
+batteryicon() {
 	case "$(battinfo -s)" in
 		'Discharging')
 			echo ' '
@@ -72,19 +71,19 @@ batteryicon () {
 	esac
 }
 
-gettime () {
+gettime() {
 	time="$(date +"%I:%M %p")"
 	echo "  $time"
 }
 
-getdate () {
+getdate() {
 	date="$(date +"%a, %b %d")"
 	echo "  $date"
 }
 
 # all statuses
 
-getstatus () {
+getstatus() {
 	# echo -n "\02 $(getweather) "
 	echo -n "\03 $(getwifi) "
 	echo -n "\04 $(volumebar) "
@@ -94,14 +93,14 @@ getstatus () {
 	echo -n "\02 $(getdate) "
 }
 
-update () {
-	xsetroot -name "$(getstatus)" & wait
+update() {
+	xsetroot -name "$(getstatus)" &
+	wait
 	# echo "$(getstatus)" & wait
 }
 
-while true
-do
+while true; do
 	update
-	sleep 1m & wait
+	sleep 1m &
+	wait
 done
-
