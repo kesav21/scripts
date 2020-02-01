@@ -8,11 +8,10 @@ doaction() {
 			slock
 			;;
 		'quit')
-			killall dwm_setstatbar
-			killall xinitrc
+			bspc quit
 			;;
 		'refresh')
-			killall -q dwm
+			bspc wm -r
 			;;
 		'restart')
 			reboot
