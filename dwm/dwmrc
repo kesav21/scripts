@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# set wallpaper
-hsetroot -solid "#282828"
-# sets the statusbar
-setstatus &
-# initialize screensaver
-lockrc &
