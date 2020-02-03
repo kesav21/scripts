@@ -1,27 +1,30 @@
 #!/bin/sh
 
-lshome() {
-	find $HOME -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*.pdf' -print \
-		| sed "s|$HOME|~|"
-}
+# if given the -n or --new-instance flag
+# create a new instance
+# else if there is one tabbed instance
+# use that instance
+# else if there are multiple tabbed instances
+# select an instance
 
-lstmp() {
-	find /tmp/vim-latex-live-preview-* -name '*.pdf' \
-		| sed "s|$HOME|~|"
-}
+getxid() {
+	icount="$(xwininfo -children -root | grep 'tabbed' | wc -l)"
 
-lspdf() {
-	lstmp &
-	lshome
+	if [ "$1" = '-n' ] || [ "$1" = '--new-instance' ] || [ "$icount" -eq 0 ]; then
+		tabbed -cd
+	elif [ "$icount" -eq 1 ]; then
+		xwininfo -children -root | awk '/tabbed/ {print $1}'
+	else
+		xwininfo | awk '/Window id/ {print $4}'
+	fi
 }
 
 open() {
-	xid=$(tabbed -cd)
-	echo "$xid"
+	echo "$1"
 	while read -r line; do
 		echo "$line"
-		zathura -e "$xid" "$line" &
+		zathura -e "$1" "$line" &
 	done
 }
 
-lspdf | dmenu | uniq | open
+lspdf | dmenu | uniq | open "$(getxid "$@")"
