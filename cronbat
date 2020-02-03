@@ -1,14 +1,11 @@
 #!/bin/sh
 
+# $1 is the low battery threshold (i prefer 10)
+
 export XDG_RUNTIME_DIR=/run/user/1000
 export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
 
 . $XDG_CONFIG_HOME/bin/dunst_ids
-
-status=$(cat /sys/class/power_supply/BAT0/status)
-capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-
-low=10
 
 #
 # actions: low, full
@@ -38,4 +35,7 @@ notify() {
 	esac
 }
 
-echo "$status $capacity $low" | getaction | notify
+status=$(cat /sys/class/power_supply/BAT0/status)
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+
+echo "$status $capacity $1" | getaction | notify
