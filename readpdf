@@ -1,30 +1,57 @@
 #!/bin/sh
 
-# if given the -n or --new-instance flag
-# create a new instance
-# else if there is one tabbed instance
-# use that instance
-# else if there are multiple tabbed instances
-# select an instance
+#
+# prints all pdf files in $HOME
+#
+lspdf() {
+	# i don't really know how this works
+	find "$HOME" -type d -path '*/\.*' -prune -o -not -name '.*' -type f -name '*.pdf' -print
+}
 
-getxid() {
-	icount="$(xwininfo -children -root | grep 'tabbed' | wc -l)"
-
-	if [ "$1" = '-n' ] || [ "$1" = '--new-instance' ] || [ "$icount" -eq 0 ]; then
-		tabbed -cd
-	elif [ "$icount" -eq 1 ]; then
-		xwininfo -children -root | awk '/tabbed/ {print $1}'
-	else
-		xwininfo | awk '/Window id/ {print $4}'
+#
+# choose list of pdfs to display, command line and dmenu
+# if the first command-line argument is -n, do not use dmenu
+#
+getpdfs() {
+	# always print cmd args
+	printf '%s\n' "$@" | sort | uniq | stest -e
+	# maybe choose from dmenu
+	if [ "$1" != '-n' ]; then
+		# choose pdfs, sort and remove duplicates
+		# make pdfs presentable for choosing, then convert them back
+		lspdf | sed "s|$HOME|~|" | dmenu | sort | uniq | sed "s|~|$HOME|"
 	fi
 }
 
+#
+# if given valid tabbed instance, use it
+# else, create new tabbed instance
+#
+getxid() {
+	# select tabbed instance using cursor
+	# get its xid
+	xid=$(xwininfo | awk '/Window id/ {print $4}')
+	# if instance is valid tabbed instance
+	if [ -n "$(xwininfo -children -root | awk "/$xid.*tabbed/")" ]; then
+		echo $xid
+	else
+		tabbed -cd
+	fi
+}
+
+#
+# open all given files in tabbed+zathura
+#
 open() {
-	echo "$1"
+	# accepts tabbed xid as input
+	echo $1
+	# reads pdfs from stdin
 	while read -r line; do
-		echo "$line"
+		echo $line
+		# open in zathura
 		zathura -e "$1" "$line" &
 	done
 }
 
-lspdf | dmenu | uniq | open "$(getxid "$@")"
+# put it all together
+getpdfs "$@" | open "$(getxid)"
