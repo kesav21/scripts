@@ -24,19 +24,31 @@ getpdfs() {
 }
 
 #
+# if there are no tabbed instances, create new tabbed instance
+# if given invalid tabbed instance, create new tabbed instance
 # if given valid tabbed instance, use it
-# else, create new tabbed instance
 #
 getxid() {
-	# select tabbed instance using cursor
-	# get its xid
-	xid=$(xwininfo | awk '/Window id/ {print $4}')
-	# if instance is valid tabbed instance
-	if [ -n "$(xwininfo -children -root | awk "/$xid.*tabbed/")" ]; then
-		echo $xid
-	else
+	# count number of tabbed instances
+	tabs="$(xwininfo -children -root | grep 'tabbed' | wc -l)"
+	# if no tabbed instances
+	if [ "$tabs" -eq 0 ]; then
+		# create new instance
 		tabbed -cd
+	else
+		# select tabbed instance using cursor
+		# get its xid
+		xid=$(xwininfo | awk '/Window id/ {print $4}')
+		# if instance is valid tabbed instance
+		if [ -n "$(xwininfo -children -root | awk "/$xid.*tabbed/")" ]; then
+			# use selected instance
+			echo $xid
+		else
+			# create new instance
+			tabbed -cd
+		fi
 	fi
+
 }
 
 #
