@@ -13,7 +13,7 @@ doaction() {
 		'refresh')
 			bspc wm -r
 			;;
-		'restart')
+		'reboot')
 			reboot
 			;;
 		'shutdown')
@@ -22,4 +22,4 @@ doaction() {
 	esac
 }
 
-echo 'lock quit refresh restart shutdown' | tr ' ' '\n' | dmenu | doaction
+echo 'lock quit refresh reboot shutdown' | tr ' ' '\n' | dmenu | doaction
