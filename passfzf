@@ -15,11 +15,48 @@ delete() {
 	done
 }
 
+display() {
+	echo 'folder,favorite,type,name,notes,fields,login_uri,login_username,login_password,login_totp'
+	while read -r line; do
+		if [ -n "$line" ]; then
+			# folder
+			echo -n "$(dirname "$line"),"
+			# favorite
+			echo -n ','
+			# type
+			pass show "$line" | grep -q 'url' && echo -n 'login,' || echo -n 'note,'
+			# name
+			echo -n $(basename "$line"),
+			# notes
+			echo -n ','
+			# fields
+			echo -n ','
+			# login_uri
+			uri=$(pass show "$line" | awk '/url:/ {print $2}')
+			[ -n "$uri" ] && echo -n "$uri", || echo -n ','
+			# login_username
+			username=$(pass show "$line" | awk '/login:/ {print $2}')
+			[ -n "$username" ] && echo -n "$username", || echo -n ','
+			# login_password
+			password=$(pass show "$line" | head -1)
+			[ -n "$password" ] && echo -n "$password", || echo -n ','
+			# login_totp
+			echo -n ','
+			# newline
+			echo ""
+		fi
+	done
+}
+
 case "$1" in
 	'ls')
 		passwords | fzf --preview='pass show {}' | edit
 		;;
 	'rm')
 		passwords | fzf -m --preview='pass show {}' | delete
+		;;
+	'cat')
+		# passwords | fzf -m --preview='pass show {}' | display
+		passwords | display
 		;;
 esac
