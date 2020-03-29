@@ -1,0 +1,13 @@
+#!/bin/sh
+
+mount /dev/sda3 /media/kesav/WINDOWS
+cd /media/kesav/WINDOWS/Windows/System32/config
+
+path='/Setup/Upgrade/Pnp/CurrentControlSet/Services/BTHPORT/Parameters/Keys'
+host='d89c67579e68'
+dev='0018003d5f1e'
+fullpath="$path/$host/$dev"
+reglookup -p "$fullpath" SYSTEM |
+	awk -F, '{print $3}'
+
+umount -l /dev/sda3
