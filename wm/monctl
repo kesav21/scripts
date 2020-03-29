@@ -5,7 +5,7 @@ current=eDP-1
 
 case "$1" in
 	'-e' | '--extend')
-		xrandr --output "$output" --auto --above "$current"
+		xrandr --output "$output" --auto --left-of "$current"
 		;;
 	'-d' | '--disconnect')
 		xrandr --auto && xrandr --output "$output" --off
