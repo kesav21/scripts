@@ -2,25 +2,34 @@
 # scripts
 
 These are the scripts I use to automate miscellaneous things on my machine.
-BTW I use dash shell now.
+I use the dash shell, but (almost) all scripts are POSIX compliant.
 
-## usage
+## recommended usage
 
-This directory is located at `~/.local/bin` on my machine.
-I added `~/.local/bin` and all of its subdirectories to `$PATH`, so I can reference the scripts directly (`dwm_quit` instead of `~/.local/bin/dwm/dwm_quit`).
+Create a folder (I use `~/.local/bin`).
+Add these scripts to that folder.
+Add that folder to `$PATH`.
 
 ## configuration
 
-Config files must be located in `$XDG_CONFIG_HOME/bin` (which is usually `~/.config/`).
+Some scripts require config files.
+These config files are expected to be in `$XDG_CONFIG_HOME/bin`.
 
-These are all the config files required:
-- `bm_files`, `bm_dirs`: bookmarks
-- `dunst_ids`: notifications
-- `screensaver_vars`: screensaver
+These are all the scripts that require config files, and the files they require:
+- `wm/cronbat`: `$XDG_CONFIG_HOME/bin/dunst_ids`
+- `wm/lockrc`: `$XDG_CONFIG_HOME/bin/lock_vars`
+- `cpzoom`: `$XDG_CONFIG_HOME/bin/zoom`
+- `bmgen`: `$XDG_CONFIG_HOME/bin/bm_dirs`, `$XDG_CONFIG_HOME/bin/bm_files`
+- `sshot`: `$XDG_CONFIG_HOME/bin/dunst_ids`
 
 ## logs
 
-Logs are stored in `$XDG_CACHE_HOME/bin` (usually `~/.cache`).
+Logs are stored in `$XDG_CACHE_HOME/bin`.
 
 ## todo
+
+- remove passfzf (migrate all passwords to Bitwarden)
+- clean up readpdf
+- remove default sshot option
+- remove mansplain
 
