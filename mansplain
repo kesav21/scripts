@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# set cache file
-cache="$XDG_CACHE_HOME"/bin/manpages
-# if cache doesn't exist, create it
-[ ! -e "$cache" ] && man -k . | awk '{print $1}' | sort -u > "$cache"
-# read from cache
-cat "$cache" | fzf --preview='man {1}' | xargs -r man

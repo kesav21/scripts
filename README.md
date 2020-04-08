@@ -28,8 +28,6 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 
 ## todo
 
-- remove passfzf (migrate all passwords to Bitwarden)
 - clean up readpdf
 - remove default sshot option
-- remove mansplain
 
