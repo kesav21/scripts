@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xmodmap "$(readlink -f "$XDG_CONFIG_HOME"/X11/xmodmaprc)"
