@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo -n '   '
+btls -c | grep 'FILCO Bluetooth Keyboard' >/dev/null && echo -n '  '
+btls -c | grep 'Grind Wireless' >/dev/null && echo -n '  '
