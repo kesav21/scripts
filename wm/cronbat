@@ -8,29 +8,29 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
 #
-# actions: low, full
+# states: low, full
 #
-getaction() {
+getstate() {
 	read -r status capacity low
 
-	[ "$status" = "Discharging" ] && [ "$capacity" -le "$low" ] && echo 'low'
-	[ "$status" = "Full" ] && echo 'full'
+	[ "$status" = 'Discharging' ] && [ "$capacity" -le "$low" ] && echo low
+	[ "$status" = 'Full' ] && echo full
 }
 
 #
 # read action from standard input
 #
 notify() {
-	read -r action
+	read -r state
 
-	case "$action" in
+	case "$state" in
 		'low')
 			icon='notification-battery-000'
-			dunstify -i $icon -r $id_battery -u critical 'Battery low' &
+			dunstify -i "$icon" -r "$id_battery" -u critical 'Battery low' &
 			;;
 		'full')
 			icon='battery-full'
-			dunstify -i $icon -r $id_battery 'Battery full' &
+			dunstify -i "$icon" -r "$id_battery" 'Battery full' &
 			;;
 	esac
 }
@@ -38,4 +38,4 @@ notify() {
 status=$(cat /sys/class/power_supply/BAT0/status)
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 
-echo "$status $capacity $1" | getaction | notify
+echo "$status" "$capacity" "$1" | getstate | notify
