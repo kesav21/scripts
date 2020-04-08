@@ -1,0 +1,6 @@
+#!/bin/sh
+
+output=HDMI-1
+current=eDP-1
+
+xrandr --output "$output" --auto --off
