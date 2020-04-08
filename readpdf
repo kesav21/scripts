@@ -9,18 +9,17 @@ lspdf() {
 }
 
 #
-# choose list of pdfs to display, command line and dmenu
-# if the first command-line argument is -n, do not use dmenu
+# choose list of pdfs to display, command line and fzf
+# if the first command-line argument is -n, do not use fzf
 #
 getpdfs() {
 	# always print cmd args
 	printf '%s\n' "$@" | sort | uniq | stest -e
-	# maybe choose from dmenu
-	if [ "$1" != '-n' ]; then
+	# maybe choose fzf
+	[ "$1" != '-n' ] &&
 		# choose pdfs, sort and remove duplicates
 		# make pdfs presentable for choosing, then convert them back
-		lspdf | sed "s|$HOME|~|" | dmenu | sort | uniq | sed "s|~|$HOME|"
-	fi
+		lspdf | sed "s|$HOME|~|" | fzfmenu -m | sort | uniq | sed "s|~|$HOME|"
 }
 
 #
@@ -61,7 +60,7 @@ open() {
 	while read -r line; do
 		echo $line
 		# open in zathura
-		zathura -e "$1" "$line" &
+		zathura --fork -e "$1" "$line"
 	done
 }
 
