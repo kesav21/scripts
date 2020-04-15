@@ -28,6 +28,3 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 
 ## todo
 
-- clean up readpdf
-- remove default sshot option
-
