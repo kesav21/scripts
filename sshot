@@ -4,11 +4,15 @@
 
 # screenshot directory
 dir="$XDG_PICTURES_DIR"/screenshots
-cd $dir
+
+# go to directory
+cd $dir || exit
+
 # take screenshot and save it to dir
-scrot $@ -e 'echo $f && sxiv $f'
+scrot $@ -e 'echo $f && sxiv $f' || exit
 
 # shorten dir
 dir=$(echo "$dir" | sed "s|$HOME|~|")
+
 # send notification
 dunstify -i 'camera-on' -t 2000 -r "$id_shot" 'Screenshot' "Stored in $dir/"
