@@ -1,16 +1,14 @@
 #!/bin/sh
 
-monitors=$(xrandr --current | awk '/ connected/ {print $1}')
-
 setbr() {
-	# apply to all connected monitors
-	for monitor in $monitors; do
-		# fake brightness control
-		xrandr --output "$monitor" --brightness "$1"
-	done
+	# get all connected monitors
+	# set gamma to $1
+	xrandr --current |
+		awk '/ connected/ {print $1}' |
+		xargs -I {} xrandr --output '{}' --brightness "$1"
 }
 
-# lower brightness
+# fake brightness control
 setbr 0.5
 # reset brightness on exit
 trap 'exit 0' TERM INT
