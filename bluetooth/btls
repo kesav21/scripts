@@ -2,26 +2,13 @@
 #
 
 pairednames() {
-	echo 'devices' | bluetoothctl \
-		| sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
-}
-
-pairedids() {
-	echo 'devices' | bluetoothctl | awk '/Device/ {print $2}'
-}
-
-isconnected() {
-	echo "info $1" | bluetoothctl | awk '/Connected/ {print $2}'
-}
-
-connectedids() {
-	pairedids | while read -r line; do
-		[ "$(isconnected "$line")" = 'yes' ] && echo $line
-	done
+	echo devices | bluetoothctl | sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
 }
 
 connectednames() {
-	connectedids | btconvert --to-name
+	echo devices | bluetoothctl | awk '/Device/ {print $2}' | while read -r i; do
+		echo info $i | bluetoothctl | grep 'Connected: yes' && echo $i
+	done | xargs btconv -n
 }
 
 case "$1" in
