@@ -4,11 +4,12 @@
 #
 
 # remove % symbol from input
-num=$(echo "$1" | sed 's/%//g')
 # convert input to a number
-num=$(($num + 0))
+arg="$(($(echo $1 | sed 's/%//g') + 0))"
 
-# calculate % of maximum brightness
-backlight=$(echo "$num * $(getbright --max) / 100" | bc)
+# get full brightness
+full="$(getbright --max)"
+
+# calculate n% of maximum brightness
 # write new brightness to file
-echo "$backlight" >/sys/class/backlight/intel_backlight/brightness
+echo $arg * $full / 100 | bc >/sys/class/backlight/intel_backlight/brightness
