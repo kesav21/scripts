@@ -1,6 +1,67 @@
 #!/bin/sh
 
-output=HDMI-1
-current=eDP-1
+bigmon=HDMI-1
+smallmon=eDP-1
 
-xrandr --output "$output" --auto --left-of "$current"
+alias m='bspc monitor'
+alias d='bspc desktop'
+
+alias lsm='bspc query --monitors --names'
+alias lsd='bspc query --desktops --names --monitor'
+
+debug() {
+	lsm | while read -r i; do
+		echo -n "$i: "
+		lsd "$i" | tr '\n' ' '
+		echo
+	done
+}
+
+echo --------------------
+echo connect
+
+echo initial state:
+debug
+
+if [ "$(lsd $bigmon)" = "$(seq 1 6)" ]; then
+	echo $bigmon is connected, returning
+	return
+fi
+
+echo $bigmon is not connected, connecting
+
+echo moving desktops
+
+seq 1 6 | while read -r i; do
+	lsd "$smallmon" | grep "$i" >/dev/null &&
+		d "$i" --to-monitor "$bigmon" ||
+		m "$bigmon" --add-desktops "$i"
+done
+
+echo moved desktops
+
+debug
+
+echo reordering desktops
+
+m "$bigmon" --reorder-desktops $(lsd "$bigmon" | sort)
+m "$smallmon" --reorder-desktops $(lsd "$smallmon" | sort)
+
+echo reordered desktops
+
+debug
+
+echo removing tmp desktops
+
+while d 'tmp' --remove >/dev/null; do true; done
+
+echo removed tmp desktops
+
+debug
+
+echo connecting to monitor
+
+xrandr --output "$bigmon" --auto --left-of "$smallmon"
+
+echo connected to monitor
+echo --------------------
