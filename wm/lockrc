@@ -1,11 +1,19 @@
 #!/bin/sh
+#
+# dpms standby: standby monitor
+# dpms suspend: suspend monitor
+# dpms off: turn off monitor
+# screensaver timeout: call xss-lock notifier
+# screensaver cycle: call xss-lock locker
 
 # retrieve config variables
 . $XDG_CONFIG_HOME/bin/lock_vars
 
 # set dpms timeouts
-xset dpms $s_standby $s_suspend $s_off
-# lock on notify timeout
-xset s $s_notify 0
-pkill xss-lock
+xset dpms $dpmsstandby $dpmssuspend $dpmsoff
+# set screensaver timeouts
+xset s $sstimeout $sscycle
+
+# restart locker
+pkill -x xss-lock
 xss-lock -n dimscreen -- slock &
