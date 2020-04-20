@@ -6,7 +6,7 @@ mkfifo $input
 mkfifo $output
 chmod 600 $input $output
 
-st -n fzf -e sh -c "cat $input | fzf $* | tee $output" &
+st -n 'fzfmenu' -e sh -c "cat $input | fzf $* | tee $output" &
 
 # handle ctrl+c outside child terminal window
 trap "kill $! 2>/dev/null; rm -f $input $output" EXIT
