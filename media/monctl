@@ -1,11 +1,12 @@
 #!/bin/sh
 
-# export XDG_RUNTIME_DIR=/run/user/1000
-# export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-# export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/1000
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+export DISPLAY=:0
 
-# XDG_CACHE_HOME='/home/kesav/.cache'
+external=HDMI-1
+laptop=eDP-1
 
-# xrandr | grep 'HDMI-1 connected' >/dev/null &&
-# 	/home/kesav/.local/bin/media/addmon >>"$XDG_CACHE_HOME"/bin/monctl ||
-# 	/home/kesav/.local/bin/media/rmmon >>"$XDG_CACHE_HOME"/bin/monctl
+xrandr | grep "$external connected" >/dev/null &&
+	xrandr --output "$external" --auto --right-of "$laptop" ||
+	xrandr --output "$external" --auto --off
