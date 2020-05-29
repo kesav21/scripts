@@ -8,10 +8,10 @@ doaction() {
 			slock
 			;;
 		'quit')
-			bspc quit
+			pkill -x dwmloop
 			;;
 		'refresh')
-			bspc wm -r
+			pkill -x dwm
 			;;
 		'reboot')
 			reboot
