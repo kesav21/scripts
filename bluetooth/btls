@@ -1,14 +1,13 @@
 #!/bin/sh
-#
 
 pairednames() {
-	echo devices | bluetoothctl | sed -rn 's/Device [A-F0-9:]* (.*)/\1/p'
+	bluetoothctl paired-devices | cut -d\  -f3-
 }
 
 connectednames() {
-	echo devices | bluetoothctl | awk '/Device/ {print $2}' | while read -r i; do
-		echo info $i | bluetoothctl | grep 'Connected: yes' && echo $i
-	done | xargs btconv -n
+	bluetoothctl paired-devices | while read -r _ mac name; do
+		bluetoothctl info $mac | grep 'Connected: yes' >/dev/null && echo $name
+	done
 }
 
 case "$1" in

@@ -2,13 +2,13 @@
 
 toname() {
 	for i in "$@"; do
-		echo info $i | bluetoothctl | awk -F': ' '/Name/ {print $2}'
+		bluetoothctl info $i | awk -F': ' '/Name/ {print $2}'
 	done
 }
 
 toid() {
 	for i in "$@"; do
-		echo devices | bluetoothctl | awk "/$i\$/ {print \$2}"
+		bluetoothctl paired-devices | awk "/$i\$/ {print \$2}"
 	done
 }
 

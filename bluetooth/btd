@@ -5,7 +5,7 @@
 disconnect() {
 	while read -r id; do
 		# disconnect using id
-		[ -n "$id" ] && echo disconnect $id | bluetoothctl
+		[ -n "$id" ] && bluetoothctl disconnect $id
 	done
 }
 

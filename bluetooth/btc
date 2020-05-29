@@ -5,7 +5,7 @@
 connect() {
 	while read -r id; do
 		# connect using id
-		[ -n "$id" ] && echo connect $id | bluetoothctl
+		[ -n "$id" ] && bluetoothctl connect $id
 	done
 }
 
