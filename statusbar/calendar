@@ -1,0 +1,9 @@
+#!/bin/sh
+
+calendar1() {
+	echo '   '
+	date +"%a, %b %d"
+	echo '  '
+}
+
+calendar1 | tr -d '\n'

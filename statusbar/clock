@@ -1,0 +1,9 @@
+#!/bin/sh
+
+clock1() {
+	echo '   '
+	date +"%I:%M %p"
+	echo '  '
+}
+
+clock1 | tr -d '\n'

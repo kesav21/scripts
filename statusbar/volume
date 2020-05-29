@@ -1,0 +1,11 @@
+#!/bin/sh
+
+pactl list sinks |
+	awk -F: '/Mute/ {print $2}' |
+	tail -1 |
+	sed 's/no/墳/;s/yes/ﱝ/' |
+	tr -d '\n'
+
+pactl list sinks |
+	awk -F/ '/^\s*Volume/ {print $2}' |
+	tail -1

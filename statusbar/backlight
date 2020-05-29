@@ -1,0 +1,7 @@
+#!/bin/sh
+
+current="$(cat /sys/class/backlight/intel_backlight/brightness)"
+full="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+percent="$(echo "100 * $current / $full" | bc)"
+
+echo "  $percent% "

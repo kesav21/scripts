@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ $(cat /sys/class/net/wlp2s0/operstate) = 'up' ]; then
+	echo -n '   '
+	iwconfig 2>/dev/null | awk -F\" '/wlp2s0/ {print $2}' | tr -d '\n'
+else
+	echo -n ' 睊  '
+fi
+
+echo -n '  '

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo -n '   '
+btls -c | sed 's/FILCO Bluetooth Keyboard/  /;s/Grind Wireless/  /' | tr -d '\n'

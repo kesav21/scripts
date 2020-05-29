@@ -1,0 +1,18 @@
+#!/bin/sh
+
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+[ "$capacity" -le 10 ] && echo -n ' '
+[ "$capacity" -gt 10 ] && [ "$capacity" -le 20 ] && echo -n ' '
+[ "$capacity" -gt 20 ] && [ "$capacity" -le 30 ] && echo -n ' '
+[ "$capacity" -gt 30 ] && [ "$capacity" -le 40 ] && echo -n ' '
+[ "$capacity" -gt 40 ] && [ "$capacity" -le 50 ] && echo -n ' '
+[ "$capacity" -gt 50 ] && [ "$capacity" -le 50 ] && echo -n ' '
+[ "$capacity" -gt 60 ] && [ "$capacity" -le 60 ] && echo -n ' '
+[ "$capacity" -gt 70 ] && [ "$capacity" -le 70 ] && echo -n ' '
+[ "$capacity" -gt 80 ] && [ "$capacity" -le 80 ] && echo -n ' '
+[ "$capacity" -gt 90 ] && echo -n ' '
+
+status=$(cat /sys/class/power_supply/BAT0/status)
+[ "$status" = "Charging" ] || [ "$status" = "Full" ] && echo -n ''
+
+echo -n " $capacity%  "
