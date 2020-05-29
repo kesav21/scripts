@@ -1,41 +1,14 @@
 #!/bin/sh
 
-# $1 is the low battery threshold (i prefer 10)
+# $1 is the low battery threshold
 
 export XDG_RUNTIME_DIR=/run/user/1000
 export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
 
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
-#
-# states: low, full
-#
-getstate() {
-	read -r status capacity low
-
-	[ "$status" = 'Discharging' ] && [ "$capacity" -le "$low" ] && echo low
-	[ "$status" = 'Full' ] && echo full
-}
-
-#
-# read action from standard input
-#
-notify() {
-	read -r state
-
-	case "$state" in
-		'low')
-			icon='notification-battery-000'
-			dunstify -i "$icon" -r "$id_battery" -u critical 'Battery low' &
-			;;
-		'full')
-			icon='battery-full'
-			dunstify -i "$icon" -r "$id_battery" 'Battery full' &
-			;;
-	esac
-}
-
 status=$(cat /sys/class/power_supply/BAT0/status)
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 
-echo "$status" "$capacity" "$1" | getstate | notify
+[ "$status" = 'Discharging' ] && [ "$capacity" -le "$1" ] &&
+	dunstify -i 'notification-battery-000' -r "$id_battery" -u critical 'Battery low'

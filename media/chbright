@@ -8,12 +8,12 @@
 arg="$(($(echo $1 | sed 's/%//g') + 0))"
 
 # get current and full brightness
-current="$(getbright --raw)"
-full="$(getbright --max)"
+current="$(cat /sys/class/backlight/intel_backlight/brightness)"
+full="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
 
 # calculate n% of maximum brightness
 # add to current brightness
-newbright="$(echo $current + $arg * $full / 100 | bc)"
+newbright="$(echo "$current + $arg * $full / 100" | bc)"
 
 # remove decimal places
 # write new brightness to file
