@@ -16,11 +16,10 @@ Some scripts require config files.
 These config files are expected to be in `$XDG_CONFIG_HOME/bin`.
 
 These are all the scripts that require config files, and the files they require:
-- `wm/cronbat`: `$XDG_CONFIG_HOME/bin/dunst_ids`
-- `wm/lockrc`: `$XDG_CONFIG_HOME/bin/lock_vars`
-- `cpzoom`: `$XDG_CONFIG_HOME/bin/zoom`
-- `bmgen`: `$XDG_CONFIG_HOME/bin/bm_dirs`, `$XDG_CONFIG_HOME/bin/bm_files`
+- `cronbat`: `$XDG_CONFIG_HOME/bin/dunst_ids`
 - `sshot`: `$XDG_CONFIG_HOME/bin/dunst_ids`
+- `lockrc`: `$XDG_CONFIG_HOME/bin/lock_vars`
+- `bmgen`: `$XDG_CONFIG_HOME/bin/bm_dirs`, `$XDG_CONFIG_HOME/bin/bm_files`
 
 ## logs
 
