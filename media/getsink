@@ -1,0 +1,11 @@
+#!/bin/sh
+
+select() {
+	pactl list sinks short >kk
+	grep 'bluez_sink.D0_8A_55_1F_E1_BE.a2dp_sink' kk ||
+		grep 'alsa_output.usb-0b0e_Jabra_Link_370_70BF9260C742011500-00.analog-stereo' kk ||
+		grep 'alsa_output.pci-0000_00_1f.3.analog-stereo' kk
+	rm kk
+}
+
+select | awk '{print $1}'

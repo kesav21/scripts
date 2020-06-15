@@ -1,4 +1,3 @@
 #!/bin/sh
 
-sink=$(pactl list sinks short | awk 'END {print $1}')
-pactl set-sink-volume "$sink" "$1"
+pactl set-sink-volume "$(getsink)" "$1"
