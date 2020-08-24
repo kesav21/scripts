@@ -1,11 +1,13 @@
 #!/bin/sh
 
+line=$(pactl list sinks short | awk -v sink="$(getsink)" '$1~sink {print NR}')
+
 pactl list sinks |
 	awk '/Mute:/ {print " "$2}' |
-	sed -n "$(getsink)p" |
+	sed -n "$line"p |
 	sed 's/no/墳/;s/yes/ﱝ/' |
 	tr -d '\n'
 
 pactl list sinks |
 	awk '/^\s*Volume:/ {print " "$5}' |
-	sed -n "$(getsink)p"
+	sed -n "$line"p
