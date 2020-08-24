@@ -10,7 +10,7 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
 
 ping -q -c 1 1.1.1.1 >/dev/null || exit
 
-pacman -Syyuw --noconfirm || su 'kesav' -c 'dunstify pacupdate "Error downloading updates"' && exit
+pacman -Syyu --noconfirm || su 'kesav' -c 'dunstify pacupdate "Error downloading updates"' && exit
 
 # ﮮ kk
 
