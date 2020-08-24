@@ -1,18 +1,23 @@
 #!/bin/sh
 
+rampicon() {
+	[ "$1" -le 10 ] && echo -n ''
+	[ "$1" -gt 10 ] && [ "$1" -le 20 ] && echo -n ''
+	[ "$1" -gt 20 ] && [ "$1" -le 30 ] && echo -n ''
+	[ "$1" -gt 30 ] && [ "$1" -le 40 ] && echo -n ''
+	[ "$1" -gt 40 ] && [ "$1" -le 50 ] && echo -n ''
+	[ "$1" -gt 50 ] && [ "$1" -le 60 ] && echo -n ''
+	[ "$1" -gt 60 ] && [ "$1" -le 70 ] && echo -n ''
+	[ "$1" -gt 70 ] && [ "$1" -le 80 ] && echo -n ''
+	[ "$1" -gt 80 ] && [ "$1" -le 90 ] && echo -n ''
+	[ "$1" -gt 90 ] && echo -n ''
+}
+
+statusicon() {
+	[ "$1" = "Charging" ] || [ "$1" = "Full" ] && echo -n ''
+}
+
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-[ "$capacity" -le 10 ] && echo -n ' '
-[ "$capacity" -gt 10 ] && [ "$capacity" -le 20 ] && echo -n ' '
-[ "$capacity" -gt 20 ] && [ "$capacity" -le 30 ] && echo -n ' '
-[ "$capacity" -gt 30 ] && [ "$capacity" -le 40 ] && echo -n ' '
-[ "$capacity" -gt 40 ] && [ "$capacity" -le 50 ] && echo -n ' '
-[ "$capacity" -gt 50 ] && [ "$capacity" -le 50 ] && echo -n ' '
-[ "$capacity" -gt 60 ] && [ "$capacity" -le 60 ] && echo -n ' '
-[ "$capacity" -gt 70 ] && [ "$capacity" -le 70 ] && echo -n ' '
-[ "$capacity" -gt 80 ] && [ "$capacity" -le 80 ] && echo -n ' '
-[ "$capacity" -gt 90 ] && echo -n ' '
-
 status=$(cat /sys/class/power_supply/BAT0/status)
-[ "$status" = "Charging" ] || [ "$status" = "Full" ] && echo -n ''
 
-echo -n " $capacity%  "
+echo -n " $(rampicon $capacity) $(statusicon $status) $capacity%  "
