@@ -9,5 +9,5 @@ pactl list sinks |
 	tr -d '\n'
 
 pactl list sinks |
-	awk '/^\s*Volume:/ {print " "$5}' |
+	awk '/^\s*Volume:/ {print " "$5" "}' |
 	sed -n "$line"p

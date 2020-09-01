@@ -1,10 +1,15 @@
 #!/bin/sh
 
-if [ $(cat /sys/class/net/wlp2s0/operstate) = 'up' ]; then
-	echo -n '   '
-	iwconfig 2>/dev/null | awk -F\" '/wlp2s0/ {print $2}' | tr -d '\n'
-else
-	echo -n ' 睊  '
-fi
+card=wlan0
 
-echo -n '  '
+isup() {
+	[ $(cat /sys/class/net/$1/operstate) = 'up' ]
+}
+
+ssid() {
+	iwconfig 2>/dev/null | awk -F\" "/$1/ {print \$2}" | tr -d '\n'
+}
+
+isup $card &&
+	echo -n "   $(ssid $card)  "  ||
+	echo -n ' 睊   '
