@@ -1,7 +1,5 @@
 #!/bin/sh
 
-card=wlan0
-
 isup() {
 	[ $(cat /sys/class/net/$1/operstate) = 'up' ]
 }
@@ -10,6 +8,8 @@ ssid() {
 	iwconfig 2>/dev/null | awk -F\" "/$1/ {print \$2}" | tr -d '\n'
 }
 
+card=$(cat $XDG_CONFIG_HOME/bin/wifi_interface)
+
 isup $card &&
-	echo -n "   $(ssid $card)  "  ||
+	echo -n "   $(ssid $card)  " ||
 	echo -n ' 睊   '

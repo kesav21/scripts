@@ -19,7 +19,7 @@ These are all the scripts that require config files, and the files they require:
 - `cronbat`: `$XDG_CONFIG_HOME/bin/dunst_ids`
 - `sshot`: `$XDG_CONFIG_HOME/bin/dunst_ids`
 - `lockrc`: `$XDG_CONFIG_HOME/bin/lock_vars`
-- `bmgen`: `$XDG_CONFIG_HOME/bin/bm_dirs`, `$XDG_CONFIG_HOME/bin/bm_files`
+- `wifibar`: `$XDG_CONFIG_HOME/bin/wifi_interface`
 
 ## logs
 
