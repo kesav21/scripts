@@ -27,3 +27,4 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 
 ## todo
 
+- figure out why lock screen freezes
