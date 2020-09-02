@@ -1,13 +1,4 @@
 #!/bin/sh
-#
-# disconnects a currently connected device
 
-disconnect() {
-	while read -r id; do
-		# disconnect using id
-		[ -n "$id" ] && bluetoothctl disconnect $id
-	done
-}
-
-# list names of connected devices
-btls --connected | fzfmenu -m | sort -u | xargs btconv -i | disconnect
+# disconnects a connected device
+btconnected | fzfmenu | xargs btid | xargs bluetoothctl disconnect

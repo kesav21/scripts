@@ -1,13 +1,8 @@
 #!/bin/sh
-#
-# connects a previously paired device
 
-connect() {
-	while read -r id; do
-		# connect using id
-		[ -n "$id" ] && bluetoothctl connect $id
-	done
-}
-
-# list names of paired devices
-btls --paired | fzfmenu -m | sort -u | xargs btconv -i | connect
+# connects a paired device
+bluetoothctl paired-devices |
+	cut -d\  -f3- |
+	fzfmenu |
+	xargs btid |
+	xargs bluetoothctl connect
