@@ -2,5 +2,4 @@
 
 class="$(cut -d' ' -f1 "$XDG_CONFIG_HOME"/bin/zoom | dmenu)"
 
-awk "\$1 == \"$class\" {print \$2}" $XDG_CONFIG_HOME/bin/zoom | xclip -in -selection clipboard
-
+awk "\$1 == \"$class\" {print \$2}" $XDG_CONFIG_HOME/bin/zoom | xsel -ib
