@@ -30,3 +30,8 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 - figure out why lock screen freezes
 - integrate bitwarden into workflow
 - integrate xdg-open into workflow
+- eliminate the need for pavucontrol
+	* if tv plugged in, play from it
+	* if bluetooth headphones plugged in, play from it
+	* if usb headset plugged in, play from it
+	* if machine has speakers, play from it
