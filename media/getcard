@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# pactl list cards short | awk '/alsa_card.pci-0000_00_1f.3/ {print $1}'
-# pactl set-card-profile 0 output:hdmi-stereo-extra1

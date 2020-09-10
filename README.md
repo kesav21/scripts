@@ -31,7 +31,6 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 - integrate bitwarden into workflow
 - integrate xdg-open into workflow
 - eliminate the need for pavucontrol
-	* if tv plugged in, play from it
-	* if bluetooth headphones plugged in, play from it
-	* if usb headset plugged in, play from it
-	* if machine has speakers, play from it
+	* switch all sink-inputs to newest sink automatically
+	* display volume of newest sink
+	* change volume of newest sink

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+pactl subscribe | while read -r _ op _ t n; do
+	op="${op#\'}"
+	op="${op%\'}"
+	n="${n#\#}"
+
+	[ "$t" = sink ] && [ "$op" = new ] && echo $n
+	[ "$t" = sink ] && [ "$op" = remove ] &&
+		pactl list short sinks | cut -f1 | sort -n | grep -v "$n" | tail -1
+done | while read -r sink; do
+	dunstify 'changed sink' "using $sink"
+	pactl list short sink-inputs | cut -f1 | xargs -n 1 -I {} pactl move-sink-input {} $sink
+done

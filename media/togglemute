@@ -1,4 +1,7 @@
 #!/bin/sh
 
-sink=$(pactl list sinks short | awk 'END {print $1}')
-pactl set-sink-mute "$sink" 'toggle'
+pactl list short sinks |
+	cut -f1 |
+	sort -n |
+	tail -1 |
+	xargs -I {} pactl set-sink-mute '{}' toggle
