@@ -1,0 +1,8 @@
+#!/bin/sh
+
+card="$(cat "$XDG_CONFIG_HOME"/bin/ethernet_interface)"
+
+[ -d /sys/class/net/"$card" ] &&
+	[ $(cat /sys/class/net/"$card"/operstate) = 'up' ] &&
+	echo '   ' ||
+	echo '   '

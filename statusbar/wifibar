@@ -1,15 +1,11 @@
 #!/bin/sh
 
-isup() {
-	[ $(cat /sys/class/net/$1/operstate) = 'up' ]
-}
+card="$(cat "$XDG_CONFIG_HOME"/bin/wifi_interface)"
 
-ssid() {
-	iwconfig 2>/dev/null | awk -F\" "/$1/ {print \$2}" | tr -d '\n'
-}
-
-card=$(cat $XDG_CONFIG_HOME/bin/wifi_interface)
-
-isup $card &&
-	echo -n "   $(ssid $card)  " ||
-	echo -n ' 睊   '
+[ -d /sys/class/net/"$card" ] &&
+	[ $(cat /sys/class/net/"$card"/operstate) = 'up' ] &&
+	iwconfig 2>/dev/null |
+	awk -F\" "/$1/ {print \$2}" |
+		tr -d '\n' |
+		xargs -I{} echo '   {}  ' ||
+	echo ' 睊  '
