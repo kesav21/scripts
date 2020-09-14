@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # disconnects a connected device
-btconnected | fzfmenu | xargs btid | xargs bluetoothctl disconnect
+btconnected | dmenu | xargs btid | xargs bluetoothctl disconnect

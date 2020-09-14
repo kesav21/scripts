@@ -1,5 +1,5 @@
 #!/bin/sh
 
-pgrep -lu kesav '.*' | cut -d ' ' -f2 | fzfmenu -m | while read -r i; do
+pgrep -lu kesav '.*' | cut -d ' ' -f2 | dmenu | while read -r i; do
 	pkill -x "$i"
 done

@@ -3,6 +3,6 @@
 # connects a paired device
 bluetoothctl paired-devices |
 	cut -d\  -f3- |
-	fzfmenu |
+	dmenu |
 	xargs btid |
 	xargs bluetoothctl connect
