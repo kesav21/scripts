@@ -1,14 +1,36 @@
 #!/bin/sh
 
-pactl subscribe | while read -r _ op _ t n; do
-	op="${op#\'}"
-	op="${op%\'}"
-	n="${n#\#}"
+. "$XDG_CONFIG_HOME"/bin/dunst_ids
 
-	[ "$t" = sink ] && [ "$op" = new ] && echo $n
-	[ "$t" = sink ] && [ "$op" = remove ] &&
-		pactl list short sinks | cut -f1 | sort -n | grep -v "$n" | tail -1
-done | while read -r sink; do
-	dunstify 'changed sink' "using $sink"
-	pactl list short sink-inputs | cut -f1 | xargs -n 1 -I {} pactl move-sink-input {} $sink
-done
+sinkevents() {
+	awk -F"['# ]" '$6 == "sink" && ($3 == "new" || $3 == "remove") {
+		print $3" "$8; system("")
+	}'
+}
+
+newsink() {
+	while read -r op n; do
+		[ "$op" = new ] && echo $n
+		[ "$op" = remove ] &&
+			pactl list short sinks | cut -f1 | sort -n | grep -v "$n" | tail -1
+	done
+}
+
+notify() {
+	pactl list sinks |
+		awk -F: '/Description/ {print $2}' |
+		tail -1 |
+		xargs -I {} dunstify -r "$id_sinkd" 'new sink' '{}'
+}
+
+switchinputs() {
+	pactl list short sink-inputs |
+		cut -f1 |
+		xargs -n 1 -I {} pactl move-sink-input {} "$1"
+}
+
+pactl subscribe | sinkevents | newsink |
+	while read -r sink; do
+		notify
+		switchinputs "$sink"
+	done
