@@ -30,6 +30,7 @@ Logs are stored in `$XDG_CACHE_HOME/bin`.
 - figure out why lock screen freezes
 - integrate bitwarden into workflow
 - integrate xdg-open into workflow
+	* drawback: xdg-open can't handle multiple files
 - eliminate the need for pavucontrol
 	* switch all sink-inputs to newest sink automatically
 	* display volume of newest sink
