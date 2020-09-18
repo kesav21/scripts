@@ -7,12 +7,12 @@
 # screensaver cycle: call xss-lock locker
 
 # retrieve config variables
-. $XDG_CONFIG_HOME/bin/lock_vars
+. "$XDG_CONFIG_HOME"/bin/lock_vars
 
 # set dpms timeouts
-xset dpms $dpmsstandby $dpmssuspend $dpmsoff
+xset dpms $standby $suspend $off
 # set screensaver timeouts
-xset s $sstimeout $sscycle
+xset s $timeout $cycle
 
 # restart locker
 pkill -x xss-lock
