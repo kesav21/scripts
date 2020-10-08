@@ -1,23 +1,34 @@
-#!/bin/sh
+#!/bin/luajit
 
-rampicon() {
-	[ "$1" -le 10 ] && echo -n ''
-	[ "$1" -gt 10 ] && [ "$1" -le 20 ] && echo -n ''
-	[ "$1" -gt 20 ] && [ "$1" -le 30 ] && echo -n ''
-	[ "$1" -gt 30 ] && [ "$1" -le 40 ] && echo -n ''
-	[ "$1" -gt 40 ] && [ "$1" -le 50 ] && echo -n ''
-	[ "$1" -gt 50 ] && [ "$1" -le 60 ] && echo -n ''
-	[ "$1" -gt 60 ] && [ "$1" -le 70 ] && echo -n ''
-	[ "$1" -gt 70 ] && [ "$1" -le 80 ] && echo -n ''
-	[ "$1" -gt 80 ] && [ "$1" -le 90 ] && echo -n ''
-	[ "$1" -gt 90 ] && echo -n ''
-}
+function readline(filename)
+	if io.open(filename) then
+		for line in io.lines(filename) do
+			return line
+		end
+		io.close(file)
+	end
+end
 
-statusicon() {
-	[ "$1" = "Charging" ] || [ "$1" = "Full" ] && echo -n ''
-}
+function rampicon(capacity)
+	if capacity <= 10 then return "" end
+	if capacity <= 20 then return "" end
+	if capacity <= 30 then return "" end
+	if capacity <= 40 then return "" end
+	if capacity <= 50 then return "" end
+	if capacity <= 60 then return "" end
+	if capacity <= 70 then return "" end
+	if capacity <= 80 then return "" end
+	if capacity <= 90 then return "" end
+	return ""
+end
 
-capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-status=$(cat /sys/class/power_supply/BAT0/status)
+function statusicon(status)
+	if status == "Charging" then return "" end
+	if status == "Full" then return "" end
+	return ""
+end
 
-echo -n " $(rampicon $capacity) $(statusicon $status) $capacity%  "
+capacity = tonumber(readline("/sys/class/power_supply/BAT0/capacity"))
+rampicon = rampicon(capacity)
+statusicon = statusicon(readline("/sys/class/power_supply/BAT0/status"))
+print(" " .. statusicon .. " " .. rampicon .. " " .. capacity .. "% ")
