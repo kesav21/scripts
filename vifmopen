@@ -1,0 +1,5 @@
+#!/bin/sh
+
+st -n centered -e vifmu -fc only &&
+	[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles ] &&
+	xargs -Ipdf zathura --fork -e "$(tab)" 'pdf' <"$XDG_CONFIG_HOME"/vifm/vimfiles
