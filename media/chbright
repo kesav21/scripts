@@ -1,20 +1,44 @@
-#!/bin/sh
-#
-# changes brightness by given amount
-#
+#!/bin/luajit
 
-# remove % symbol from input
-# convert input to a number
-arg="$(($(echo $1 | sed 's/%//g') + 0))"
+function readline(filename)
+	if io.open(filename) then
+		for line in io.lines(filename) do
+			return line
+		end
+		io.close(file)
+	end
+end
 
-# get current and full brightness
-current="$(cat /sys/class/backlight/intel_backlight/brightness)"
-full="$(cat /sys/class/backlight/intel_backlight/max_brightness)"
+function restrict(lower, value, upper)
+	if value < lower then
+		print('too low ' .. value)
+		return lower
+	elseif value > upper then
+		print('too high ' .. value)
+		return upper
+	else
+		print('just right ' .. value)
+		return value
+	end
+end
 
-# calculate n% of maximum brightness
-# add to current brightness
-newbright="$(echo "$current + $arg * $full / 100" | bc)"
+diff = tonumber(arg[1]:sub(1, -2))
+print('parsed ' .. diff)
+current = tonumber(readline('/sys/class/backlight/intel_backlight/brightness'))
+print('current ' .. current)
+max = tonumber(readline('/sys/class/backlight/intel_backlight/max_brightness'))
+print('max ' .. max)
+new = restrict(0, current + diff * max / 100, max)
+print('new ' .. new)
 
-# remove decimal places
-# write new brightness to file
-echo ${newbright%.*} >/sys/class/backlight/intel_backlight/brightness
+if current == new then
+	print('stale, exiting')
+	os.exit(1)
+end
+
+print('writing')
+file = io.open('/sys/class/backlight/intel_backlight/brightness', "w")
+io.output(file)
+io.write(new)
+io.close(file)
+print('written')
