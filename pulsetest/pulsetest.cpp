@@ -17,6 +17,7 @@ typedef struct {
 	char* logpath_mute;
 
 	std::vector<int> sinks;
+	int DEBUG;
 } PulseAudio;
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
@@ -64,6 +65,8 @@ void initialize(PulseAudio* pa) {
 	strcpy(pa->logpath_mute, logpath_cache);
 	strcat(pa->logpath_mute, logname_mute);
 	printf("using log file: %s\n", pa->logpath_mute);
+
+	pa->DEBUG = 0;
 }
 
 int run(PulseAudio* pa) {
@@ -106,14 +109,12 @@ void context_state_callback(pa_context *c, void *userdata) {
 	}
 }
 
-#define DEBUG 0
-
 void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	PulseAudio* pa = (PulseAudio*) userdata;
 	if (i) {
 		pa->sinks.push_back(i->index);
 
-		if (DEBUG) {
+		if (pa->DEBUG) {
 			printf("{");
 			for (int j: pa->sinks) printf("%d,", j);
 			printf("}\n");
@@ -132,7 +133,7 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
 		pa->sinks.push_back(idx);
 
-		if (DEBUG) {
+		if (pa->DEBUG) {
 			printf("new sink\n");
 			printf("{");
 			for (int j: pa->sinks) printf("%d,", j);
@@ -145,7 +146,7 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
 		pa->sinks.pop_back();
 
-		if (DEBUG) {
+		if (pa->DEBUG) {
 			printf("removed sink\n");
 			printf("{");
 			for (int j: pa->sinks) printf("%d,", j);
@@ -156,7 +157,7 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_CHANGE) {
-		if (DEBUG) {
+		if (pa->DEBUG) {
 			printf("changed volume\n");
 		}
 		pa_context_get_sink_info_by_index(c, idx, set_volume_callback, userdata);
@@ -165,11 +166,11 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 
 void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
-		if (DEBUG) {
+		PulseAudio* pa = (PulseAudio*) userdata;
+
+		if (pa->DEBUG) {
 			printf("sink: %d,%s\n", i->index, i->description);
 		}
-
-		PulseAudio* pa = (PulseAudio*) userdata;
 
 		FILE* file = fopen(pa->logpath_index, "w");
 		if (file) {
@@ -191,13 +192,13 @@ void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *user
 
 void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
+		PulseAudio* pa = (PulseAudio*) userdata;
+
 		float volume = 100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM;
 
-		if (DEBUG) {
+		if (pa->DEBUG) {
 			printf("volume: %.0f,%d\n", volume, i->mute);
 		}
-
-		PulseAudio* pa = (PulseAudio*) userdata;
 
 		FILE* file = fopen(pa->logpath_volume, "w");
 		if (file) {
