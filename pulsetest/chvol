@@ -1,4 +1,4 @@
 #!/bin/sh
 
-IFS=, read sink _ <"$XDG_CACHE_HOME"/bin/pulsetest.sink
+IFS=, read sink _ <"$XDG_CACHE_HOME"/bin/pulsetest.sink.index
 pactl set-sink-volume "$sink" "$1"

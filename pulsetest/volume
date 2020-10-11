@@ -1,4 +1,4 @@
 #!/bin/sh
 
-IFS=, read volume mute <"$XDG_CACHE_HOME"/bin/pulsetest.volume
+IFS=, read volume mute <"$XDG_CACHE_HOME"/bin/pulsetest.sink.volume
 [ "$mute" -eq 0 ] && echo -n "墳 $volume%  " || echo -n "ﱝ $volume%  "
