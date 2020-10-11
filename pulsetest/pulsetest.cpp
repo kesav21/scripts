@@ -10,6 +10,8 @@ typedef struct {
 	pa_mainloop_api* _mainloop_api;
 	pa_context* _context;
 	pa_signal_event* _signal;
+	char* sinklogpath;
+	char* volumelogpath;
 } PulseAudio;
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
@@ -31,6 +33,20 @@ void initialize(PulseAudio* pa) {
 	pa->_context = pa_context_new(pa->_mainloop_api, "PulseAudio Test");
 	pa_context_connect(pa->_context, NULL, PA_CONTEXT_NOAUTOSPAWN, NULL);
 	pa_context_set_state_callback(pa->_context, context_state_callback, pa);
+
+	char* cachepath = getenv("XDG_CACHE_HOME");
+
+	const char* sinklogname = "/bin/pulsetest.sink";
+	pa->sinklogpath = (char*) malloc(strlen(cachepath) + strlen(sinklogname) + 1);
+	strcpy(pa->sinklogpath, cachepath);
+	strcat(pa->sinklogpath, sinklogname);
+	printf("using log file: %s\n", pa->sinklogpath);
+
+	const char* volumelogname = "/bin/pulsetest.volume";
+	pa->volumelogpath = (char*) malloc(strlen(cachepath) + strlen(volumelogname) + 1);
+	strcpy(pa->volumelogpath, cachepath);
+	strcat(pa->volumelogpath, volumelogname);
+	printf("using log file: %s\n", pa->volumelogpath);
 }
 
 int run(PulseAudio* pa) {
@@ -44,11 +60,15 @@ void destroy(PulseAudio* pa) {
 	pa_signal_free(pa->_signal);
 	pa_signal_done();
 	pa_mainloop_free(pa->_mainloop);
+	free(pa->sinklogpath);
+	free(pa->volumelogpath);
 
 	pa->_context = NULL;
 	pa->_signal = NULL;
 	pa->_mainloop = NULL;
 	pa->_mainloop_api = NULL;
+	pa->sinklogpath = NULL;
+	pa->volumelogpath = NULL;
 }
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
@@ -121,16 +141,12 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 
 void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
-		char sinklog[100] = "";
-		strcpy(sinklog, getenv("XDG_CACHE_HOME"));
-		strcat(sinklog, "/bin/pulsetest.sink");
-
 		if (DEBUG) {
 			printf("sink: %d,%s\n", i->index, i->description);
-			printf("writing to %s\n", sinklog);
 		}
 
-		FILE *file = fopen(sinklog, "w");
+		PulseAudio* pa = (PulseAudio*) userdata;
+		FILE* file = fopen(pa->sinklogpath, "w");
 		if (file) {
 			fprintf(file, "%d,%s\n", i->index, i->description);
 			fclose(file);
@@ -144,16 +160,12 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 	if (i) {
 		float volume = 100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM;
 
-		char volumelog[100] = "";
-		strcpy(volumelog, getenv("XDG_CACHE_HOME"));
-		strcat(volumelog, "/bin/pulsetest.volume");
-
 		if (DEBUG) {
 			printf("volume: %.0f,%d\n", volume, i->mute);
-			printf("writing to %s\n", volumelog);
 		}
 
-		FILE *file = fopen(volumelog, "w");
+		PulseAudio* pa = (PulseAudio*) userdata;
+		FILE* file = fopen(pa->volumelogpath, "w");
 		if (file) {
 			fprintf(file, "%.0f,%d\n", volume, i->mute);
 			fclose(file);
@@ -166,7 +178,7 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 int main(int argc, char *argv[]) {
 	PulseAudio* pa = (PulseAudio*) malloc(sizeof(PulseAudio));
 	initialize(pa);
-	int ret =  run(pa);
+	int ret = run(pa);
 	destroy(pa);
 	return ret;
 }
