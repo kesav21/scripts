@@ -1,11 +1,12 @@
 #!/bin/luajit
 
 function readline(filename)
-	if io.open(filename) then
+	file = io.open(filename)
+	if file then
 		for line in io.lines(filename) do
+			io.close(file)
 			return line
 		end
-		io.close(file)
 	end
 end
 
