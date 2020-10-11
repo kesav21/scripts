@@ -5,6 +5,13 @@
 #include <stdio.h>
 #include <vector>
 
+typedef struct {
+	pa_mainloop* _mainloop;
+	pa_mainloop_api* _mainloop_api;
+	pa_context* _context;
+	pa_signal_event* _signal;
+} PulseAudio;
+
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
 void context_state_callback(pa_context *c, void *userdata);
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata);
@@ -12,66 +19,40 @@ void initialize_sinks_callback(pa_context *c, const pa_sink_info *i, int eol, vo
 void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 
-class PulseAudio
-{
-	private:
-		pa_mainloop* _mainloop;
-		pa_mainloop_api* _mainloop_api;
-		pa_context* _context;
-		pa_signal_event* _signal;
 
-	public:
-		PulseAudio(): _mainloop(NULL), _mainloop_api(NULL), _context(NULL), _signal(NULL) {
-		}
+void initialize(PulseAudio* pa) {
+	pa->_mainloop = pa_mainloop_new();
+	pa->_mainloop_api = pa_mainloop_get_api(pa->_mainloop);
 
-		bool initialize() {
-			_mainloop = pa_mainloop_new();
-			_mainloop_api = pa_mainloop_get_api(_mainloop);
-			pa_signal_init(_mainloop_api);
-			_signal = pa_signal_new(SIGINT, exit_signal_callback, this);
-			signal(SIGPIPE, SIG_IGN);
-			_context = pa_context_new(_mainloop_api, "PulseAudio Test");
-			pa_context_connect(_context, NULL, PA_CONTEXT_NOAUTOSPAWN, NULL);
-			pa_context_set_state_callback(_context, context_state_callback, this);
-			return true;
-		}
+	pa_signal_init(pa->_mainloop_api);
+	pa->_signal = pa_signal_new(SIGINT, exit_signal_callback, pa);
+	signal(SIGPIPE, SIG_IGN);
 
-		int run() {
-			int ret = 1;
-			pa_mainloop_run(_mainloop, &ret);
-			return ret;
-		}
+	pa->_context = pa_context_new(pa->_mainloop_api, "PulseAudio Test");
+	pa_context_connect(pa->_context, NULL, PA_CONTEXT_NOAUTOSPAWN, NULL);
+	pa_context_set_state_callback(pa->_context, context_state_callback, pa);
+}
 
-		void quit(int ret = 0) {
-			_mainloop_api->quit(_mainloop_api, ret);
-		}
+int run(PulseAudio* pa) {
+	int ret = 1;
+	pa_mainloop_run(pa->_mainloop, &ret);
+	return ret;
+}
 
-		void destroy() {
-			if (_context) {
-				pa_context_unref(_context);
-				_context = NULL;
-			}
+void destroy(PulseAudio* pa) {
+	pa_context_unref(pa->_context);
+	pa_signal_free(pa->_signal);
+	pa_signal_done();
+	pa_mainloop_free(pa->_mainloop);
 
-			if (_signal) {
-				pa_signal_free(_signal);
-				pa_signal_done();
-				_signal = NULL;
-			}
-
-			if (_mainloop) {
-				pa_mainloop_free(_mainloop);
-				_mainloop = NULL;
-				_mainloop_api = NULL;
-			}
-		}
-
-		~PulseAudio() {
-			destroy();
-		}
-};
+	pa->_context = NULL;
+	pa->_signal = NULL;
+	pa->_mainloop = NULL;
+	pa->_mainloop_api = NULL;
+}
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
-	((PulseAudio*) userdata)->quit(0);
+	m->quit(m, 0);
 }
 
 void context_state_callback(pa_context *c, void *userdata) {
@@ -183,7 +164,9 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 }
 
 int main(int argc, char *argv[]) {
-	PulseAudio pa = PulseAudio();
-	pa.initialize();
-	return pa.run();
+	PulseAudio* pa = (PulseAudio*) malloc(sizeof(PulseAudio));
+	initialize(pa);
+	int ret =  run(pa);
+	destroy(pa);
+	return ret;
 }
