@@ -35,10 +35,20 @@ if current == new then
 	print('stale, exiting')
 	os.exit(1)
 end
+print('fresh')
 
-print('writing')
 file = io.open('/sys/class/backlight/intel_backlight/brightness', "w")
+if not file then
+	print('could not open file for writing')
+	os.exit(1)
+end
+print('opened')
+
 io.output(file)
-io.write(new)
-io.close(file)
+if not io.write(new) then
+	print('write failed')
+	os.exit(1)
+end
 print('written')
+
+io.close(file)
