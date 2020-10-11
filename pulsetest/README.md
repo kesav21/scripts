@@ -1,6 +1,10 @@
 
 # pulsetest
 
+`pulsetest` is a collection of scripts I use to control anything relating to audio on my machines.
+The core, written in C++, interfaces with pulseaudio directly and writes its results to certain files.
+The peripherals, written in sh, read and interpret these files to performs various tasks on my machines.
+
 ## related links
 
 - [code gist](https://gist.github.com/jasonwhite/1df6ee4b5039358701d2)
