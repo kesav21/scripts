@@ -1,9 +1,4 @@
 #!/bin/sh
 
-pactl list sinks |
-	awk '/Mute:/ {print " "$2}' |
-	tail -1 |
-	sed 's/no/墳/;s/yes/ﱝ/' |
-	tr -d '\n'
-
-pactl list sinks | awk '/^\s*Volume:/ {print " "$5" "}' | tail -1
+IFS=, read volume mute <"$XDG_CACHE_HOME"/bin/pulsetest.volume
+[ "$mute" -eq 0 ] && echo -n "墳 $volume%  " || echo -n "ﱝ $volume%  "
