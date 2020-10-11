@@ -12,7 +12,9 @@ typedef struct {
 	pa_signal_event* _signal;
 
 	char* logpath_index;
+	char* logpath_description;
 	char* logpath_volume;
+	char* logpath_mute;
 } PulseAudio;
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
@@ -43,11 +45,23 @@ void initialize(PulseAudio* pa) {
 	strcat(pa->logpath_index, logname_index);
 	printf("using log file: %s\n", pa->logpath_index);
 
+	const char* logname_description = "/bin/pulsetest.sink.description";
+	pa->logpath_description = (char*) malloc(strlen(logpath_cache) + strlen(logname_description) + 1);
+	strcpy(pa->logpath_description, logpath_cache);
+	strcat(pa->logpath_description, logname_description);
+	printf("using log file: %s\n", pa->logpath_description);
+
 	const char* logname_volume = "/bin/pulsetest.sink.volume";
 	pa->logpath_volume = (char*) malloc(strlen(logpath_cache) + strlen(logname_volume) + 1);
 	strcpy(pa->logpath_volume, logpath_cache);
 	strcat(pa->logpath_volume, logname_volume);
 	printf("using log file: %s\n", pa->logpath_volume);
+
+	const char* logname_mute = "/bin/pulsetest.sink.mute";
+	pa->logpath_mute = (char*) malloc(strlen(logpath_cache) + strlen(logname_mute) + 1);
+	strcpy(pa->logpath_mute, logpath_cache);
+	strcat(pa->logpath_mute, logname_mute);
+	printf("using log file: %s\n", pa->logpath_mute);
 }
 
 int run(PulseAudio* pa) {
@@ -63,7 +77,9 @@ void destroy(PulseAudio* pa) {
 	pa_mainloop_free(pa->_mainloop);
 
 	free(pa->logpath_index);
+	free(pa->logpath_description);
 	free(pa->logpath_volume);
+	free(pa->logpath_mute);
 
 	pa->_context = NULL;
 	pa->_signal = NULL;
@@ -71,7 +87,9 @@ void destroy(PulseAudio* pa) {
 	pa->_mainloop_api = NULL;
 
 	pa->logpath_index = NULL;
+	pa->logpath_description = NULL;
 	pa->logpath_volume = NULL;
+	pa->logpath_mute = NULL;
 }
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
@@ -152,10 +170,18 @@ void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *user
 
 		FILE* file = fopen(pa->logpath_index, "w");
 		if (file) {
-			fprintf(file, "%d,%s\n", i->index, i->description);
+			fprintf(file, "%d\n", i->index);
 			fclose(file);
 		} else {
-			fprintf(stderr, "failed writing to sinklog\n");
+			fprintf(stderr, "failed writing to %s\n", pa->logpath_index);
+		}
+
+		file = fopen(pa->logpath_description, "w");
+		if (file) {
+			fprintf(file, "%s\n", i->description);
+			fclose(file);
+		} else {
+			fprintf(stderr, "failed writing to %s\n"), pa->logpath_description;
 		}
 	}
 }
@@ -169,12 +195,21 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 		}
 
 		PulseAudio* pa = (PulseAudio*) userdata;
+
 		FILE* file = fopen(pa->logpath_volume, "w");
 		if (file) {
-			fprintf(file, "%.0f,%d\n", volume, i->mute);
+			fprintf(file, "%.0f\n", volume);
 			fclose(file);
 		} else {
-			fprintf(stderr, "failed writing to volumelog\n");
+			fprintf(stderr, "failed writing to %s\n", pa->logpath_volume);
+		}
+
+		file = fopen(pa->logpath_mute, "w");
+		if (file) {
+			fprintf(file, "%d\n", i->mute);
+			fclose(file);
+		} else {
+			fprintf(stderr, "failed writing to %s\n", pa->logpath_mute);
 		}
 	}
 }
