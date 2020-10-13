@@ -1,11 +1,6 @@
 #!/bin/sh
 
-card="$(cat "$XDG_CONFIG_HOME"/bin/wifi_interface)"
-
-[ -d /sys/class/net/"$card" ] &&
-	[ $(cat /sys/class/net/"$card"/operstate) = 'up' ] &&
-	iwconfig 2>/dev/null |
-	awk -F\" "/$1/ {print \$2}" |
-		tr -d '\n' |
-		xargs -I{} echo '   {}  ' ||
-	echo ' 睊  '
+iwgetid -r | {
+	read -r ssid
+	[ -n "$ssid" ] && echo "   $ssid " || echo ' 睊  '
+}
