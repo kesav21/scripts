@@ -1,7 +1,21 @@
-#!/bin/sh
+#!/bin/luajit
 
-[ "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.mute)" -eq 0 ] &&
-	echo -n "墳" ||
-	echo -n "ﱝ "
+function readline(filename)
+	file = io.open(filename)
+	if file then
+		for line in io.lines(filename) do
+			io.close(file)
+			return line
+		end
+	end
+end
 
-echo -n " $(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.volume)%  "
+function muteicon(mute)
+	if mute == 0 then return "墳" else return "ﱝ " end
+end
+
+cache = os.getenv("XDG_CACHE_HOME")
+mute = tonumber(readline(cache .. '/bin/pulsetest.sink.mute'))
+volume = tonumber(readline(cache .. '/bin/pulsetest.sink.volume'))
+print(muteicon(mute) .. ' ' .. volume .. '% ')
+
