@@ -19,4 +19,4 @@ statepath = '/sys/class/net/' .. iface .. '/operstate'
 state = readline(statepath)
 -- print(state)
 
-if state == up then print('   ') else print('   ') end
+if state == 'up' then print('   ') else print('   ') end

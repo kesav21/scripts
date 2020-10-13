@@ -1,4 +1,3 @@
 #!/bin/sh
 
-IFS=, read sink _ <"$XDG_CACHE_HOME"/bin/pulsetest.sink
-pactl set-sink-mute "$sink" toggle
+pactl set-sink-mute "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.index)" toggle

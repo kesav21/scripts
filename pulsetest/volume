@@ -11,7 +11,7 @@ function readline(filename)
 end
 
 function muteicon(mute)
-	if mute == 0 then return "墳" else return "ﱝ " end
+	if mute == 0 then return "墳" else return "ﱝ" end
 end
 
 cache = os.getenv("XDG_CACHE_HOME")
