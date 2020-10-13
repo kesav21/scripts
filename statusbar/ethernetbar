@@ -1,8 +1,22 @@
-#!/bin/sh
+#!/bin/luajit
 
-card="$(cat "$XDG_CONFIG_HOME"/bin/ethernet_interface)"
+function readline(filename)
+	file = io.open(filename)
+	if file then
+		for line in io.lines(filename) do
+			io.close(file)
+			return line
+		end
+	end
+end
 
-[ -d /sys/class/net/"$card" ] &&
-	[ $(cat /sys/class/net/"$card"/operstate) = 'up' ] &&
-	echo '   ' ||
-	echo '   '
+ifacepath = os.getenv("XDG_CONFIG_HOME") .. '/bin/ethernet_interface'
+-- print(ifacepath)
+iface = readline(ifacepath)
+-- print(iface)
+statepath = '/sys/class/net/' .. iface .. '/operstate'
+-- print(statepath)
+state = readline(statepath)
+-- print(state)
+
+if state == up then print('   ') else print('   ') end

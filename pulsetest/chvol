@@ -1,3 +1,4 @@
 #!/bin/sh
 
-pactl set-sink-volume "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.index)" "$1"
+validatevol "$1" &&
+	pactl set-sink-volume "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.index)" "$1"
