@@ -1,0 +1,45 @@
+#!/bin/luajit
+
+function readline(filename)
+	file = io.open(filename)
+	if file then
+		for line in io.lines(filename) do
+			io.close(file)
+			return line
+		end
+	end
+end
+
+function restrict(lower, value, upper)
+	if value < lower then
+		print('too low ' .. value)
+		return lower
+	elseif value > upper then
+		print('too high ' .. value)
+		return upper
+	else
+		print('just right ' .. value)
+		return value
+	end
+end
+
+if not arg[1] then
+	print('no argument given')
+	os.exit(1)
+end
+
+diff = tonumber(arg[1]:sub(1, -2))
+print('parsed ' .. diff)
+
+cache = os.getenv("XDG_CACHE_HOME")
+current = tonumber(readline(cache .. '/bin/pulsetest.sink.volume'))
+print('current ' .. current)
+
+new = restrict(0, current + diff, 100)
+print('new ' .. new)
+
+if current == new then
+	print('stale, exiting')
+	os.exit(1)
+end
+print('fresh, accepting')
