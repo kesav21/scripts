@@ -10,36 +10,49 @@ function readline(filename)
 	end
 end
 
-function restrict(lower, value, upper)
-	if value < lower then
-		print('too low ' .. value)
-		return lower
-	elseif value > upper then
-		print('too high ' .. value)
-		return upper
-	else
-		print('just right ' .. value)
-		return value
-	end
+if not arg[1] then
+	io.stderr:write('no argument given')
+	os.exit(1)
 end
 
-if not arg[1] then
-	print('no argument given')
+if string.sub(arg[1], 1, 1) ~= '+' and string.sub(arg[1], 1, 1) ~= '-' then
+	io.stderr:write('argument must start with either + or -')
+	os.exit(1)
+end
+
+if string.sub(arg[1], -1) ~= '%' then
+	io.stderr:write('argument must end with %')
+	os.exit(1)
+end
+
+if not tonumber(arg[1]:sub(1, -2)) then
+	io.stderr:write('argument must contain a number')
 	os.exit(1)
 end
 
 diff = tonumber(arg[1]:sub(1, -2))
 print('parsed ' .. diff)
 
-cache = os.getenv("XDG_CACHE_HOME")
-current = tonumber(readline(cache .. '/bin/pulsetest.sink.volume'))
+currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sink.volume'
+print('reading from ' .. currentpath)
+
+current = tonumber(readline(currentpath))
 print('current ' .. current)
 
-new = restrict(0, current + diff, 100)
+new = current + diff
 print('new ' .. new)
 
-if current == new then
-	print('stale, exiting')
+if new < 0 then
+	io.stderr:write('too low')
 	os.exit(1)
 end
-print('fresh, accepting')
+
+if new > 100 then
+	io.stderr:write('too low')
+	os.exit(1)
+end
+
+if current == new then
+	io.stderr:write('no change')
+	os.exit(1)
+end
