@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <stdio.h>
+#include "pidof.h"
 
 // programming in lua: a directory iterator
 // https://www.lua.org/pil/29.1.html
