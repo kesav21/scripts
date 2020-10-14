@@ -1,4 +1,66 @@
-#!/bin/sh
+#!/bin/luajit
 
-validatevol "$1" &&
-	pactl set-sink-volume "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.sink.index)" "$1"
+function readline(filename)
+	file = io.open(filename)
+	if file then
+		for line in io.lines(filename) do
+			io.close(file)
+			return line
+		end
+	end
+end
+
+if not arg[1] then
+	io.stderr:write('no argument given')
+	os.exit(1)
+end
+
+if string.sub(arg[1], 1, 1) ~= '+' and string.sub(arg[1], 1, 1) ~= '-' then
+	io.stderr:write('argument must start with either + or -')
+	os.exit(1)
+end
+
+if string.sub(arg[1], -1) ~= '%' then
+	io.stderr:write('argument must end with %')
+	os.exit(1)
+end
+
+if not tonumber(arg[1]:sub(1, -2)) then
+	io.stderr:write('argument must contain a number')
+	os.exit(1)
+end
+
+diff = tonumber(arg[1]:sub(1, -2))
+print('parsed ' .. diff)
+
+currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sink.volume'
+print('reading from ' .. currentpath)
+
+current = tonumber(readline(currentpath))
+print('current ' .. current)
+
+new = current + diff
+print('new ' .. new)
+
+if new < 0 then
+	io.stderr:write('too low')
+	os.exit(1)
+end
+
+if new > 100 then
+	io.stderr:write('too high')
+	os.exit(1)
+end
+
+if current == new then
+	io.stderr:write('no change')
+	os.exit(1)
+end
+
+indexpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sink.index'
+print('reading from ' .. indexpath)
+
+index = tonumber(readline(indexpath))
+print('sink index ' .. index)
+
+os.execute('pactl set-sink-volume ' .. index .. ' ' .. arg[1])
