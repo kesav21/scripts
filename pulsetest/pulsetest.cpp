@@ -17,13 +17,14 @@ typedef struct {
 	char* logpath_mute;
 
 	std::vector<int> sinks;
+	int sink;
 	int DEBUG;
 } PulseAudio;
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
 void context_state_callback(pa_context *c, void *userdata);
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata);
-void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
+void initialize_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 
@@ -103,26 +104,27 @@ void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void 
 
 void context_state_callback(pa_context *c, void *userdata) {
 	if (pa_context_get_state(c) == PA_CONTEXT_READY) {
-		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
+		pa_context_get_sink_info_list(c, initialize_sink_callback, userdata);
 		pa_context_set_subscribe_callback(c, subscribe_callback, userdata);
 		pa_context_subscribe(c, PA_SUBSCRIPTION_MASK_SINK, NULL, NULL);
 	}
 }
 
-void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
+void initialize_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	PulseAudio* pa = (PulseAudio*) userdata;
 	if (i) {
-		pa->sinks.push_back(i->index);
+		pa->sink = i->index;
 
 		if (pa->DEBUG) {
-			printf("{");
-			for (int j: pa->sinks) printf("%d,", j);
-			printf("}\n");
+			printf("iterating over sink %d\n", pa->sink);
 		}
 	}
 	if (eol) {
-		pa_context_get_sink_info_by_index(c, pa->sinks.back(), set_volume_callback, userdata);
-		pa_context_get_sink_info_by_index(c, pa->sinks.back(), use_sink_callback, userdata);
+		if (pa->DEBUG) {
+			printf("ending with sink %d\n", pa->sink);
+		}
+		pa_context_get_sink_info_by_index(c, pa->sink, set_volume_callback, userdata);
+		pa_context_get_sink_info_by_index(c, pa->sink, use_sink_callback, userdata);
 	}
 }
 
