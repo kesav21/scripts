@@ -1,2 +1,2 @@
-pulsetest: main.c pidof.c callbacks.c core.c
-	gcc -D_REENTRANT -lpulse -pthread main.c pidof.c callbacks.c core.c -o bin/pulsetest
+pulsetest: src/main.c src/pidof.c src/callbacks.c src/core.c
+	gcc -D_REENTRANT -lpulse -pthread src/main.c src/pidof.c src/callbacks.c src/core.c -o bin/pulsetest
