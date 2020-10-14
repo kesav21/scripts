@@ -6,6 +6,10 @@
 # screensaver timeout: call xss-lock notifier
 # screensaver cycle: call xss-lock locker
 
+xset -dpms
+xset s 0 0
+exit
+
 # retrieve config variables
 . "$XDG_CONFIG_HOME"/bin/lock_vars
 
