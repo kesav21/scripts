@@ -1,2 +1,2 @@
-pulsetest: pulsetest.cpp
-	g++ -D_REENTRANT -lpulse -pthread pulsetest.cpp -o pulsetest
+pulsetest: pulsetest.c
+	gcc -D_REENTRANT -lpulse -pthread pulsetest.c -o pulsetest
