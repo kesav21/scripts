@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "cpidof.c"
+#include "pidof.c"
 
 typedef struct {
 	pa_mainloop* _mainloop;
