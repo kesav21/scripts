@@ -28,3 +28,4 @@ The peripherals, written in sh, read and interpret these files to performs vario
 
 - switch sink-inputs on sink change
 - notify on sink change
+- [create a custom pulseaudio module](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/Developer/Modules/)
