@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "cpidof.c"
+
 typedef struct {
 	pa_mainloop* _mainloop;
 	pa_mainloop_api* _mainloop_api;
@@ -221,6 +223,17 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 			fclose(file);
 		} else {
 			fprintf(stderr, "failed writing to %s\n", pa->logpath_mute);
+		}
+
+		int pid = pidof("dwmblocks", 9);
+		if (pid != -1) {
+			printf("signalling dwmblocks, %d\n", pid);
+			int ret = kill(pid, SIGRTMIN+1);
+			if (ret == 0) {
+				printf("signalled dwmblocks\n");
+			} else {
+				fprintf(stderr, "failed to signal dwmblocks, %d\n", ret);
+			}
 		}
 	}
 }

@@ -43,9 +43,3 @@ int pidof(char* name, int namelen)
 	return pid;
 }
 
-int main(void)
-{
-	printf("%d\n", pidof("dwmblocks", 9));
-	return 0;
-}
-
