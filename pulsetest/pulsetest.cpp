@@ -3,7 +3,6 @@
 #include <signal.h>
 #include <string.h>
 #include <stdio.h>
-#include <vector>
 
 typedef struct {
 	pa_mainloop* _mainloop;
@@ -16,7 +15,6 @@ typedef struct {
 	char* logpath_volume;
 	char* logpath_mute;
 
-	std::vector<int> sinks;
 	int sink;
 	int DEBUG;
 } PulseAudio;
@@ -25,6 +23,7 @@ void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void 
 void context_state_callback(pa_context *c, void *userdata);
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata);
 void initialize_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
+void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 
@@ -67,7 +66,7 @@ void initialize(PulseAudio* pa) {
 	strcat(pa->logpath_mute, logname_mute);
 	printf("using log file: %s\n", pa->logpath_mute);
 
-	pa->DEBUG = 0;
+	pa->DEBUG = 1;
 }
 
 int run(PulseAudio* pa) {
@@ -128,34 +127,40 @@ void initialize_sink_callback(pa_context *c, const pa_sink_info *i, int eol, voi
 	}
 }
 
+void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
+	PulseAudio* pa = (PulseAudio*) userdata;
+	if (i) {
+		pa->sink = i->index;
+
+		if (pa->DEBUG) {
+			printf("iterating over sink %d\n", pa->sink);
+		}
+	}
+	if (eol) {
+		if (pa->DEBUG) {
+			printf("ending with sink %d\n", pa->sink);
+		}
+		pa_context_get_sink_info_by_index(c, pa->sink, use_sink_callback, userdata);
+	}
+}
+
+
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata) {
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
 	PulseAudio* pa = (PulseAudio*) userdata;
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
-		pa->sinks.push_back(idx);
-
 		if (pa->DEBUG) {
 			printf("new sink\n");
-			printf("{");
-			for (int j: pa->sinks) printf("%d,", j);
-			printf("}\n");
 		}
-
 		pa_context_get_sink_info_by_index(c, idx, use_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
-		pa->sinks.pop_back();
-
 		if (pa->DEBUG) {
 			printf("removed sink\n");
-			printf("{");
-			for (int j: pa->sinks) printf("%d,", j);
-			printf("}\n");
 		}
-
-		pa_context_get_sink_info_by_index(c, pa->sinks.back(), use_sink_callback, userdata);
+		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_CHANGE) {
