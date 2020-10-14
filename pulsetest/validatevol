@@ -48,7 +48,7 @@ if new < 0 then
 end
 
 if new > 100 then
-	io.stderr:write('too low')
+	io.stderr:write('too high')
 	os.exit(1)
 end
 

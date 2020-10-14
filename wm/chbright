@@ -10,17 +10,24 @@ function readline(filename)
 	end
 end
 
-function restrict(lower, value, upper)
-	if value < lower then
-		print('too low ' .. value)
-		return lower
-	elseif value > upper then
-		print('too high ' .. value)
-		return upper
-	else
-		print('just right ' .. value)
-		return value
-	end
+if not arg[1] then
+	io.stderr:write('no argument given')
+	os.exit(1)
+end
+
+if string.sub(arg[1], 1, 1) ~= '+' and string.sub(arg[1], 1, 1) ~= '-' then
+	io.stderr:write('argument must start with either + or -')
+	os.exit(1)
+end
+
+if string.sub(arg[1], -1) ~= '%' then
+	io.stderr:write('argument must end with %')
+	os.exit(1)
+end
+
+if not tonumber(arg[1]:sub(1, -2)) then
+	io.stderr:write('argument must contain a number')
+	os.exit(1)
 end
 
 diff = tonumber(arg[1]:sub(1, -2))
@@ -29,27 +36,34 @@ current = tonumber(readline('/sys/class/backlight/intel_backlight/brightness'))
 print('current ' .. current)
 max = tonumber(readline('/sys/class/backlight/intel_backlight/max_brightness'))
 print('max ' .. max)
-new = restrict(0, current + diff * max / 100, max)
+new = current + diff * max / 100
 print('new ' .. new)
 
-if current == new then
-	print('stale, exiting')
+if new < 0 then
+	io.stderr:write('too low')
 	os.exit(1)
 end
-print('fresh')
+
+if new > max then
+	io.stderr:write('too high')
+	os.exit(1)
+end
+
+if current == new then
+	io.stderr:write('no change')
+	os.exit(1)
+end
 
 file = io.open('/sys/class/backlight/intel_backlight/brightness', "w")
 if not file then
-	print('could not open file for writing')
+	io.stderr:write('could not open file for writing')
 	os.exit(1)
 end
-print('opened')
 
 io.output(file)
 if not io.write(new) then
-	print('write failed')
+	io.stderr:write('write failed')
 	os.exit(1)
 end
-print('written')
 
 io.close(file)
