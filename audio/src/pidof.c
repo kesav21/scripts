@@ -36,6 +36,9 @@ int pidof(char* name, int namelen)
 	}
 #undef FPSIZE
 
+	free(pname);
+	free(filepath);
+
 	closedir(directory);
 	return pid;
 }

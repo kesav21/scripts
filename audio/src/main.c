@@ -5,5 +5,7 @@ int main(int argc, char *argv[]) {
 	initialize(pa);
 	int ret = run(pa);
 	destroy(pa);
+	free(pa);
+	pa = NULL;
 	return ret;
 }
