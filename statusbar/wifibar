@@ -1,6 +1,4 @@
 #!/bin/sh
 
-iwgetid -r | {
-	read -r ssid
-	[ -n "$ssid" ] && echo "   $ssid " || echo ' 睊  '
-}
+ssid="$(iwgetid -r)"
+[ -n "$ssid" ] && echo "   $ssid " || echo ' 睊  '

@@ -15,7 +15,6 @@ typedef struct {
 	char* logpath_mute;
 
 	int sink;
-	int DEBUG;
 } PulseAudio;
 
 #endif
