@@ -23,7 +23,7 @@ void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *user
 			fprintf(file, "%s\n", i->description);
 			fclose(file);
 		} else {
-			fprintf(stderr, "[use_sink]\tfailed writing to %s\n"), pa->logpath_description;
+			fprintf(stderr, "[use_sink]\tfailed writing to %s\n", pa->logpath_description);
 		}
 	}
 }
@@ -81,7 +81,6 @@ void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata) {
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
-	PulseAudio* pa = (PulseAudio*) userdata;
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
 		printf("[subscribe]\tnew sink\n");
