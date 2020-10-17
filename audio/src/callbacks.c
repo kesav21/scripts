@@ -83,17 +83,17 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
-		printf("[subscribe]\tnew sink\n");
+		printf("[subscribe]\tnew sink %d\n", idx);
 		pa_context_get_sink_info_by_index(c, idx, use_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
-		printf("[subscribe]\tremoved sink\n");
+		printf("[subscribe]\tremoved sink %d\n", idx);
 		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_CHANGE) {
-		printf("[subscribe]\tchanged volume\n");
+		printf("[subscribe]\tchanged volume of %d\n", idx);
 		pa_context_get_sink_info_by_index(c, idx, set_volume_callback, userdata);
 	}
 }
