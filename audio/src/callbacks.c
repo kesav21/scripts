@@ -6,12 +6,14 @@ void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void 
 
 void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
+		int pid, ret;
+		FILE* file;
 		PulseAudio* pa = (PulseAudio*) userdata;
 		float volume = 100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM;
 
 		printf("[write_sink]\t%d \"%s\" %.0f %d\n", i->index, i->description, volume, i->mute);
 
-		FILE* file = fopen(pa->logpath_index, "w");
+		file = fopen(pa->logpath_index, "w");
 		if (file) {
 			fprintf(file, "%d\n", i->index);
 			fclose(file);
@@ -43,13 +45,11 @@ void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", pa->logpath_mute);
 		}
 
-		int pid = pidof("dwmblocks", 9);
+		pid = pidof("dwmblocks", 9);
 		if (pid != -1) {
 			printf("[write_sink]\tsignalling dwmblocks (%d)\n", pid);
-			int ret = kill(pid, SIGRTMIN+1);
-			if (ret == 0) {
-				printf("[write_sink]\tsignalled\n");
-			} else {
+			ret = kill(pid, SIGRTMIN+1);
+			if (ret != 0) {
 				fprintf(stderr, "[write_sink]\tfailed to signal dwmblocks (%d)\n", ret);
 			}
 		}
