@@ -1,6 +1,26 @@
 #!/bin/sh
 
-st -n centered -e vifmu -fc only &&
+st -n centered -e vifm -fc only &&
 	[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles ] &&
-	xargs -Ipdf zathura --fork -e "$(tab)" 'pdf' <"$XDG_CONFIG_HOME"/vifm/vimfiles &&
+	while read -r line; do
+		type="$(file --brief --mime-type "$line")"
+		case "$type" in
+			application/pdf)
+				echo $line >>"$XDG_CONFIG_HOME"/vifm/vimfiles.pdf
+				;;
+			image*)
+				echo $line >>"$XDG_CONFIG_HOME"/vifm/vimfiles.img
+				;;
+		esac
+	done <"$XDG_CONFIG_HOME"/vifm/vimfiles &&
 	rm "$XDG_CONFIG_HOME"/vifm/vimfiles
+
+# open pdfs
+[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles.pdf ] &&
+	xargs -Ip zathura --fork -e "$(tab)" 'p' <"$XDG_CONFIG_HOME"/vifm/vimfiles.pdf &&
+	rm "$XDG_CONFIG_HOME"/vifm/vimfiles.pdf
+
+# open images
+[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles.img ] &&
+	sxiv -i <"$XDG_CONFIG_HOME"/vifm/vimfiles.img &&
+	rm "$XDG_CONFIG_HOME"/vifm/vimfiles.img
