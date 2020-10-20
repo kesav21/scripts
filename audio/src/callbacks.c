@@ -4,18 +4,21 @@ void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void 
 	m->quit(m, 0);
 }
 
-void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
+void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
+		int pid, ret;
+		FILE* file;
 		PulseAudio* pa = (PulseAudio*) userdata;
+		float volume = 100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM;
 
-		printf("[use_sink]\t%d \"%s\"\n", i->index, i->description);
+		printf("[write_sink]\t%d \"%s\" %.0f %d\n", i->index, i->description, volume, i->mute);
 
-		FILE* file = fopen(pa->logpath_index, "w");
+		file = fopen(pa->logpath_index, "w");
 		if (file) {
 			fprintf(file, "%d\n", i->index);
 			fclose(file);
 		} else {
-			fprintf(stderr, "[use_sink]\tfailed writing to %s\n", pa->logpath_index);
+			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", pa->logpath_index);
 		}
 
 		file = fopen(pa->logpath_description, "w");
@@ -23,25 +26,15 @@ void use_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *user
 			fprintf(file, "%s\n", i->description);
 			fclose(file);
 		} else {
-			fprintf(stderr, "[use_sink]\tfailed writing to %s\n"), pa->logpath_description;
+			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", pa->logpath_description);
 		}
-	}
-}
 
-void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
-	if (i) {
-		PulseAudio* pa = (PulseAudio*) userdata;
-
-		float volume = 100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM;
-
-		printf("[set_volume]\t%.0f, %d\n", volume, i->mute);
-
-		FILE* file = fopen(pa->logpath_volume, "w");
+		file = fopen(pa->logpath_volume, "w");
 		if (file) {
 			fprintf(file, "%.0f\n", volume);
 			fclose(file);
 		} else {
-			fprintf(stderr, "[set_volume]\tfailed writing to %s\n", pa->logpath_volume);
+			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", pa->logpath_volume);
 		}
 
 		file = fopen(pa->logpath_mute, "w");
@@ -49,17 +42,15 @@ void set_volume_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 			fprintf(file, "%d\n", i->mute);
 			fclose(file);
 		} else {
-			fprintf(stderr, "[set_volume]\tfailed writing to %s\n", pa->logpath_mute);
+			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", pa->logpath_mute);
 		}
 
-		int pid = pidof("dwmblocks", 9);
+		pid = pidof("dwmblocks", 9);
 		if (pid != -1) {
-			printf("[set_volume]\tsignalling dwmblocks (%d)\n", pid);
-			int ret = kill(pid, SIGRTMIN+1);
-			if (ret == 0) {
-				printf("[set_volume]\tsignalled\n");
-			} else {
-				fprintf(stderr, "[set_volume]\tfailed to signal dwmblocks (%d)\n", ret);
+			printf("[write_sink]\tsignalling dwmblocks (%d)\n", pid);
+			ret = kill(pid, SIGRTMIN+1);
+			if (ret != 0) {
+				fprintf(stderr, "[write_sink]\tfailed to signal dwmblocks (%d)\n", ret);
 			}
 		}
 	}
@@ -73,29 +64,27 @@ void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 	}
 	if (eol) {
 		printf("[select_sink]\tselecting %d\n", pa->sink);
-		pa_context_get_sink_info_by_index(c, pa->sink, use_sink_callback, userdata);
-		pa_context_get_sink_info_by_index(c, pa->sink, set_volume_callback, userdata);
+		pa_context_get_sink_info_by_index(c, pa->sink, write_sink_callback, userdata);
 	}
 }
 
 
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata) {
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
-	PulseAudio* pa = (PulseAudio*) userdata;
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
-		printf("[subscribe]\tnew sink\n");
-		pa_context_get_sink_info_by_index(c, idx, use_sink_callback, userdata);
+		printf("[subscribe]\tnew sink %d\n", idx);
+		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
-		printf("[subscribe]\tremoved sink\n");
+		printf("[subscribe]\tremoved sink %d\n", idx);
 		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_CHANGE) {
-		printf("[subscribe]\tchanged volume\n");
-		pa_context_get_sink_info_by_index(c, idx, set_volume_callback, userdata);
+		printf("[subscribe]\tchanged volume of %d\n", idx);
+		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 }
 
