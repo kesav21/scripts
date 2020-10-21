@@ -33,7 +33,11 @@ end
 diff = tonumber(arg[1]:sub(1, -2))
 print('parsed ' .. diff)
 
-currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sink.volume'
+cache = os.getenv("XDG_CACHE_HOME")
+newest = tonumber(readline(cache .. '/bin/pulsetest.newest_sink_index'))
+print('newest sink ' .. newest)
+
+currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sinks.' .. newest .. '.volume'
 print('reading from ' .. currentpath)
 
 current = tonumber(readline(currentpath))
@@ -57,10 +61,4 @@ if current == new then
 	os.exit(1)
 end
 
-indexpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sink.index'
-print('reading from ' .. indexpath)
-
-index = tonumber(readline(indexpath))
-print('sink index ' .. index)
-
-os.execute('pactl set-sink-volume ' .. index .. ' ' .. arg[1])
+os.execute('pactl set-sink-volume ' .. newest .. ' ' .. arg[1])

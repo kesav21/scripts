@@ -1,6 +1,7 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
+#include <math.h>
 #include "data.h"
 #include "pidof.h"
 

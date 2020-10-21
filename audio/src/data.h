@@ -9,11 +9,6 @@ typedef struct {
 	pa_context* _context;
 	pa_signal_event* _signal;
 
-	char* logpath_index;
-	char* logpath_description;
-	char* logpath_volume;
-	char* logpath_mute;
-
 	int sink;
 } PulseAudio;
 
