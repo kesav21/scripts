@@ -1,3 +1,0 @@
-#!/bin/luajit
-
-print(os.date("  %a, %b %d "))
