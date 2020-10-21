@@ -1,14 +1,28 @@
 #!/bin/luajit
 
-function readline(filename)
-	file = io.open(filename)
-	if file then
-		for line in io.lines(filename) do
-			io.close(file)
-			return line
-		end
+function first(iterable)
+	for line in iterable do
+		return line
 	end
 end
+
+function firstline(filename)
+	file = io.open(filename)
+	if file then
+		line = first(io.lines(filename))
+		io.close(file)
+		if line then
+			return line
+		else
+			io.stderr:write("eof: " .. filename .. " is empty")
+			os.exit(1)
+		end
+	else
+		io.stderr:write("file_not_found: " .. filename .. " does not exist")
+		os.exit(1)
+	end
+end
+
 
 if not arg[1] then
 	io.stderr:write('no argument given')
@@ -34,13 +48,13 @@ diff = tonumber(arg[1]:sub(1, -2))
 print('parsed ' .. diff)
 
 cache = os.getenv("XDG_CACHE_HOME")
-newest = tonumber(readline(cache .. '/bin/pulsetest.newest_sink_index'))
+newest = tonumber(firstline(cache .. '/bin/pulsetest.newest_sink_index'))
 print('newest sink ' .. newest)
 
 currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sinks.' .. newest .. '.volume'
 print('reading from ' .. currentpath)
 
-current = tonumber(readline(currentpath))
+current = tonumber(firstline(currentpath))
 print('current ' .. current)
 
 new = current + diff
