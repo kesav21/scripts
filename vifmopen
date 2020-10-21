@@ -3,8 +3,7 @@
 st -n centered -e vifm -fc only &&
 	[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles ] &&
 	while read -r line; do
-		type="$(file --brief --mime-type "$line")"
-		case "$type" in
+		case "$(file --brief --mime-type "$line")" in
 			application/pdf)
 				echo $line >>"$XDG_CONFIG_HOME"/vifm/vimfiles.pdf
 				;;
