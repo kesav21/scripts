@@ -10,6 +10,9 @@ st -n centered -e vifm -fc only &&
 			image*)
 				echo $line >>"$XDG_CONFIG_HOME"/vifm/vimfiles.img
 				;;
+			video*)
+				echo $line >>"$XDG_CONFIG_HOME"/vifm/vimfiles.vid
+				;;
 		esac
 	done <"$XDG_CONFIG_HOME"/vifm/vimfiles &&
 	rm "$XDG_CONFIG_HOME"/vifm/vimfiles
@@ -23,3 +26,8 @@ st -n centered -e vifm -fc only &&
 [ -s "$XDG_CONFIG_HOME"/vifm/vimfiles.img ] &&
 	sxiv -i <"$XDG_CONFIG_HOME"/vifm/vimfiles.img &&
 	rm "$XDG_CONFIG_HOME"/vifm/vimfiles.img
+
+# open videos
+[ -s "$XDG_CONFIG_HOME"/vifm/vimfiles.vid ] &&
+	xargs mpv <"$XDG_CONFIG_HOME"/vifm/vimfiles.vid &&
+	rm "$XDG_CONFIG_HOME"/vifm/vimfiles.vid
