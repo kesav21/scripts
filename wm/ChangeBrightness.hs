@@ -1,6 +1,7 @@
 #!/usr/bin/env runghc
 
 import           System.Environment             ( getArgs )
+import           System.Exit                    ( exitFailure )
 import           Text.Read                      ( readMaybe )
 
 -- https://www.schoolofhaskell.com/user/bartosz/basics-of-haskell/3-pure-functions-laziness-io
@@ -66,6 +67,9 @@ main = do
   full    <- readFile "/sys/class/backlight/intel_backlight/max_brightness"
 
   case calculate args current full of
-    Nothing -> print "error"
-    Just x ->
+    Nothing -> do
+      putStrLn "error"
+      exitFailure
+    Just x -> do
+      print x
       writeFile "/sys/class/backlight/intel_backlight/brightness" (show x)
