@@ -39,21 +39,26 @@ isPercent _   = Nothing
 parseArgs :: [String] -> Maybe Int
 parseArgs args = do
   first     <- head' args
-  sign      <- head' first >>= sign
+  sign'     <- head' first >>= sign
   magnitude <- midl' first >>= toInt
   percent   <- last' first >>= isPercent
-  return $ sign * magnitude * percent
+  return $ sign' * magnitude * percent
 
-validate :: Int -> Maybe Int
-validate x | x >= 0 && x <= 7500 = Just x
-validate _                       = Nothing
+restrict :: Int -> Int -> Int -> Int
+restrict low high val | val < low  = low
+                      | val > high = high
+                      | otherwise  = val
+
+stale :: Int -> Int -> Maybe Int
+stale current new | current == new = Nothing
+                  | otherwise      = Just new
 
 calculate :: [String] -> String -> String -> Maybe Int
 calculate args current full = do
-  a <- parseArgs args
-  c <- toInt current
-  f <- toInt full
-  validate $ c + a * f `div` 100
+  args'    <- parseArgs args
+  current' <- toInt current
+  full'    <- toInt full
+  stale current' . restrict 0 full' $ current' + args' * full' `div` 100
 
 main = do
   args    <- getArgs
@@ -61,6 +66,6 @@ main = do
   full    <- readFile "/sys/class/backlight/intel_backlight/max_brightness"
 
   case calculate args current full of
-    Nothing -> return ()
+    Nothing -> print "error"
     Just x ->
       writeFile "/sys/class/backlight/intel_backlight/brightness" (show x)
