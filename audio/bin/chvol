@@ -62,12 +62,12 @@ print('new ' .. new)
 
 if new < 0 then
 	io.stderr:write('too low')
-	os.exit(1)
+	new = 0
 end
 
 if new > 100 then
 	io.stderr:write('too high')
-	os.exit(1)
+	new = 100
 end
 
 if current == new then
