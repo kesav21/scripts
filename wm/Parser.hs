@@ -48,37 +48,53 @@ parseInt = fmap read . notNull . Parser $ Just . span isDigit
 
 parseInput :: Parser Int
 parseInput = do
-  signLiteral <- parseChar '+' <|> parseChar '-'
-  magnitude   <- parseInt
+  sign      <- parseChar '+' <|> parseChar '-'
+  magnitude <- parseInt
   parseChar '%'
-  case signLiteral of
+  case sign of
     '+' -> return magnitude
     '-' -> return (-magnitude)
+    _   -> empty
 
 parseArgs :: [String] -> [Int]
 parseArgs = map fst . catMaybes . map (runParser parseInput)
 
-main = do
+main = getArgs >>= print . parseArgs
+-- main = getArgs >>= print
 
-  print $ runParser (parseChar '+') ""
-  print $ runParser (parseChar '+') "5%"
-  print $ runParser (parseChar '+') "+"
-  print $ runParser (parseChar '+') "+5%"
-  putStrLn ""
-  print . runParser parseInt $ ""
-  print . runParser parseInt $ "5%"
-  print . runParser parseInt $ "10%"
-  putStrLn ""
-  print . runParser parseInput $ ""
-  print . runParser parseInput $ "-"
-  print . runParser parseInput $ "+"
-  print . runParser parseInput $ "5"
-  print . runParser parseInput $ "%"
-  print . runParser parseInput $ "+5"
-  print . runParser parseInput $ "5%"
-  print . runParser parseInput $ "+5%"
-  print . runParser parseInput $ "-5%"
-  putStrLn ""
-  args <- getArgs
-  print . parseArgs $ args
+-- main = do
+--   print $ runParser (parseChar '+') ""
+--   print $ runParser (parseChar '+') "5%"
+--   print $ runParser (parseChar '+') "+"
+--   print $ runParser (parseChar '+') "+5%"
+--   putStrLn ""
+--   print . runParser parseInt $ ""
+--   print . runParser parseInt $ "5%"
+--   print . runParser parseInt $ "10%"
+--   putStrLn ""
+--   print . runParser parseInput $ ""
+--   print . runParser parseInput $ "-"
+--   print . runParser parseInput $ "+"
+--   print . runParser parseInput $ "5"
+--   print . runParser parseInput $ "%"
+--   print . runParser parseInput $ "+5"
+--   print . runParser parseInput $ "5%"
+--   print . runParser parseInput $ "+5%"
+--   print . runParser parseInput $ "-5%"
+--   putStrLn ""
+--   args <- getArgs
+--   print . parseArgs $ args
+
+
+-- Parser.hs sign magnitude
+
+-- sign
+-- -i, --increase
+-- -d, --decrease
+
+-- magnitude
+-- -p n, --percentage n
+-- number, 1-100, 0 < new < max
+-- -a n, --absolute n
+-- number, 1-max, 0 < new < max
 
