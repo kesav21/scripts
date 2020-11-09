@@ -50,7 +50,7 @@ parseInput :: Parser Int
 parseInput = do
   sign      <- parseChar '+' <|> parseChar '-'
   magnitude <- parseInt
-  parseChar '%'
+  _         <- parseChar '%'
   case sign of
     '+' -> return magnitude
     '-' -> return (-magnitude)
@@ -60,7 +60,6 @@ parseArgs :: [String] -> [Int]
 parseArgs = map fst . catMaybes . map (runParser parseInput)
 
 main = getArgs >>= print . parseArgs
--- main = getArgs >>= print
 
 -- main = do
 --   print $ runParser (parseChar '+') ""
@@ -68,23 +67,19 @@ main = getArgs >>= print . parseArgs
 --   print $ runParser (parseChar '+') "+"
 --   print $ runParser (parseChar '+') "+5%"
 --   putStrLn ""
---   print . runParser parseInt $ ""
---   print . runParser parseInt $ "5%"
---   print . runParser parseInt $ "10%"
+--   print $ runParser parseInt ""
+--   print $ runParser parseInt "5%"
+--   print $ runParser parseInt "10%"
 --   putStrLn ""
---   print . runParser parseInput $ ""
---   print . runParser parseInput $ "-"
---   print . runParser parseInput $ "+"
---   print . runParser parseInput $ "5"
---   print . runParser parseInput $ "%"
---   print . runParser parseInput $ "+5"
---   print . runParser parseInput $ "5%"
---   print . runParser parseInput $ "+5%"
---   print . runParser parseInput $ "-5%"
---   putStrLn ""
---   args <- getArgs
---   print . parseArgs $ args
-
+--   print $ runParser parseInput ""
+--   print $ runParser parseInput "-"
+--   print $ runParser parseInput "+"
+--   print $ runParser parseInput "5"
+--   print $ runParser parseInput "%"
+--   print $ runParser parseInput "+5"
+--   print $ runParser parseInput "5%"
+--   print $ runParser parseInput "+5%"
+--   print $ runParser parseInput "-5%"
 
 -- Parser.hs sign magnitude
 
@@ -97,4 +92,3 @@ main = getArgs >>= print . parseArgs
 -- number, 1-100, 0 < new < max
 -- -a n, --absolute n
 -- number, 1-max, 0 < new < max
-
