@@ -20,24 +20,46 @@ parseChar char = do
   put xs
   if x /= char then empty else return x
 
+parseWord :: Parser String
+parseWord = do
+  (x, xs) <- span (/= ' ') <$> get
+  put xs
+  if null x then empty else return x
+
 parseInt :: Parser Int
 parseInt = do
   (x, xs) <- span isDigit <$> get
   put xs
   if null x then empty else return $ read x
 
+parseSign :: Parser Int
+parseSign = do
+  word <- parseWord
+  _    <- parseChar ' '
+  case word of
+    "-i"         -> return 1
+    "--increase" -> return 1
+    "-d"         -> return (-1)
+    "--decrease" -> return (-1)
+    _            -> empty
+
+parseMagnitude :: Parser Int
+parseMagnitude = do
+  word <- parseWord
+  _    <- parseChar ' '
+  case word of
+    "-p"           -> parseInt >>= return
+    "--percentage" -> parseInt >>= return
+    _              -> empty
+
 parseInput :: Parser Int
 parseInput = do
-  sign      <- parseChar '+' <|> parseChar '-'
-  magnitude <- parseInt
-  _         <- parseChar '%'
-  case sign of
-    '+' -> return magnitude
-    '-' -> return (-magnitude)
-    _   -> empty
+  sign      <- parseSign
+  magnitude <- parseMagnitude
+  return $ sign * magnitude
 
-parseArgs :: [String] -> [Int]
-parseArgs = map fst . catMaybes . map (runStateT parseInput)
+parseArgs :: [String] -> Maybe Int
+parseArgs = fmap fst . runStateT parseInput . unwords
 
 main = getArgs >>= print . parseArgs
 
