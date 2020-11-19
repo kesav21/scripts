@@ -1,4 +1,3 @@
 #!/bin/sh
 
-echo -n '   '
-btconnected | sed 's/FILCO Bluetooth Keyboard/  /;s/Grind Wireless/  /' | tr -d '\n'
+printf '  %s ' "$(btconnected | tr '\n' ' ')"
