@@ -12,6 +12,7 @@ import           Text.Read                      ( readMaybe )
 
 -- https://www.schoolofhaskell.com/user/bartosz/basics-of-haskell/3-pure-functions-laziness-io
 -- https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell/10_Error_Handling
+-- https://mmhaskell.com/monads/transformers
 
 toEither :: String -> Maybe a -> Either String a
 toEither msg Nothing      = Left msg
@@ -73,22 +74,25 @@ stale current new | current == new = Nothing
                   | otherwise      = Just new
 
 calculate :: [String] -> String -> String -> Either String Int
-calculate args current full = do
-  args'    <- parseArgs args
-  current' <- readCurrentError (toInt current)
-  full'    <- readFullError (toInt full)
-  staleError . stale current' . restrict 0 full' $ current' + args' * full' `div` 100
+calculate args curr full = do
+  args' <- parseArgs args
+  curr' <- readCurrentError (toInt curr)
+  full' <- readFullError (toInt full)
+  staleError . stale curr' . restrict 0 full' $ curr' + args' * full' `div` 100
 
 main = do
-  args    <- getArgs
+  let currPath = "/sys/class/backlight/intel_backlight/brightness"
+      fullPath = "/sys/class/backlight/intel_backlight/max_brightness"
 
-  currH   <- openFile "/sys/class/backlight/intel_backlight/brightness" ReadMode
-  current <- hGetContents currH
+  args  <- getArgs
 
-  fullH   <- openFile "/sys/class/backlight/intel_backlight/max_brightness" ReadMode
-  full    <- hGetContents fullH
+  currH <- openFile currPath ReadMode
+  curr  <- hGetContents currH
 
-  case calculate args current full of
+  fullH <- openFile fullPath ReadMode
+  full  <- hGetContents fullH
+
+  case calculate args curr full of
     Left e -> do
       hClose currH
       hClose fullH
@@ -98,7 +102,6 @@ main = do
       hClose currH
       hClose fullH
       print x
-      currH <- openFile "/sys/class/backlight/intel_backlight/brightness" WriteMode
+      currH <- openFile currPath WriteMode
       hPutStr currH (show x)
       hClose currH
-
