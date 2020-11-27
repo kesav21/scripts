@@ -86,6 +86,7 @@ main = getArgs >>= print . parseArgs
 -- sign
 -- -i, --increase
 -- -d, --decrease
+-- -s, --set
 
 -- magnitude
 -- -p n, --percentage n
