@@ -13,6 +13,9 @@ import           Control.Monad.State            ( StateT
                                                 )
 import           Data.Char                      ( isDigit )
 
+readFileInt :: String -> MaybeT IO Int
+readFileInt = MaybeT . fmap readMaybe . readFile
+
 type Parser = StateT String Maybe
 
 parseChar :: Char -> Parser Char
@@ -62,9 +65,6 @@ parseInput = do
 parseArgs :: IO [String] -> MaybeT IO Int
 parseArgs = MaybeT . fmap (fmap fst . runStateT parseInput . unwords)
 
-readFileInt :: String -> MaybeT IO Int
-readFileInt = MaybeT . fmap readMaybe . readFile
-
 type BrightCalc = ReaderT (Int, Int, Int) (MaybeT IO) Int
 
 applyDiff :: BrightCalc
@@ -109,23 +109,3 @@ main = do
   case state of
     Nothing -> exitFailure
     Just a  -> writeFile currPath (show a)
-
--- main = do
---   print $ runStateT (parseChar '+') ""
---   print $ runStateT (parseChar '+') "5%"
---   print $ runStateT (parseChar '+') "+"
---   print $ runStateT (parseChar '+') "+5%"
---   putStrLn ""
---   print $ runStateT parseInt ""
---   print $ runStateT parseInt "5%"
---   print $ runStateT parseInt "10%"
---   putStrLn ""
---   print $ runStateT parseInput ""
---   print $ runStateT parseInput "-"
---   print $ runStateT parseInput "+"
---   print $ runStateT parseInput "5"
---   print $ runStateT parseInput "%"
---   print $ runStateT parseInput "+5"
---   print $ runStateT parseInput "5%"
---   print $ runStateT parseInput "+5%"
---   print $ runStateT parseInput "-5%"
