@@ -1,5 +1,6 @@
 #!/usr/bin/env runghc
 
+import           Control.Monad.Reader
 import           Control.Monad.Trans.Maybe
 import           Text.Read                      ( readMaybe )
 import           System.Environment             ( getArgs )
@@ -64,25 +65,25 @@ parseArgs = MaybeT . fmap (fmap fst . runStateT parseInput . unwords)
 readFileInt :: String -> MaybeT IO Int
 readFileInt = MaybeT . fmap readMaybe . readFile
 
-type BrightCalc = StateT (Int, Int, Int) (MaybeT IO)
+type BrightCalc = ReaderT (Int, Int, Int) (MaybeT IO) Int
 
-applyDiff :: BrightCalc Int
+applyDiff :: BrightCalc
 applyDiff = do
-  (curr, full, diff) <- get
+  (curr, full, diff) <- ask
   return $ curr + diff * full `div` 100
 
-restrict :: Int -> BrightCalc Int
+restrict :: Int -> BrightCalc
 restrict val = do
-  (_, full, _) <- get
+  (_, full, _) <- ask
   if val < 0 then return 0 else if val > full then return full else return val
 
-stale :: Int -> BrightCalc Int
+stale :: Int -> BrightCalc
 stale val = do
-  (curr, _, _) <- get
+  (curr, _, _) <- ask
   if val == curr then empty else return val
 
 newBrightness :: (Int, Int, Int) -> MaybeT IO Int
-newBrightness = fmap fst . runStateT (applyDiff >>= restrict >>= stale)
+newBrightness = runReaderT $ applyDiff >>= restrict >>= stale
 
 main = do
   let currPath = "/sys/class/backlight/intel_backlight/brightness"
