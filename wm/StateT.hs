@@ -85,6 +85,17 @@ stale val = do
 newBrightness :: (Int, Int, Int) -> MaybeT IO Int
 newBrightness = runReaderT $ applyDiff >>= restrict >>= stale
 
+-- newBrightness :: (Int, Int, Int) -> MaybeT IO Int
+-- newBrightness (curr, full, diff) = MaybeT $ do
+--   return . stale curr . restrict 0 full . calculate $ (curr, full, diff)
+--  where
+--   stale old new | old == new = Nothing
+--                 | otherwise  = Just new
+--   restrict low high val | val < low  = low
+--                         | val > high = high
+--                         | otherwise  = val
+--   calculate (curr, full, diff) = curr + diff * full `div` 100
+
 main = do
   let currPath = "/sys/class/backlight/intel_backlight/brightness"
       fullPath = "/sys/class/backlight/intel_backlight/max_brightness"
