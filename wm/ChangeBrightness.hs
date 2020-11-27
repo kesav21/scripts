@@ -1,12 +1,6 @@
 #!/usr/bin/env runghc
 
 import           System.Environment             ( getArgs )
-import           System.IO                      ( openFile
-                                                , IOMode(ReadMode, WriteMode)
-                                                , hGetContents
-                                                , hPutStr
-                                                , hClose
-                                                )
 import           System.Exit                    ( exitFailure )
 import           Text.Read                      ( readMaybe )
 
@@ -84,24 +78,14 @@ main = do
   let currPath = "/sys/class/backlight/intel_backlight/brightness"
       fullPath = "/sys/class/backlight/intel_backlight/max_brightness"
 
-  args  <- getArgs
-
-  currH <- openFile currPath ReadMode
-  curr  <- hGetContents currH
-
-  fullH <- openFile fullPath ReadMode
-  full  <- hGetContents fullH
+  args <- getArgs
+  curr <- readFile currPath
+  full <- readFile fullPath
 
   case calculate args curr full of
     Left e -> do
-      hClose currH
-      hClose fullH
       putStrLn e
       exitFailure
     Right x -> do
-      hClose currH
-      hClose fullH
       print x
-      currH <- openFile currPath WriteMode
-      hPutStr currH (show x)
-      hClose currH
+      writeFile currPath (show x)
