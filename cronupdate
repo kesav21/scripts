@@ -1,21 +1,18 @@
 #!/bin/sh
 
-# Syncs repositories and downloads updates, meant to be run as a cronjob.
-# to update, run sudo crontab -e
-
 export XDG_RUNTIME_DIR=/run/user/1000
 export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
 
 . $XDG_CONFIG_HOME/bin/dunst_ids
 
-ping -q -c 1 1.1.1.1 >/dev/null || exit
+ping -q -c 1 1.1.1.1 >/dev/null ||
+	su kesav -c 'dunstify "Package Update" "Error connecting to the internet"' &&
+	exit
 
-pacman -Syyu --noconfirm || su 'kesav' -c 'dunstify pacupdate "Error downloading updates"' && exit
+pacman -Syyu --noconfirm ||
+	su kesav -c 'dunstify "Package Update" "Error updating with pacman"' &&
+	exit
 
-# ﮮ kk
-
-if pacman -Qu | grep -v "\[ignored\]"; then
-	su 'kesav' -c 'dunstify pacupdate "Updates available"'
-else
-	su 'kesav' -c 'dunstify pacupdate "No updates available"'
-fi
+yay -Syyu --noconfirm ||
+	su kesav -c 'dunstify "Package Update" "Error updating with yay"' &&
+	exit
