@@ -16,13 +16,6 @@ newsink() {
 	done
 }
 
-notify() {
-	pactl list sinks |
-		awk -F: '/Description/ {print $2}' |
-		tail -1 |
-		xargs -I {} dunstify -r "$id_sinkd" 'new sink' '{}'
-}
-
 switchinputs() {
 	pactl list short sink-inputs |
 		cut -f1 |
@@ -31,6 +24,5 @@ switchinputs() {
 
 pactl subscribe | sinkevents | newsink |
 	while read -r sink; do
-		notify
 		switchinputs "$sink"
 	done
