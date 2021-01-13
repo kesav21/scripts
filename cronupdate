@@ -1,18 +1,10 @@
 #!/bin/sh
 
-export XDG_RUNTIME_DIR=/run/user/1000
-export DBUS_SESSION_BUS_ADDRESS=unix:path="$XDG_RUNTIME_DIR"/bus
-
-. $XDG_CONFIG_HOME/bin/dunst_ids
-
 ping -q -c 1 1.1.1.1 >/dev/null ||
-	su kesav -c 'dunstify "Package Update" "Error connecting to the internet"' &&
-	exit
+	dunstify 'Package Update' 'Error connecting to the internet'
 
-pacman -Syyu --noconfirm ||
-	su kesav -c 'dunstify "Package Update" "Error updating with pacman"' &&
-	exit
+sudo pacman -Syyu --noconfirm ||
+	dunstify 'Package Update' 'Error updating with pacman'
 
 yay -Syyu --noconfirm ||
-	su kesav -c 'dunstify "Package Update" "Error updating with yay"' &&
-	exit
+	dunstify 'Package Update' 'Error updating with yay'
