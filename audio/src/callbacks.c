@@ -104,6 +104,33 @@ void write_newest_sink_callback(pa_context *c, const pa_sink_info *i, int eol, v
 	}
 }
 
+#define NOTIFICATION_ID 1005
+
+int intlen(int input) {
+	if (input == 0 || input == 1) {
+		return 1;
+	} else {
+		return ceil(log(input) / log(10));
+	}
+}
+
+void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
+	if (i) {
+		int length;
+		char* command;
+
+		length = intlen(NOTIFICATION_ID) + strlen(i->description) + strlen("dunstify -r '' 'New sink' ''") + 1;
+		command = (char*) malloc(length);
+		snprintf(command, length, "dunstify -r '%d' 'New sink' '%s'", NOTIFICATION_ID, i->description);
+
+		printf("[notify]\texecuting %s\n", command);
+		if (system(command) != 0) {
+			fprintf(stderr, "[notify]\tfailed executing notify command\n");
+		}
+	}
+}
+
+#undef NOTIFICATION_ID
 
 // void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 // 	if (i) {
@@ -166,6 +193,7 @@ void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 		printf("[select_sink]\tselecting %d\n", pa->sink);
 		pa_context_get_sink_info_by_index(c, pa->sink, write_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, pa->sink, write_newest_sink_callback, userdata);
+		pa_context_get_sink_info_by_index(c, pa->sink, notify_sink_callback, userdata);
 	}
 }
 
@@ -176,6 +204,7 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 		printf("[subscribe]\tnew sink %d\n", idx);
 		pa_context_get_sink_info_by_index(c, idx, write_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, idx, write_newest_sink_callback, userdata);
+		pa_context_get_sink_info_by_index(c, idx, notify_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {

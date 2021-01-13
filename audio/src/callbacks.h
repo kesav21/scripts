@@ -10,5 +10,6 @@ void context_state_callback(pa_context *c, void *userdata);
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata);
 void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
+void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 
 #endif
