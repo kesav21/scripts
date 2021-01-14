@@ -1,25 +1,9 @@
 #!/bin/sh
 
-doaction() {
-	read -r option
-
-	case "$option" in
-		'lock')
-			slock
-			;;
-		'quit')
-			pkill -x dwmloop
-			;;
-		'refresh')
-			pkill -x dwm
-			;;
-		'reboot')
-			reboot
-			;;
-		'shutdown')
-			shutdown now
-			;;
-	esac
-}
-
-echo 'lock quit refresh reboot shutdown' | tr ' ' '\n' | dmenu | doaction
+case "$(printf 'lock quit refresh reboot shutdown' | tr ' ' '\n' | dmenu)" in
+	lock) slock ;;
+	quit) pkill -x dwmloop ;;
+	refresh) pkill -x dwm ;;
+	reboot) reboot ;;
+	shutdown) shutdown now ;;
+esac
