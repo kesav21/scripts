@@ -11,5 +11,8 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
 void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata);
+void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int eol, void *userdata);
+void moved_sink_input_callback(pa_context *c, int status, void *userdata);
+
 
 #endif

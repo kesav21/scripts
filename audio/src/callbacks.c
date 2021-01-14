@@ -132,6 +132,22 @@ void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 
 #undef NOTIFICATION_ID
 
+void moved_sink_input_callback(pa_context *c, int status, void *userdata) {
+	if (status) {
+		printf("[moved_sink_input]\tmoved sink\n");
+	} else {
+		fprintf(stderr, "[moved_sink_input]\tfailed moving sink\n");
+	}
+}
+
+void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int eol, void *userdata) {
+	if (i) {
+		PulseAudio* pa = (PulseAudio*) userdata;
+		printf("[switch_sink_inputs]\tmoving %s, sink input %d -> sink %d\n", i->name, i->index, pa->sink);
+		pa_context_move_sink_input_by_index(c, i->index, pa->sink, moved_sink_input_callback, userdata);
+	}
+}
+
 // void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 // 	if (i) {
 // 		int pid, ret;
@@ -194,6 +210,7 @@ void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 		pa_context_get_sink_info_by_index(c, pa->sink, write_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, pa->sink, write_newest_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, pa->sink, notify_sink_callback, userdata);
+		pa_context_get_sink_input_info_list(c, switch_sink_inputs_callback, userdata);
 	}
 }
 
@@ -201,10 +218,13 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
+		PulseAudio* pa = (PulseAudio*) userdata;
+		pa->sink = idx;
 		printf("[subscribe]\tnew sink %d\n", idx);
 		pa_context_get_sink_info_by_index(c, idx, write_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, idx, write_newest_sink_callback, userdata);
 		pa_context_get_sink_info_by_index(c, idx, notify_sink_callback, userdata);
+		pa_context_get_sink_input_info_list(c, switch_sink_inputs_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
@@ -226,6 +246,7 @@ void context_state_callback(pa_context *c, void *userdata) {
 		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 		pa_context_set_subscribe_callback(c, subscribe_callback, userdata);
 		pa_context_subscribe(c, PA_SUBSCRIPTION_MASK_SINK, NULL, NULL);
+
 	}
 }
 
