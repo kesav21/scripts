@@ -67,5 +67,5 @@ debug('reading from ' .. volume_path)
 volume = tonumber(firstline(volume_path))
 debug('volume is ' .. volume)
 
-print(mute_icon .. ' ' .. volume .. '% ')
+print(' ' .. mute_icon .. ' ' .. volume .. '% ')
 
