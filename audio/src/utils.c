@@ -43,3 +43,11 @@ int pidof(char* name, int namelen)
 	return pid;
 }
 
+int intlen(int input) {
+	if (input == 0 || input == 1) {
+		return 1;
+	} else {
+		return ceil(log(input) / log(10));
+	}
+}
+

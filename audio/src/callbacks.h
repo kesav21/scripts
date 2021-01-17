@@ -1,7 +1,6 @@
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
-#include <math.h>
 #include "data.h"
 #include "utils.h"
 

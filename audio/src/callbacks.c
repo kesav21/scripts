@@ -1,13 +1,5 @@
 #include "callbacks.h"
 
-int intlen(int input) {
-	if (input == 0 || input == 1) {
-		return 1;
-	} else {
-		return ceil(log(input) / log(10));
-	}
-}
-
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
 	m->quit(m, 0);
 }
