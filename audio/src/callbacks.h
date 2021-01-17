@@ -3,7 +3,7 @@
 
 #include <math.h>
 #include "data.h"
-#include "pidof.h"
+#include "utils.h"
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata);
 void context_state_callback(pa_context *c, void *userdata);

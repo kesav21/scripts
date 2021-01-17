@@ -1,5 +1,5 @@
-#ifndef PIDOF_H
-#define PIDOF_H
+#ifndef UITLS_H
+#define UITLS_H
 
 #include <stdlib.h>
 #include <string.h>
