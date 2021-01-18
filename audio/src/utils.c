@@ -5,6 +5,9 @@
 
 typedef struct dirent dirent;
 
+/*
+ * get the pid of a process
+ */
 int pidof(char* name, int namelen)
 {
 	int pid = -1;
@@ -43,6 +46,9 @@ int pidof(char* name, int namelen)
 	return pid;
 }
 
+/*
+ * get the number of digits in an integer
+ */
 int intlen(int input) {
 	if (input == 0 || input == 1) {
 		return 1;
@@ -50,4 +56,3 @@ int intlen(int input) {
 		return ceil(log(input) / log(10));
 	}
 }
-

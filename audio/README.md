@@ -1,31 +1,42 @@
 
-# pulsetest
+# PulseTest
 
-`pulsetest` is a collection of scripts I use to control anything relating to audio on my machines.
-The core, written in C++, interfaces with pulseaudio directly and writes its results to certain files.
-The peripherals, written in sh, read and interpret these files to performs various tasks on my machines.
+PulseTest is a collection of scripts I use to control anything relating to audio on my machines.
+The daemon, written in C, interfaces with PulseAudio directly and writes its results to certain files.
+The scripts, written in lua and sh, read and interpret these files.
 
-## related links
+## Daemon
 
-- [code gist](https://gist.github.com/jasonwhite/1df6ee4b5039358701d2)
-- [pulseaudio documentation](https://freedesktop.org/software/pulseaudio/doxygen/)
+The daemon is responsible for the following:
+- Maintaining an always up-to-date reference to the newest sink
+- Maintaining always up-to-date information on all sinks
+- Notifying on sink change
+- Switching sink-inputs on sink change
 
-## usage
+## Scripts
 
-- compile the program
+The scripts can do the following:
+- [Set volume](chvol)
+- [Toggle mute](togglemute)
+- [Pretty-print volume and mute](volume)
+
+## Usage
+
+- Compile the daemon
 	```sh
 	make
 	```
-- run the executable in the background
+- Run the daemon as a background process
 	```sh
-	./pulsetest &
+	./bin/pulsetest &
 	```
-- [set sink volume](chvol)
-- [toggle sink mute](togglemute)
-- [pretty print sink volume and mute](volume)
 
-## todo
+## Related Reading
 
-- switch sink-inputs on sink change
-- notify on sink change
+- [Code gist](https://gist.github.com/jasonwhite/1df6ee4b5039358701d2)
+- [Official PulseAudio documentation](https://freedesktop.org/software/pulseaudio/doxygen/)
+
+## TODO
+
 - [create a custom pulseaudio module](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/Developer/Modules/)
+

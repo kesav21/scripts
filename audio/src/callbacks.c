@@ -4,6 +4,9 @@ void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void 
 	m->quit(m, 0);
 }
 
+/*
+ * update the information on the given sink
+ */
 void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
 		int pid;
@@ -73,6 +76,9 @@ void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 	}
 }
 
+/*
+ * update the reference to the newest sink
+ */
 void write_newest_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
 		int logpath_newest_sink_length;
@@ -97,13 +103,18 @@ void write_newest_sink_callback(pa_context *c, const pa_sink_info *i, int eol, v
 	}
 }
 
+// TODO: find a better place for this
 #define NOTIFICATION_ID 1005
 
+/*
+ * create a desktop notification for the given sink
+ */
 void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	if (i) {
 		int length;
 		char* command;
 
+		// TODO: determine if strlen is safe to use
 		length = intlen(NOTIFICATION_ID) + strlen(i->description) + strlen("dunstify -r '' 'New sink' ''") + 1;
 		command = (char*) malloc(length);
 		snprintf(command, length, "dunstify -r '%d' 'New sink' '%s'", NOTIFICATION_ID, i->description);
@@ -117,6 +128,9 @@ void notify_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 
 #undef NOTIFICATION_ID
 
+/*
+ * log success or failure of switching a sink input
+ */
 void moved_sink_input_callback(pa_context *c, int status, void *userdata) {
 	if (status) {
 		printf("[moved_sink_input]\tmoved sink\n");
@@ -125,6 +139,9 @@ void moved_sink_input_callback(pa_context *c, int status, void *userdata) {
 	}
 }
 
+/*
+ * switch all sink inputs to the newest sink, which is indicated by pa->sink
+ */
 void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int eol, void *userdata) {
 	if (i) {
 		PulseAudio* pa = (PulseAudio*) userdata;
@@ -133,12 +150,16 @@ void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int
 	}
 }
 
+/*
+ * loop over all sinks, the last sink is the newest
+ */
 void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
 	PulseAudio* pa = (PulseAudio*) userdata;
 	if (i) {
 		pa->sink = i->index;
 		printf("[select_sink]\titerating over %d\n", pa->sink);
 	}
+	// eol means last sink
 	if (eol) {
 		printf("[select_sink]\tselecting %d\n", pa->sink);
 		pa_context_get_sink_info_by_index(c, pa->sink, write_sink_callback, userdata);
@@ -148,9 +169,13 @@ void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *u
 	}
 }
 
+/*
+ * handle all types of sink events
+ */
 void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32_t idx, void *userdata) {
 	unsigned eventtype = type & PA_SUBSCRIPTION_EVENT_TYPE_MASK;
 
+	// if a new sink is created, use it
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
 		PulseAudio* pa = (PulseAudio*) userdata;
 		pa->sink = idx;
@@ -161,23 +186,31 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 		pa_context_get_sink_input_info_list(c, switch_sink_inputs_callback, userdata);
 	}
 
+	// if a sink is removed, find the newest sink
+	// TODO: find newest sink only if removed sink is the newest sink
 	if (eventtype == PA_SUBSCRIPTION_EVENT_REMOVE) {
 		printf("[subscribe]\tremoved sink %d\n", idx);
+		// TODO: delete information of removed sink
 		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
 	}
 
 	if (eventtype == PA_SUBSCRIPTION_EVENT_CHANGE) {
 		printf("[subscribe]\tchanged volume of %d\n", idx);
+		// TODO: create new callback to only update the volume file
 		pa_context_get_sink_info_by_index(c, idx, write_sink_callback, userdata);
 	}
 }
 
+/*
+ * entry point into this application
+ */
 void context_state_callback(pa_context *c, void *userdata) {
 	if (pa_context_get_state(c) == PA_CONTEXT_READY) {
 		printf("[context_state]\tready\n");
+		// select an initial sink
 		pa_context_get_sink_info_list(c, select_sink_callback, userdata);
+		// subscribe to sink events
 		pa_context_set_subscribe_callback(c, subscribe_callback, userdata);
 		pa_context_subscribe(c, PA_SUBSCRIPTION_MASK_SINK, NULL, NULL);
 	}
 }
-
