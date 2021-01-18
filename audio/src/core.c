@@ -1,4 +1,5 @@
-#include "core.h"
+#include "callbacks.h"
+#include "data.h"
 
 void initialize(PulseAudio* pa) {
 	pa->_mainloop = pa_mainloop_new();

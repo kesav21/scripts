@@ -1,7 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include "callbacks.h"
+#include "data.h"
 
 void initialize(PulseAudio* pa);
 int run(PulseAudio* pa);

@@ -1,12 +1,15 @@
-#include "utils.h"
-
-// programming in lua: a directory iterator
-// https://www.lua.org/pil/29.1.html
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <math.h>
 
 typedef struct dirent dirent;
 
 /*
  * get the pid of a process
+ * programming in lua: a directory iterator
+ * https://www.lua.org/pil/29.1.html
  */
 int pidof(char* name, int namelen)
 {

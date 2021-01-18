@@ -1,4 +1,9 @@
-#include "callbacks.h"
+#include <pulse/pulseaudio.h>
+#include <string.h>
+#include <stdio.h>
+#include "utils.h"
+#include <math.h>
+#include "data.h"
 
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
 	m->quit(m, 0);
@@ -12,7 +17,7 @@ void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 		int pid;
 		int ret;
 		int digits = intlen(i->index);
-		int volume = round(100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM);;
+		int volume = round(100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM);
 		int logpath_description_length;
 		int logpath_volume_length;
 		int logpath_mute_length;
