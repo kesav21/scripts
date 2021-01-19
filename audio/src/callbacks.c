@@ -1,4 +1,5 @@
 #include <pulse/pulseaudio.h>
+#include "callbacks.h"
 #include <string.h>
 #include <stdio.h>
 #include "utils.h"

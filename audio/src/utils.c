@@ -2,6 +2,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <stdio.h>
+#include "utils.h"
 #include <math.h>
 
 typedef struct dirent dirent;

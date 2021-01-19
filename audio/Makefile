@@ -3,13 +3,13 @@ CFLAGS=-lm -D_REENTRANT -lpulse -pthread
 
 all: bin/pulsetest
 
-obj/utils.o: src/utils.c
+obj/utils.o: src/utils.c src/utils.h
 	$(CC) $< -c -o $@
 
-obj/callbacks.o: src/callbacks.c src/data.h src/utils.h
+obj/callbacks.o: src/callbacks.c src/data.h src/utils.h src/callbacks.h
 	$(CC) $< -c -o $@
 
-obj/core.o: src/core.c src/data.h src/callbacks.h
+obj/core.o: src/core.c src/data.h src/callbacks.h src/core.h
 	$(CC) $< -c -o $@
 
 obj/main.o: src/main.c src/data.h src/core.h
