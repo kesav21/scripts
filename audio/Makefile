@@ -17,3 +17,7 @@ obj/main.o: src/main.c src/data.h src/core.h
 
 bin/pulsetest: obj/main.o obj/utils.o obj/callbacks.o obj/core.o
 	$(CC) $(CFLAGS) $^ -o $@
+
+.PHONY: clean
+clean:
+	rm obj/*.o
