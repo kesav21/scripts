@@ -13,4 +13,4 @@ end
 current = tonumber(readline('/sys/class/backlight/intel_backlight/brightness'))
 max = tonumber(readline('/sys/class/backlight/intel_backlight/max_brightness'))
 percent = current / max * 100
-print("  " .. percent .. "% ")
+print(string.format("  %s%% ", percent))

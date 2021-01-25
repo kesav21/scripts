@@ -32,4 +32,4 @@ end
 capacity = tonumber(readline("/sys/class/power_supply/BAT0/capacity"))
 rampicon = rampicon(capacity)
 statusicon = statusicon(readline("/sys/class/power_supply/BAT0/status"))
-print(" " .. statusicon .. " " .. rampicon .. " " .. capacity .. "% ")
+print(string.format(" %s %s %s%% ", statusicon, rampicon, capacity))

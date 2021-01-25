@@ -14,11 +14,11 @@ function firstline(filename)
 		if line then
 			return line
 		else
-			io.stderr:write("eof: " .. filename .. " is empty")
+			io.stderr:write(string.format("eof: %s is empty", filename))
 			os.exit(1)
 		end
 	else
-		io.stderr:write("file_not_found: " .. filename .. " does not exist")
+		io.stderr:write(string.format("file_not_found: %s does not exist", filename))
 		os.exit(1)
 	end
 end
@@ -39,19 +39,19 @@ if string.sub(arg[1], -1) ~= '%' then
 	os.exit(1)
 end
 
-if not tonumber(arg[1]:sub(1, -2)) then
+if not tonumber(string.sub(arg[1], 1, -2)) then
 	io.stderr:write('argument must contain a number')
 	os.exit(1)
 end
 
-diff = tonumber(arg[1]:sub(1, -2))
+diff = tonumber(string.sub(arg[1], 1, -2))
 print('parsed ' .. diff)
 
 cache = os.getenv("XDG_CACHE_HOME")
 newest = tonumber(firstline(cache .. '/bin/pulsetest.newest_sink_index'))
 print('newest sink ' .. newest)
 
-currentpath = os.getenv("XDG_CACHE_HOME") .. '/bin/pulsetest.sinks.' .. newest .. '.volume'
+currentpath = string.format("%s/bin/pulsetest.sinks.%s.volume", cache, newest)
 print('reading from ' .. currentpath)
 
 current = tonumber(firstline(currentpath))
@@ -75,4 +75,4 @@ if current == new then
 	os.exit(1)
 end
 
-os.execute('pactl set-sink-volume ' .. newest .. ' ' .. arg[1])
+os.execute(string.format('pactl set-sink-volume %d %s', newest, arg[1]))

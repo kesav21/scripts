@@ -14,7 +14,7 @@ ifacepath = os.getenv("XDG_CONFIG_HOME") .. '/bin/ethernet_interface'
 -- print(ifacepath)
 iface = readline(ifacepath)
 -- print(iface)
-statepath = '/sys/class/net/' .. iface .. '/operstate'
+statepath = string.format('/sys/class/net/%s/operstate', iface)
 -- print(statepath)
 state = readline(statepath)
 -- print(state)
