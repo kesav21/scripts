@@ -1,15 +1,15 @@
 #!/bin/luajit
 
-function first(iterable)
+local function first(iterable)
 	for line in iterable do
 		return line
 	end
 end
 
-function firstline(filename)
-	file = io.open(filename)
+local function firstline(filename)
+	local file = io.open(filename)
 	if file then
-		line = first(io.lines(filename))
+		local line = first(io.lines(filename))
 		io.close(file)
 		if line then
 			return line
@@ -44,20 +44,20 @@ if not tonumber(string.sub(arg[1], 1, -2)) then
 	os.exit(1)
 end
 
-diff = tonumber(string.sub(arg[1], 1, -2))
+local diff = tonumber(string.sub(arg[1], 1, -2))
 print('parsed ' .. diff)
 
-cache = os.getenv("XDG_CACHE_HOME")
-newest = tonumber(firstline(cache .. '/bin/pulsetest.newest_sink_index'))
+local cache = os.getenv("XDG_CACHE_HOME")
+local newest = tonumber(firstline(cache .. '/bin/pulsetest.newest_sink_index'))
 print('newest sink ' .. newest)
 
-currentpath = string.format("%s/bin/pulsetest.sinks.%s.volume", cache, newest)
+local currentpath = string.format("%s/bin/pulsetest.sinks.%s.volume", cache, newest)
 print('reading from ' .. currentpath)
 
-current = tonumber(firstline(currentpath))
+local current = tonumber(firstline(currentpath))
 print('current ' .. current)
 
-new = current + diff
+local new = current + diff
 print('new ' .. new)
 
 if new < 0 then

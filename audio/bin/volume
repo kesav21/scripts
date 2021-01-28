@@ -1,15 +1,15 @@
 #!/bin/luajit
 
-function first(iterable)
+local function first(iterable)
 	for line in iterable do
 		return line
 	end
 end
 
-function firstline(filename)
-	file = io.open(filename)
+local function firstline(filename)
+	local file = io.open(filename)
 	if file then
-		line = first(io.lines(filename))
+		local line = first(io.lines(filename))
 		io.close(file)
 		if line then
 			return line
@@ -23,8 +23,8 @@ function firstline(filename)
 	end
 end
 
-function getenv(varname)
-	var = os.getenv(varname)
+local function getenv(varname)
+	local var = os.getenv(varname)
 	if var then
 		return var
 	else
@@ -33,7 +33,7 @@ function getenv(varname)
 	end
 end
 
-function mute_icon(mute)
+local function get_mute_icon(mute)
 	if mute == 0 then
 		return "墳"
 	elseif mute == 1 then
@@ -44,27 +44,28 @@ function mute_icon(mute)
 	end
 end
 
+local debug
 if #arg == 1 and arg[1] == "-v" then
 	debug = print
 else
 	debug = function() end
 end
 
-cache_var = "XDG_CACHE_HOME"
+local cache_var = "XDG_CACHE_HOME"
 debug('getting ' .. cache_var)
-cache = getenv(cache_var)
+local cache = getenv(cache_var)
 debug("cache is " .. cache)
-newest_path = cache .. '/bin/pulsetest.newest_sink_index'
+local newest_path = cache .. '/bin/pulsetest.newest_sink_index'
 debug('reading from ' .. newest_path)
-newest = tonumber(firstline(newest_path))
+local newest = tonumber(firstline(newest_path))
 debug('newest sink is ' .. newest)
-mute_path = string.format('%s/bin/pulsetest.sinks.%s.mute', cache, newest)
+local mute_path = string.format('%s/bin/pulsetest.sinks.%s.mute', cache, newest)
 debug('reading from ' .. mute_path)
-mute_icon = mute_icon(tonumber(firstline(mute_path)))
+local mute_icon = get_mute_icon(tonumber(firstline(mute_path)))
 debug('mute is ' .. mute_icon)
-volume_path = string.format('%s/bin/pulsetest.sinks.%s.volume', cache, newest)
+local volume_path = string.format('%s/bin/pulsetest.sinks.%s.volume', cache, newest)
 debug('reading from ' .. volume_path)
-volume = tonumber(firstline(volume_path))
+local volume = tonumber(firstline(volume_path))
 debug('volume is ' .. volume)
 
 print(string.format(' %s %s%% ', mute_icon, volume))
