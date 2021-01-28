@@ -22,27 +22,12 @@ void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 		int ret;
 		int digits = intlen(i->index);
 		int volume = round(100.0f * (float) pa_cvolume_avg(&(i->volume)) / (float) PA_VOLUME_NORM);
-		int logpath_description_length;
 		int logpath_volume_length;
 		int logpath_mute_length;
-		char* logpath_description;
 		char* logpath_volume;
 		char* logpath_mute;
 		char* logpath_cache = getenv("XDG_CACHE_HOME");
 		FILE* file;
-
-		logpath_description_length = strlen(logpath_cache)
-			+ strlen("/bin/pulsetest.sinks.") + digits + strlen(".description") + 1;
-		logpath_description = (char*) malloc(logpath_description_length);
-		snprintf(logpath_description, logpath_description_length, "%s/bin/pulsetest.sinks.%d.description", logpath_cache, i->index);
-		printf("[write_sink]\t%s\t<- %s\n", logpath_description, i->description);
-		file = fopen(logpath_description, "w");
-		if (file) {
-			fprintf(file, "%s\n", i->description);
-			fclose(file);
-		} else {
-			fprintf(stderr, "[write_sink]\tfailed writing to %s\n", logpath_description);
-		}
 
 		logpath_volume_length = strlen(logpath_cache)
 			+ strlen("/bin/pulsetest.sinks.") + digits + strlen(".volume") + 1;
@@ -79,7 +64,6 @@ void write_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *us
 			}
 		}
 
-		free(logpath_description);
 		free(logpath_volume);
 		free(logpath_mute);
 	}
