@@ -24,12 +24,12 @@ function rampicon(capacity)
 end
 
 function statusicon(status)
-	if status == "Charging" then return "" end
-	if status == "Full" then return "" end
+	if status == "Charging" then return " " end
+	if status == "Full" then return " " end
 	return ""
 end
 
 capacity = tonumber(readline("/sys/class/power_supply/BAT0/capacity"))
 rampicon = rampicon(capacity)
 statusicon = statusicon(readline("/sys/class/power_supply/BAT0/status"))
-print(string.format(" %s %s %s%% ", statusicon, rampicon, capacity))
+print(string.format("%s %s %s%% ", statusicon, rampicon, capacity))
