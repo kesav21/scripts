@@ -6,6 +6,9 @@
 #include <math.h>
 #include "data.h"
 
+/*
+ * quit mainloop
+ */
 void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
 	m->quit(m, 0);
 }
