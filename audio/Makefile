@@ -1,19 +1,17 @@
 CC=gcc
 CFLAGS=-lm -D_REENTRANT -lpulse -pthread
 
-all: bin/pulsetest
+bin/pulsetest: obj/main.o obj/callbacks.o obj/utils.o
+	$(CC) $(CFLAGS) $^ -o $@
 
-obj/utils.o: src/utils.c src/utils.h
+obj/main.o: src/main.c src/data.h src/callbacks.h
 	$(CC) $< -c -o $@
 
 obj/callbacks.o: src/callbacks.c src/data.h src/utils.h src/callbacks.h
 	$(CC) $< -c -o $@
 
-obj/main.o: src/main.c src/data.h src/callbacks.h
+obj/utils.o: src/utils.c src/utils.h
 	$(CC) $< -c -o $@
-
-bin/pulsetest: obj/main.o obj/utils.o obj/callbacks.o
-	$(CC) $(CFLAGS) $^ -o $@
 
 .PHONY: clean
 clean:
