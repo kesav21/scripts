@@ -137,7 +137,7 @@ void moved_sink_input_callback(pa_context *c, int status, void *userdata) {
  */
 void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int eol, void *userdata) {
 	if (i) {
-		PulseAudio* pa = (PulseAudio*) userdata;
+		UserData* pa = (UserData*) userdata;
 		printf("[switch_sink_inputs]\tmoving %s, sink input %d -> sink %d\n", i->name, i->index, pa->sink);
 		pa_context_move_sink_input_by_index(c, i->index, pa->sink, moved_sink_input_callback, userdata);
 	}
@@ -147,7 +147,7 @@ void switch_sink_inputs_callback(pa_context *c, const pa_sink_input_info *i, int
  * loop over all sinks, the last sink is the newest
  */
 void select_sink_callback(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
-	PulseAudio* pa = (PulseAudio*) userdata;
+	UserData* pa = (UserData*) userdata;
 	if (i) {
 		pa->sink = i->index;
 		printf("[select_sink]\titerating over %d\n", pa->sink);
@@ -170,7 +170,7 @@ void subscribe_callback(pa_context *c, pa_subscription_event_type_t type, uint32
 
 	// if a new sink is created, use it
 	if (eventtype == PA_SUBSCRIPTION_EVENT_NEW) {
-		PulseAudio* pa = (PulseAudio*) userdata;
+		UserData* pa = (UserData*) userdata;
 		pa->sink = idx;
 		printf("[subscribe]\tnew sink %d\n", idx);
 		pa_context_get_sink_info_by_index(c, idx, write_sink_callback, userdata);

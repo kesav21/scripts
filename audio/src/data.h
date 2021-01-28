@@ -3,6 +3,6 @@
 
 typedef struct {
 	int sink;
-} PulseAudio;
+} UserData;
 
 #endif

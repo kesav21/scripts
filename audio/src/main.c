@@ -7,9 +7,9 @@ int main(int argc, char *argv[]) {
 	pa_mainloop_api* mainloop_api;
 	pa_context* context;
 	pa_signal_event* my_signal;
-	PulseAudio* pa;
+	UserData* pa;
 
-	pa = (PulseAudio*) malloc(sizeof(PulseAudio));
+	pa = (UserData*) malloc(sizeof(UserData));
 
 	mainloop = pa_mainloop_new();
 	mainloop_api = pa_mainloop_get_api(mainloop);
