@@ -1,3 +1,0 @@
-#!/bin/sh
-
-pactl set-sink-mute "$(cat "$XDG_CACHE_HOME"/bin/pulsetest.newest_sink_index)" toggle
