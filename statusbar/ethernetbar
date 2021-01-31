@@ -1,22 +1,14 @@
 #!/bin/luajit
 
-function readline(filename)
-	file = io.open(filename)
-	if file then
-		for line in io.lines(filename) do
-			io.close(file)
-			return line
-		end
-	end
-end
+local fileio = require('kk.fileio')
 
 ifacepath = os.getenv("XDG_CONFIG_HOME") .. '/bin/ethernet_interface'
 -- print(ifacepath)
-iface = readline(ifacepath)
+iface = fileio.firstline(ifacepath)
 -- print(iface)
 statepath = string.format('/sys/class/net/%s/operstate', iface)
 -- print(statepath)
-state = readline(statepath)
+state = fileio.firstline(statepath)
 -- print(state)
 
 if state == 'up' then print('   ') else print('   ') end

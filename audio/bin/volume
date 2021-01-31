@@ -1,27 +1,6 @@
 #!/bin/luajit
 
-local function first(iterable)
-	for line in iterable do
-		return line
-	end
-end
-
-local function firstline(filename)
-	local file = io.open(filename)
-	if file then
-		local line = first(io.lines(filename))
-		io.close(file)
-		if line then
-			return line
-		else
-			io.stderr:write(string.format("eof: %s is empty", filename))
-			os.exit(1)
-		end
-	else
-		io.stderr:write(string.format("file_not_found: %s does not exist", filename))
-		os.exit(1)
-	end
-end
+local fileio = require('kk.fileio')
 
 local function getenv(varname)
 	local var = os.getenv(varname)
@@ -57,15 +36,15 @@ local cache = getenv(cache_var)
 debug("cache is " .. cache)
 local newest_path = cache .. '/bin/pulsetest.newest_sink_index'
 debug('reading from ' .. newest_path)
-local newest = tonumber(firstline(newest_path))
+local newest = tonumber(fileio.firstline(newest_path))
 debug('newest sink is ' .. newest)
 local mute_path = string.format('%s/bin/pulsetest.sinks.%s.mute', cache, newest)
 debug('reading from ' .. mute_path)
-local mute_icon = get_mute_icon(tonumber(firstline(mute_path)))
+local mute_icon = get_mute_icon(tonumber(fileio.firstline(mute_path)))
 debug('mute is ' .. mute_icon)
 local volume_path = string.format('%s/bin/pulsetest.sinks.%s.volume', cache, newest)
 debug('reading from ' .. volume_path)
-local volume = tonumber(firstline(volume_path))
+local volume = tonumber(fileio.firstline(volume_path))
 debug('volume is ' .. volume)
 
 print(string.format(' %s %s%% ', mute_icon, volume))

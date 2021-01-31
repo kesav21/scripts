@@ -1,28 +1,6 @@
 #!/bin/luajit
 
-local function first(iterable)
-	for line in iterable do
-		return line
-	end
-end
-
-local function firstline(filename)
-	local file = io.open(filename)
-	if file then
-		local line = first(io.lines(filename))
-		io.close(file)
-		if line then
-			return line
-		else
-			io.stderr:write(string.format("eof: %s is empty", filename))
-			os.exit(1)
-		end
-	else
-		io.stderr:write(string.format("file_not_found: %s does not exist", filename))
-		os.exit(1)
-	end
-end
-
+local fileio = require('kk.fileio')
 
 if not arg[1] then
 	io.stderr:write('no argument given')
@@ -48,13 +26,13 @@ local diff = tonumber(string.sub(arg[1], 1, -2))
 print('parsed ' .. diff)
 
 local cache = os.getenv("XDG_CACHE_HOME")
-local newest = tonumber(firstline(cache .. '/bin/pulsetest.newest_sink_index'))
+local newest = tonumber(fileio.firstline(cache .. '/bin/pulsetest.newest_sink_index'))
 print('newest sink ' .. newest)
 
 local currentpath = string.format("%s/bin/pulsetest.sinks.%s.volume", cache, newest)
 print('reading from ' .. currentpath)
 
-local current = tonumber(firstline(currentpath))
+local current = tonumber(fileio.firstline(currentpath))
 print('current ' .. current)
 
 local new = current + diff
