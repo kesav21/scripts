@@ -1,92 +1,8 @@
 #!/bin/luajit
 
 local lfs = require('lfs')
-
-local iter = {}
-local fileio = {}
-
-function iter.takeUntil(predicate, iterator)
-	return function()
-		local element = iterator()
-		if predicate(element) then
-			return element
-		end
-	end
-end
-
-function iter.insert(value, iterator)
-	local firstTime = true
-	return function()
-		if firstTime then
-			firstTime = false
-			return value
-		else
-			return iterator()
-		end
-	end
-end
-
-function iter.append(value, iterator)
-	local firstTime = true
-	return function()
-		local element = iterator()
-		if element then
-			return element
-		elseif firstTime then
-			firstTime = false
-			return value
-		end
-	end
-end
-
-function iter.map(transformation, iterator)
-	return function()
-		local element = iterator()
-		if element then
-			return transformation(element)
-		end
-	end
-end
-
--- why did i create this?
--- because applying a function can be a bit cryptic,
--- but using this function clarifies what is happening
-function iter.first(iterator)
-	return iterator()
-end
-
-function iter.filter(predicate, iterator)
-	local function next_match()
-		local element = iterator()
-		if element then
-			if predicate(element) then
-				return element
-			else
-				return next_match()
-			end
-		end
-	end
-	return next_match
-end
-
-function fileio.exists(filename)
-	local file = io.open(filename, 'r')
-	if file then
-		io.close(file)
-		return true
-	else
-		return false
-	end
-end
-
-function fileio.firstline(filename)
-	local file = io.open(filename, 'r')
-	if file then
-		local lines = io.lines(filename)
-		io.close(file)
-		return lines() -- get first line
-	end
-end
+local iter = require('kk.iter')
+local fileio = require('kk.fileio')
 
 local function parents(dir)
 	return function()
@@ -105,9 +21,9 @@ end
 
 local cwd = lfs.currentdir()
 local dirs = iter.append('/', iter.insert(cwd, iter.takeUntil(isnotroot, parents(cwd))))
-local file = iter.first(iter.filter(fileio.exists, iter.map(to_head_file, dirs)))
-if file then
-	local line = fileio.firstline(file)
+local filename = iter.first(iter.filter(fileio.exists, iter.map(to_head_file, dirs)))
+if filename then
+	local line = fileio.firstline(filename)
 	local branch = string.sub(line, 17)
 	print(branch)
 else
