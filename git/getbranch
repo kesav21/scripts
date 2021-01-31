@@ -2,14 +2,10 @@
 
 local lfs = require('lfs')
 
-local function parents(dir)
-	return function()
-		dir = dir .. '/..'
-		return dir
-	end
-end
+local iter = {}
+local fileio = {}
 
-local function takeUntil(predicate, iterator)
+function iter.takeUntil(predicate, iterator)
 	return function()
 		local element = iterator()
 		if predicate(element) then
@@ -18,7 +14,7 @@ local function takeUntil(predicate, iterator)
 	end
 end
 
-local function insert(value, iterator)
+function iter.insert(value, iterator)
 	local firstTime = true
 	return function()
 		if firstTime then
@@ -30,7 +26,7 @@ local function insert(value, iterator)
 	end
 end
 
-local function append(value, iterator)
+function iter.append(value, iterator)
 	local firstTime = true
 	return function()
 		local element = iterator()
@@ -43,7 +39,7 @@ local function append(value, iterator)
 	end
 end
 
-local function map(transformation, iterator)
+function iter.map(transformation, iterator)
 	return function()
 		local element = iterator()
 		if element then
@@ -55,11 +51,11 @@ end
 -- why did i create this?
 -- because applying a function can be a bit cryptic,
 -- but using this function clarifies what is happening
-local function first(iterator)
+function iter.first(iterator)
 	return iterator()
 end
 
-local function filter(predicate, iterator)
+function iter.filter(predicate, iterator)
 	local function next_match()
 		local element = iterator()
 		if element then
@@ -73,7 +69,7 @@ local function filter(predicate, iterator)
 	return next_match
 end
 
-local function file_exists(filename)
+function fileio.exists(filename)
 	local file = io.open(filename, 'r')
 	if file then
 		io.close(file)
@@ -83,12 +79,19 @@ local function file_exists(filename)
 	end
 end
 
-local function readline(filename)
+function fileio.firstline(filename)
 	local file = io.open(filename, 'r')
 	if file then
 		local lines = io.lines(filename)
 		io.close(file)
 		return lines() -- get first line
+	end
+end
+
+local function parents(dir)
+	return function()
+		dir = dir .. '/..'
+		return dir
 	end
 end
 
@@ -101,10 +104,10 @@ local function to_head_file(path)
 end
 
 local cwd = lfs.currentdir()
-local dirs = append('/', insert(cwd, takeUntil(isnotroot, parents(cwd))))
-local file = first(filter(file_exists, map(to_head_file, dirs)))
+local dirs = iter.append('/', iter.insert(cwd, iter.takeUntil(isnotroot, parents(cwd))))
+local file = iter.first(iter.filter(fileio.exists, iter.map(to_head_file, dirs)))
 if file then
-	local line = readline(file)
+	local line = fileio.firstline(file)
 	local branch = string.sub(line, 17)
 	print(branch)
 else
