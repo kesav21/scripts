@@ -52,12 +52,25 @@ local function map(transformation, iterator)
 	end
 end
 
-local function first(predicate, iterator)
-	for i in iterator do
-		if predicate(i) then
-			return i
+-- why did i create this?
+-- because applying a function can be a bit cryptic,
+-- but using this function clarifies what is happening
+local function first(iterator)
+	return iterator()
+end
+
+local function filter(predicate, iterator)
+	local function next_match()
+		local element = iterator()
+		if element then
+			if predicate(element) then
+				return element
+			else
+				return next_match()
+			end
 		end
 	end
+	return next_match
 end
 
 local function file_exists(filename)
@@ -73,10 +86,9 @@ end
 local function readline(filename)
 	local file = io.open(filename, 'r')
 	if file then
-		for line in io.lines(filename) do
-			io.close(file)
-			return line
-		end
+		local lines = io.lines(filename)
+		io.close(file)
+		return lines() -- get first line
 	end
 end
 
@@ -90,7 +102,7 @@ end
 
 local cwd = lfs.currentdir()
 local dirs = append('/', insert(cwd, takeUntil(isnotroot, parents(cwd))))
-local file = first(file_exists, map(to_head_file, dirs))
+local file = first(filter(file_exists, map(to_head_file, dirs)))
 if file then
 	local line = readline(file)
 	local branch = string.sub(line, 17)
