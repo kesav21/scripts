@@ -39,17 +39,17 @@ local new = current + diff
 print('new ' .. new)
 
 if new < 0 then
-	io.stderr:write('too low')
+	print('too low, correcting')
 	new = 0
 end
 
 if new > 100 then
-	io.stderr:write('too high')
+	print('too high, correcting')
 	new = 100
 end
 
 if current == new then
-	io.stderr:write('no change')
+	io.stderr:write('no change\n')
 	os.exit(1)
 end
 
