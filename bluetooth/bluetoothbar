@@ -1,3 +1,4 @@
 #!/bin/sh
 
-printf '  %s ' "$(btconnected | tr '\n' ' ')"
+printf '   '
+btconnected | tr '\n' ' '
