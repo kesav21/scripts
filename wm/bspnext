@@ -1,0 +1,3 @@
+#!/bin/sh
+
+bspc node -f "$(bspc query --nodes --desktop .active --node .tiled | awk -v current="$(bspc query --nodes --node focused)" '$0 ~ current {getline; print $0}')"
