@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# terminate already running bar instances
+pkill -x polybar
+
+# wait until the processes have been shut down
+while pgrep -x polybar >/dev/null; do true; done
+
+# display polybar on all monitors
+polybar --list-monitors | while IFS=: read -r m _; do
+	MONITOR=$m polybar --reload example &
+done
+
+echo polybar launched
