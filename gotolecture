@@ -1,0 +1,10 @@
+#!/bin/sh
+
+lecture="$(cut -d, -f1 <"$XDG_CONFIG_HOME"/bin/lectures | dmenu)"
+[ -z "$lecture" ] && exit
+
+awk -F, -v lecture="$lecture" '$1 ~ lecture {print $2,$3}' <"$XDG_CONFIG_HOME"/bin/lectures | {
+	read -r password link
+	echo $password | xsel -ib
+	xdg-open "$link"
+}
