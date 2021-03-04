@@ -2,13 +2,19 @@
 
 local fileio = require('kk.fileio')
 
-ifacepath = os.getenv("XDG_CONFIG_HOME") .. '/bin/ethernet_interface'
+local cache = os.getenv("XDG_CONFIG_HOME")
+-- print(cache)
+local ifacepath = string.format("%s/bin/ethernet_interface", cache)
 -- print(ifacepath)
-iface = fileio.firstline(ifacepath)
+local iface = fileio.firstline(ifacepath)
 -- print(iface)
-statepath = string.format('/sys/class/net/%s/operstate', iface)
+local statepath = string.format('/sys/class/net/%s/operstate', iface)
 -- print(statepath)
-state = fileio.firstline(statepath)
+local state = fileio.firstline(statepath)
 -- print(state)
 
-if state == 'up' then print('   ') else print('   ') end
+if state == 'up' then
+	print('  ')
+else
+	print('  ')
+end
