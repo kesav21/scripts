@@ -20,4 +20,19 @@ function M.firstline(filename)
 	end
 end
 
+function M.writeline(filename, data)
+	local file = io.open(filename, 'w')
+	if file then
+		io.output(file)
+		io.write(data)
+		return io.close(file)
+	else
+		return false
+	end
+end
+
+-- TODO: test all the functions in this module
+-- eq(true, fileio.writeline(statusbar_path, "kk"))
+-- eq("kk", fileio.firstline(statusbar_path))
+
 return M
