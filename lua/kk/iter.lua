@@ -64,4 +64,46 @@ function M.filter(predicate, iterator)
 	return next_match
 end
 
+function M.to_table(iterator)
+	local t = {}
+	for i in iterator do
+		table.insert(t, i)
+	end
+	return t
+end
+
+-- https://stackoverflow.com/questions/22724092/difference-between-stateful-and-stateless-iterators-in-lua
+function M.values(s)
+	local f, _, var = pairs(s)
+	return function()
+		local i, v = f(s, var)
+		var = i
+		return v
+	end
+end
+
+function M.filter_keys(predicate, s)
+	local f, _, var = pairs(s)
+	local function next_match()
+		local i, v = f(s, var)
+		var = i
+		if v then
+			if predicate(v) then
+				return i
+			else
+				return next_match()
+			end
+		end
+	end
+	return next_match
+end
+
+function M.length(iterator)
+	local count = 0
+	for _ in iterator do
+		count = count + 1
+	end
+	return count
+end
+
 return M
