@@ -14,7 +14,7 @@ local state = fileio.firstline(statepath)
 -- print(state)
 
 if state == 'up' then
-	print('  ')
+	print('')
 else
-	print('  ')
+	print('')
 end

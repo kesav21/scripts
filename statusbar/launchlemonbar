@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# pkill -x polybar
+# while pgrep -x polybar >/dev/null; do true; done
+
+wm() {
+	focused="$(bspc query --desktops --monitor "$1" --desktop .active --names)"
+	bspc query --desktops --monitor "$1" --names | while read -r d; do
+		[ "$d" = "$focused" ] && printf '%%{R} %s %%{R}' "$d" || printf ' %s ' "$d"
+	done
+}
+
+bluetooth() {
+	printf ' '
+	btconnected | tr '\n' ' '
+}
+
+clock() {
+	printf ' '
+	date +'%I:%M %p'
+}
+
+calendar() {
+	printf ' '
+	date +'%a, %b %d '
+}
+
+xrandr |
+	awk '/ connected/ {print i++, $1}' |
+	while read -r mid mname; do
+		printf '%%{S%s} %%{l} %s %%{r} %s  %s %s  %s  %s' "$mid" "$(wm "$mname")" \
+			"$(volume)" "$(bluetooth)" "$(ethernetbar)" "$(clock)" "$(calendar)"
+	done |
+	tr -d '\n' |
+	lemonbar -p -f 'FiraCode Nerd Font:style=Regular:size=10' -F '#ebdbb2' -B '#1d2021'
