@@ -1,4 +1,6 @@
 #!/bin/sh
 
+trap 'kill -9 -$$' INT TERM EXIT
+
 refreshbar |
 	lemonbar -p -f 'FiraCode Nerd Font:style=Regular:size=10' -F '#ebdbb2' -B '#1d2021'

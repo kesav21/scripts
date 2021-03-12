@@ -7,7 +7,6 @@ printbar() {
 }
 
 trap printbar USR1
-trap "trap - TERM && kill -- -$$" INT TERM EXIT
 
 xrandr |
 	awk '/ connected/ {print $1}' >"$XDG_CACHE_HOME"/bin/statusbar.monitors &&
