@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LUA_PATH="$LUA_PATH;"/home/kesav/.local/bin/statusbar/?.lua
+LUA_PATH="$LUA_PATH;"/home/kesav/.local/src/statusbar/?.lua
 
 printbar() {
 	luajit -e 'print(require("statusbar").bar())'
