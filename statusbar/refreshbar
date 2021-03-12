@@ -1,0 +1,22 @@
+#!/bin/sh
+
+LUA_PATH="$LUA_PATH;"/home/kesav/.local/bin/statusbar/?.lua
+
+printbar() {
+	luajit -e 'print(require("statusbar").bar())'
+}
+
+trap printbar USR1
+trap "trap - TERM && kill -- -$$" INT TERM EXIT
+
+xrandr |
+	awk '/ connected/ {print $1}' >"$XDG_CACHE_HOME"/bin/statusbar.monitors &&
+	printbar
+
+bspc subscribe desktop |
+	while read -r line; do printbar; done &
+
+inotifywait -q -m -e close_write ~/.cache/bin/sinkmon.newest_sink_index ~/.cache/bin/sinkmon.sinks.*.volume |
+	while read -r line; do printbar; done &
+
+wait

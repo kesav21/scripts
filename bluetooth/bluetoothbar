@@ -1,5 +1,0 @@
-#!/bin/sh
-
-printf '  '
-btconnected | tr '\n' ' '
-printf ' '
