@@ -1,4 +1,0 @@
-#!/bin/sh
-
-ssid="$(iw dev | awk '/ssid/ {print $2}')"
-[ -n "$ssid" ] && printf '   %s  ' "$ssid" || printf ' 睊  '

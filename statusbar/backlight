@@ -1,8 +1,0 @@
-#!/bin/luajit
-
-local fileio = require('kk.fileio')
-
-current = tonumber(fileio.firstline('/sys/class/backlight/intel_backlight/brightness'))
-max = tonumber(fileio.firstline('/sys/class/backlight/intel_backlight/max_brightness'))
-percent = current / max * 100
-print(string.format("  %s%% ", percent))
