@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# configuration
+# if HDMI-1 is connected, it will be the primary monitor
+# if HDMI-1 is not connected, DP-1 will be the primary monitor
+# if both HDMI-1 and DP-1 are connected, HDMI-1 will be to the left of HDMI-1
+
+# assumptions
+# only one or two monitors will be simultaneously connected at any given time
+# connected monitors will be named either HDMI-1 or DP-1
+# all connected monitors will have a resolution of 1920x1080
+
+# disable every monitor, whether or not it is connected
+xrandr --output HDMI-1 --off --output DP-1 --off
+
+case "$(xrandr | grep ' connected' | wc -l)" in
+	1)
+		xrandr |
+			grep ' connected' |
+			xargs -I {} xrandr --output '{}' --mode 1920x1080 --pos 0x0 --primary
+		;;
+	2)
+		xrandr --output HDMI-1 --mode 1920x1080 --pos 0x0 --primary \
+			--output DP-1 --mode 1920x1080 --pos 1920x0
+		;;
+esac
+
+# count="$(xrandr | grep ' connected' | wc -l)"
+
+# if there is only one connected monitor
+# [ "$count" -eq 1 ] &&
+# 	xrandr |
+# 	grep ' connected' |
+# 		xargs -I {} xrandr --output '{}' --mode 1920x1080 --pos 0x0 --primary
+
+# if there are two connected monitors
+## if they are HDMI-1 and DP-1
+# [ "$count" -eq 2 ] &&
+# 	xrandr --output HDMI-1 --mode 1920x1080 --pos 0x0 --primary --output DP-1 --mode 1920x1080 --pos 1920x0
